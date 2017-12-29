@@ -62,8 +62,8 @@ public class Current_Rates_Activity extends AppCompatActivity {
             object=object.getJSONObject("bpi");
             object=object.getJSONObject("USD");
             Double bitcoin_rate = object.getDouble("rate_float");
-
-            BitCoin_Rate.setText(String.format(Locale.US,"%f",bitcoin_rate));
+            String Bitcoin_Rate = "$" + String.format(Locale.US,"%.2f",bitcoin_rate);
+            BitCoin_Rate.setText(Bitcoin_Rate);
 
         } catch (JSONException e) {
             e.printStackTrace();

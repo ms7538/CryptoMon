@@ -11,20 +11,29 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="32dp"
-        android:text="@string/bitcoin" />
+        android:layout_marginTop="33dp"
+        android:layout_toEndOf="@+id/imageView2"
+        android:text="@string/bitcoin"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/bitcoin_rate_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView"
         android:layout_alignBottom="@+id/textView"
-        android:layout_marginStart="38dp"
-        android:layout_toEndOf="@+id/textView"
-        android:text="@string/val" />
+        android:layout_alignParentEnd="true"
+        android:text="@string/val"
+        android:textSize="25sp" />
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/textView"
+        app:srcCompat="@drawable/opengraph" />
 
 
 </RelativeLayout>
