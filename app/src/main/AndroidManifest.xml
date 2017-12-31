@@ -26,7 +26,7 @@
                     android:scheme="android-app-google-plus-demo" />
             </intent-filter>
         </activity>
-        <activity android:name=".Current_Rates_Activity" />
+        <activity android:name=".BitCoin_Activity" />
     </application>
 
 </manifest>

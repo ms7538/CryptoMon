@@ -14,7 +14,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        final Button Agree_btn = findViewById(R.id.rates_btn);
+        final Button Agree_btn = findViewById(R.id.bitcoin_btn);
 
 
         Agree_btn.setOnClickListener(new View.OnClickListener() {
@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View arg0) {
 
                 Intent myIntent = new Intent(HomeActivity.this,
-                        Current_Rates_Activity.class);
+                        BitCoin_Activity.class);
                 HomeActivity.this.startActivity(myIntent);
 
             }

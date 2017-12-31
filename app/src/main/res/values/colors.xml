@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="orange"        >#FF9900</color>
+    <color name="green"         >#009900</color>
+    <color name="green2"        >#17ff00</color>
+    <color name="l1col"         >#576bff</color>
+    <color name="l2col"         >#e800ff</color>
+    <color name="l3col"         >#11dbec</color>
+    <color name="l4col"         >#ffc63d</color>
+    <color name="l5col"         >#8165C5</color>
+    <color name="red"           >#e70000</color>
+    <color name="dark_gray"     >#333333</color>
+    <color name="navy_blue"     >#017ed5</color>
+    <color name="bright_yellow" >#fff400</color>
+    <color name="light_gray"    >#f0f5f5</color>
+    <color name="white"         >#ffffff</color>
+    <color name="green_A"       >#00cc52</color>
+    <color name="green_B"       >#05ca82</color>
+    <color name="green_C"       >#22bc89</color>
+    <color name="green_D"       >#0fa58a</color>
+    <color name="maroon"        >#581845</color>
+    <color name="fade1"         >#ff6700</color>
+    <color name="fade2"         >#f09100</color>
+    <color name="fade3"         >#ecbe00</color>
+    <color name="fade4"         >#e5dc00</color>
+    <color name="fade5"         >#f0ff00</color>
 </resources>

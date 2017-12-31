@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.poloapps.cryptomon.BitCoin_Activity">
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+
+        <ImageView
+            android:id="@+id/bitcoin_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:contentDescription="@string/description"
+            app:srcCompat="@drawable/bitcoin" />
+
+        <TextView
+            android:id="@+id/bitcoin_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_marginStart="18dp"
+            android:text="@string/bitcoin"
+            android:textColor="@color/fade5"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/bitcoin_rate_val"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_marginStart="55dp"
+            android:gravity="center"
+            android:text="@string/val"
+            android:textColor="@color/fade5"
+            android:textSize="20sp" />
+
+    </TableRow>
+
+
+</TableLayout>
