@@ -1,9 +1,13 @@
 package com.poloapps.cryptomon;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +40,7 @@ public class BitCoin_Activity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+       TextView CD_link = findViewById(R.id.tv_CoinDesk_link);
         dialog = new ProgressDialog(this);
         final DecimalFormat formatter = new DecimalFormat("#,###,###.##");
         dialog.setMessage("Loading....");
@@ -72,6 +77,18 @@ public class BitCoin_Activity extends AppCompatActivity {
 
         RequestQueue rQueue = Volley.newRequestQueue(BitCoin_Activity.this);
         rQueue.add(bitcoin_usd_request);
+        CD_link.setPaintFlags(CD_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        CD_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://www.coindesk.com/price/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+
+
 
     }
 

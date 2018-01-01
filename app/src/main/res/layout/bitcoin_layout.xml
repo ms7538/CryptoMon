@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorPrimaryDark"
     tools:context="com.poloapps.cryptomon.BitCoin_Activity">
 
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black">
+        android:layout_height="wrap_content"
+        >
 
         <ImageView
             android:id="@+id/bitcoin_logo"
@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/bitcoin_rate_val"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_column="3"
             android:layout_marginStart="55dp"
@@ -44,5 +44,36 @@
 
     </TableRow>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/l5col">
+
+        <TextView
+            android:id="@+id/tv_powered_by"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:text="@string/powered_by"
+            android:textColor="@color/fade5"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_CoinDesk_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/tv_powered_by"
+            android:text="@string/coindesk"
+            android:textColor="@color/fade5"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
 
 </TableLayout>
+
+
