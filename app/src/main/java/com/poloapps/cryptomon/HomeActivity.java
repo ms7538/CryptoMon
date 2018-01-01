@@ -14,10 +14,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        final Button Agree_btn = findViewById(R.id.bitcoin_btn);
+        final Button BitCoin_btn = findViewById(R.id.bitcoin_btn);
+        final Button T100_btn = findViewById(R.id.top100_btn);
 
-
-        Agree_btn.setOnClickListener(new View.OnClickListener() {
+        BitCoin_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
 
@@ -27,6 +27,15 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+        T100_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
 
+                Intent myIntent = new Intent(HomeActivity.this,
+                        Top_100.class);
+                HomeActivity.this.startActivity(myIntent);
+
+            }
+        });
     }
 }
