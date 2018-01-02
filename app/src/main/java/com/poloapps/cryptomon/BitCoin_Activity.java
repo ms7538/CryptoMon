@@ -28,7 +28,7 @@ public class BitCoin_Activity extends AppCompatActivity {
 
 
     String BC_url = "https://api.coindesk.com/v1/bpi/currentprice/usd.json";
-    //String LC_url = "https://api.coinmarketcap.com/v1/ticker/litecoin/";
+
     ProgressDialog dialog;
 
     @Override
