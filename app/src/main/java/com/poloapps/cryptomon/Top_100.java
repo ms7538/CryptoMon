@@ -48,7 +48,10 @@ public class Top_100 extends AppCompatActivity {
 
                         try {
                             JSONArray T100_Array = new JSONArray(string);
-                            test_txt.setText(Integer.toString(T100_Array.length()));
+                            JSONObject obj1 = T100_Array.getJSONObject(0);
+                            String rate = obj1.getString("price_usd");
+                            test_txt.setText(rate);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
