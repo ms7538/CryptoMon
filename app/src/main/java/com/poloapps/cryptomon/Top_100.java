@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,6 @@ import java.util.HashMap;
 public class Top_100 extends AppCompatActivity {
     String LC_url = "https://api.coinmarketcap.com/v1/ticker/";
     ProgressDialog dialog;
-    // final DecimalFormat formatter = new DecimalFormat("#,###,###.##");
     ArrayList<HashMap<String, String>> rankList;
 
    @Override
@@ -36,7 +36,8 @@ public class Top_100 extends AppCompatActivity {
         setContentView(R.layout.activity_top_100);
 
         rankList = new ArrayList<>();
-        //https://www.androidhive.info/2012/01/android-json-parsing-tutorial/
+        ListView lv = findViewById(R.id.list);
+
     }
     @Override
     public void onResume() {
