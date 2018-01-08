@@ -21,22 +21,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Top_100 extends AppCompatActivity {
     String LC_url = "https://api.coinmarketcap.com/v1/ticker/";
     ProgressDialog dialog;
-   // final DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+    // final DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+    ArrayList<HashMap<String, String>> rankList;
 
-    @Override
+   @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_100);
+
+        rankList = new ArrayList<>();
+        //https://www.androidhive.info/2012/01/android-json-parsing-tutorial/
     }
     @Override
     public void onResume() {
         super.onResume();
         dialog = new ProgressDialog(this);
-        final TextView test_txt = findViewById((R.id.testtv));
+       // final TextView test_txt = findViewById((R.id.testtv));
         dialog.setMessage("Loading....");
         dialog.show();
 
@@ -50,7 +56,7 @@ public class Top_100 extends AppCompatActivity {
                             JSONArray T100_Array = new JSONArray(string);
                             JSONObject obj1 = T100_Array.getJSONObject(0);
                             String rate = obj1.getString("price_usd");
-                            test_txt.setText(rate);
+                            //test_txt.setText(rate);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
