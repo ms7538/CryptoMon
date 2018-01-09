@@ -77,9 +77,8 @@ public class Top_100 extends AppCompatActivity {
 
                             ListAdapter adapter = new SimpleAdapter(
                                     Top_100.this, rankList,
-                                    R.layout.list_item, new String[]{"rank", "symbol",
-                                    "rate"}, new int[]{R.id.list_rank,
-                                    R.id.list_code, R.id.list_rate});
+                                    R.layout.list_item, new String[]{"rank", "symbol", "rate"},
+                                    new int[]{R.id.list_rank, R.id.list_code, R.id.list_rate});
 
                             lv.setAdapter(adapter);
 
