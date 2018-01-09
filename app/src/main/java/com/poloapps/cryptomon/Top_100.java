@@ -1,16 +1,11 @@
 package com.poloapps.cryptomon;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Paint;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -23,7 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,21 +58,25 @@ public class Top_100 extends AppCompatActivity {
                             for (int i = 0; i < T100_Array.length(); i++) {
 
                                 JSONObject obj1 = T100_Array.getJSONObject(i);
+
                                 String rate   = obj1.getString("price_usd");
+                                String name   = obj1.getString("name");
                                 String symbol = obj1.getString("symbol");
                                 String rank   = obj1.getString("rank");
 
                                 HashMap<String, String> item = new HashMap<>();
-                                item.put("rank",  rank);
-                                item.put("symbol",symbol);
-                                item.put("rate",  rate);
+                                item.put("rank",   rank);
+                                item.put("name",   name);
+                                item.put("symbol", symbol);
+                                item.put("rate",   rate);
                                 rankList.add(item);
                             }
 
                             ListAdapter adapter = new SimpleAdapter(
                                     Top_100.this, rankList,
-                                    R.layout.list_item, new String[]{"rank", "symbol", "rate"},
-                                    new int[]{R.id.list_rank, R.id.list_code, R.id.list_rate});
+                                    R.layout.list_item, new String[]{"rank","name","symbol","rate"},
+                                    new int[]{R.id.list_rank, R.id.list_name,
+                                            R.id.list_symbol, R.id.list_rate});
 
                             lv.setAdapter(adapter);
 
