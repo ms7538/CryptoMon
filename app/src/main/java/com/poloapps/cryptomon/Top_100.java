@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,15 +37,14 @@ public class Top_100 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_100);
 
-        rankList = new ArrayList<>();
-        ListView lv = findViewById(R.id.list);
+
 
     }
     @Override
     public void onResume() {
         super.onResume();
         dialog = new ProgressDialog(this);
-       // final TextView test_txt = findViewById((R.id.testtv));
+
         dialog.setMessage("Loading....");
         dialog.show();
 
@@ -54,10 +55,33 @@ public class Top_100 extends AppCompatActivity {
                     public void onResponse(String string) {
 
                         try {
+
+                            rankList = new ArrayList<>();
+                            ListView lv = findViewById(R.id.list);
+
                             JSONArray T100_Array = new JSONArray(string);
-                            JSONObject obj1 = T100_Array.getJSONObject(0);
-                            String rate = obj1.getString("price_usd");
-                            //test_txt.setText(rate);
+
+                            for (int i = 0; i < T100_Array.length(); i++) {
+
+                                JSONObject obj1 = T100_Array.getJSONObject(i);
+                                String rate   = obj1.getString("price_usd");
+                                String symbol = obj1.getString("symbol");
+                                String rank   = obj1.getString("rank");
+
+                                HashMap<String, String> item = new HashMap<>();
+                                item.put("rank",  rank);
+                                item.put("symbol",symbol);
+                                item.put("rate",  rate);
+                                rankList.add(item);
+                            }
+
+                            ListAdapter adapter = new SimpleAdapter(
+                                    Top_100.this, rankList,
+                                    R.layout.list_item, new String[]{"rank", "symbol",
+                                    "rate"}, new int[]{R.id.list_rank,
+                                    R.id.list_code, R.id.list_rate});
+
+                            lv.setAdapter(adapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -76,5 +100,6 @@ public class Top_100 extends AppCompatActivity {
 
         RequestQueue rQueue = Volley.newRequestQueue(Top_100.this);
         rQueue.add(crypto100_request);
-           }
+
+   }
 }
