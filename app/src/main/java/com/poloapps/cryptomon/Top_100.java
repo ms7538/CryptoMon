@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,14 +32,12 @@ public class Top_100 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_100);
 
-
-
     }
     @Override
     public void onResume() {
         super.onResume();
+        final DecimalFormat formatter = new DecimalFormat("#,###,###.##");
         dialog = new ProgressDialog(this);
-
         dialog.setMessage("Loading....");
         dialog.show();
 
@@ -60,6 +59,8 @@ public class Top_100 extends AppCompatActivity {
                                 JSONObject obj1 = T100_Array.getJSONObject(i);
 
                                 String rate   = obj1.getString("price_usd");
+                                rate          = "$" + formatter.format(Double.parseDouble(rate));
+
                                 String name   = obj1.getString("name");
                                 String symbol = obj1.getString("symbol");
                                 String rank   = obj1.getString("rank");
