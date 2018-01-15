@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/list_rank"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:text="@string/x"
@@ -26,7 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
-            android:layout_marginStart="50dp"
             android:text="@string/x"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
@@ -53,7 +52,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
-            android:layout_marginStart="50dp"
             android:text="@string/x"
             android:textColor="@android:color/black"
             android:textSize="20sp" />
