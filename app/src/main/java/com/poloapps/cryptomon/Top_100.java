@@ -36,7 +36,7 @@ public class Top_100 extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        final DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+        final DecimalFormat formatter = new DecimalFormat("#,###,###,###.##");
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading....");
         dialog.show();
