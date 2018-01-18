@@ -64,7 +64,6 @@ public class Top_100 extends AppCompatActivity {
                                 String name   = obj1.getString("name");
                                 String symbol = obj1.getString("symbol");
                                 name          = name + " / " + symbol;
-
                                 String rank   = obj1.getString("rank");
 
                                 HashMap<String, String> item = new HashMap<>();

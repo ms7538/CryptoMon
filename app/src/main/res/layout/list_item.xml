@@ -42,7 +42,7 @@
             android:layout_column="1"
             android:text="@string/price"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/list_rate"
@@ -53,6 +53,53 @@
             android:textColor="@android:color/black"
             android:textSize="20sp" />
 
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_blue_dark">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:text="@string/_1h_1d_7d"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/h1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:text="@string/x"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="@string/for_slash"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/d1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:text="@string/x"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_height="wrap_content"
+            android:text="@string/for_slash"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/d7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:text="@string/x"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
     </TableRow>
 
