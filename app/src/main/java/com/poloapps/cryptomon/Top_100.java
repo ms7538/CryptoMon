@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -27,6 +28,7 @@ public class Top_100 extends AppCompatActivity {
     ProgressDialog dialog;
     ArrayList<HashMap<String, String>> rankList;
 
+
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,9 @@ public class Top_100 extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        final DecimalFormat formatter = new DecimalFormat("#,###,###,###.##");
+
+        final DecimalFormat formatter  = new DecimalFormat("#,###,###,###.##");
+        final DecimalFormat formatter2 = new DecimalFormat("#.######");
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading....");
         dialog.show();
@@ -59,7 +63,10 @@ public class Top_100 extends AppCompatActivity {
                                 JSONObject obj1 = T100_Array.getJSONObject(i);
 
                                 String rate   = obj1.getString("price_usd");
-                                rate          = "$" + formatter.format(Double.parseDouble(rate));
+                                Double d_rate = Double.parseDouble(rate);
+
+                                if (d_rate < .01) rate  = "$" + formatter2.format(d_rate);
+                                else              rate  = "$" + formatter.format(d_rate);
 
                                 String name   = obj1.getString("name");
                                 String symbol = obj1.getString("symbol");
@@ -69,7 +76,7 @@ public class Top_100 extends AppCompatActivity {
                                 String D_1d   = obj1.getString("percent_change_24h");
                                 String D_7d   = obj1.getString("percent_change_7d");
 
-
+                               //if (Double.parseDouble(D_1h) < 0 )
 
                                 HashMap<String, String> item = new HashMap<>();
                                 item.put("rank",   rank);
@@ -87,6 +94,7 @@ public class Top_100 extends AppCompatActivity {
                                                                      "d1d","d7d"},
                                     new int[]{R.id.list_rank, R.id.list_name, R.id.list_rate,
                                               R.id.h1,R.id.d1,R.id.d7});
+
 
                             lv.setAdapter(adapter);
 

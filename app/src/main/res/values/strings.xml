@@ -11,6 +11,6 @@
     <string name="txt_test">test</string>
     <string name="x">X</string>
     <string name="price">Price:</string>
-    <string name="_1h_1d_7d">(% 1h | 1d | 7d):</string>
+    <string name="_1h_1d_7d">(1h|1d|7d)%:</string>
     <string name="for_slash"> \u00A0 | \u00A0</string>
 </resources>

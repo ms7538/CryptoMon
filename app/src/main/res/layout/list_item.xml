@@ -54,52 +54,59 @@
             android:textSize="20sp" />
 
     </TableRow>
+
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_blue_dark">
+        android:background="@color/l5col">
 
         <TextView
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_column="1"
+            android:layout_marginTop="3dp"
             android:text="@string/_1h_1d_7d"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
 
         <LinearLayout>
-        <TextView
-            android:id="@+id/h1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/x"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/for_slash"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/d1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/x"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/for_slash"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/d7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/x"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/h1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/x"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/for_slash"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/d1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/x"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/for_slash"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/d7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/x"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
 
     </TableRow>
