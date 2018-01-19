@@ -66,16 +66,17 @@
             android:textColor="@android:color/black"
             android:textSize="14sp" />
 
+        <LinearLayout>
         <TextView
             android:id="@+id/h1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="2"
             android:text="@string/x"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
         <TextView
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/for_slash"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -83,12 +84,12 @@
             android:id="@+id/d1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="2"
             android:text="@string/x"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
         <TextView
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:text="@string/for_slash"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
@@ -96,10 +97,10 @@
             android:id="@+id/d7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="2"
             android:text="@string/x"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
+        </LinearLayout>
 
     </TableRow>
 

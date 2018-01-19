@@ -65,19 +65,28 @@ public class Top_100 extends AppCompatActivity {
                                 String symbol = obj1.getString("symbol");
                                 name          = name + " / " + symbol;
                                 String rank   = obj1.getString("rank");
+                                String D_1h   = obj1.getString("percent_change_1h");
+                                String D_1d   = obj1.getString("percent_change_24h");
+                                String D_7d   = obj1.getString("percent_change_7d");
+
+
 
                                 HashMap<String, String> item = new HashMap<>();
                                 item.put("rank",   rank);
                                 item.put("name",   name);
                                 item.put("rate",   rate);
+                                item.put("d1h",    D_1h);
+                                item.put("d1d",    D_1d);
+                                item.put("d7d",    D_7d);
                                 rankList.add(item);
                             }
 
                             ListAdapter adapter = new SimpleAdapter(
                                     Top_100.this, rankList,
-                                    R.layout.list_item, new String[]{"rank","name","rate"},
-                                    new int[]{R.id.list_rank, R.id.list_name,
-                                            R.id.list_rate});
+                                    R.layout.list_item, new String[]{"rank","name","rate","d1h",
+                                                                     "d1d","d7d"},
+                                    new int[]{R.id.list_rank, R.id.list_name, R.id.list_rate,
+                                              R.id.h1,R.id.d1,R.id.d7});
 
                             lv.setAdapter(adapter);
 
