@@ -89,13 +89,10 @@ public class Top_100 extends AppCompatActivity {
                             }
 
                             ListAdapter adapter = new SimpleAdapter(
-                                    Top_100.this, rankList,
-                                    R.layout.list_item, new String[]{"rank","name","rate","d1h",
-                                                                     "d1d","d7d"},
+                                    Top_100.this, rankList, R.layout.list_item,
+                                    new String[]{"rank","name","rate","d1h","d1d","d7d"},
                                     new int[]{R.id.list_rank, R.id.list_name, R.id.list_rate,
                                               R.id.h1,R.id.d1,R.id.d7});
-
-
                             lv.setAdapter(adapter);
 
                         } catch (JSONException e) {
