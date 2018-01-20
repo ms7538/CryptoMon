@@ -1,8 +1,11 @@
 package com.poloapps.cryptomon;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -22,6 +25,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Top_100 extends AppCompatActivity {
     String LC_url = "https://api.coinmarketcap.com/v1/ticker/";
@@ -88,13 +92,49 @@ public class Top_100 extends AppCompatActivity {
                                 rankList.add(item);
                             }
 
-                            ListAdapter adapter = new SimpleAdapter(
-                                    Top_100.this, rankList, R.layout.list_item,
-                                    new String[]{"rank","name","rate","d1h","d1d","d7d"},
-                                    new int[]{R.id.list_rank, R.id.list_name, R.id.list_rate,
-                                              R.id.h1,R.id.d1,R.id.d7});
 
-                            lv.setAdapter(adapter);
+                            String[] from = {"rank","name","rate","d1h","d1d","d7d"};
+                            int[] to = {R.id.list_rank, R.id.list_name, R.id.list_rate,
+                                    R.id.h1,R.id.d1,R.id.d7};
+
+                            ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(),
+                                    rankList, R.layout.list_item, from, to)
+                            {
+                                @Override
+                                public View getView(int position, View convertView, ViewGroup parent) {
+                                    View view = super.getView(position, convertView, parent);
+                                    TextView delta_1h = view.findViewById(R.id.h1);
+                                    TextView delta_1d = view.findViewById(R.id.d1);
+                                    TextView delta_7d = view.findViewById(R.id.d7);
+                                    //Do what u want here, in my case I
+                                    Map<String, String> currentRow = rankList.get(position);
+
+                                    double    delta1h = Double.parseDouble(currentRow.get("d1h"));
+                                    if      ( delta1h < 0 ) delta_1h.setTextColor(Color.RED);
+                                    else if ( delta1h > 0 ) delta_1h.setTextColor(Color.GREEN);
+
+                                    double    delta1d = Double.parseDouble(currentRow.get("d1d"));
+                                    if      ( delta1d < 0 ) delta_1d.setTextColor(Color.RED);
+                                    else if ( delta1d > 0 ) delta_1d.setTextColor(Color.GREEN);
+
+                                    double    delta7d = Double.parseDouble(currentRow.get("d7d"));
+                                    if      ( delta7d < 0 ) delta_7d.setTextColor(Color.RED);
+                                    else if ( delta7d > 0 ) delta_7d.setTextColor(Color.GREEN);
+                                    return view;
+                                }
+                            };
+
+                            lv.setAdapter(listAdapter);
+
+//                            ListAdapter adapter = new SimpleAdapter(
+//                                    Top_100.this, rankList, R.layout.list_item,
+//
+//                                    new String[]{"rank","name","rate","d1h","d1d","d7d"},
+//                                    new int[]{R.id.list_rank, R.id.list_name, R.id.list_rate,
+//                                              R.id.h1,R.id.d1,R.id.d7});
+//
+//                            lv.setAdapter(adapter);
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -109,10 +149,12 @@ public class Top_100 extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
+
         });
 
         RequestQueue rQueue = Volley.newRequestQueue(Top_100.this);
         rQueue.add(crypto100_request);
 
    }
+
 }
