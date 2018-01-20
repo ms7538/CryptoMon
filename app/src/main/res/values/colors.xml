@@ -11,7 +11,7 @@
     <color name="l3col"         >#11dbec</color>
     <color name="l4col"         >#ffc63d</color>
     <color name="l5col"         >#1d1337</color>
-    <color name="red"           >#e70000</color>
+    <color name="red"           >#e52d2d</color>
     <color name="dark_gray"     >#333333</color>
     <color name="navy_blue"     >#017ed5</color>
     <color name="bright_yellow" >#fff400</color>
@@ -27,4 +27,5 @@
     <color name="fade3"         >#ecbe00</color>
     <color name="fade4"         >#e5dc00</color>
     <color name="fade5"         >#f0ff00</color>
+    <color name="delta_col"     >#231938</color>
 </resources>

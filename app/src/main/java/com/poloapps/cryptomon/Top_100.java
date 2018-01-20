@@ -2,6 +2,8 @@ package com.poloapps.cryptomon;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.provider.CalendarContract;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +35,7 @@ public class Top_100 extends AppCompatActivity {
     ArrayList<HashMap<String, String>> rankList;
 
 
+
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,7 @@ public class Top_100 extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        final Integer RED = ContextCompat.getColor(getApplicationContext(),(R.color.red));
 
         final DecimalFormat formatter  = new DecimalFormat("#,###,###,###.##");
         final DecimalFormat formatter2 = new DecimalFormat("#.######");
@@ -107,15 +111,15 @@ public class Top_100 extends AppCompatActivity {
                                     Map<String, String> currentRow = rankList.get(position);
 
                                     double    delta1h = Double.parseDouble(currentRow.get("d1h"));
-                                    if      ( delta1h < 0 ) delta_1h.setTextColor(Color.RED);
+                                    if      ( delta1h < 0 ) delta_1h.setTextColor(RED);
                                     else if ( delta1h > 0 ) delta_1h.setTextColor(Color.GREEN);
 
                                     double    delta1d = Double.parseDouble(currentRow.get("d1d"));
-                                    if      ( delta1d < 0 ) delta_1d.setTextColor(Color.RED);
+                                    if      ( delta1d < 0 ) delta_1d.setTextColor(RED);
                                     else if ( delta1d > 0 ) delta_1d.setTextColor(Color.GREEN);
 
                                     double    delta7d = Double.parseDouble(currentRow.get("d7d"));
-                                    if      ( delta7d < 0 ) delta_7d.setTextColor(Color.RED);
+                                    if      ( delta7d < 0 ) delta_7d.setTextColor(RED);
                                     else if ( delta7d > 0 ) delta_7d.setTextColor(Color.GREEN);
                                     return view;
                                 }
