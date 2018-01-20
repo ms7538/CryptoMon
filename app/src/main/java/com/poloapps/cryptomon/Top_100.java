@@ -80,8 +80,6 @@ public class Top_100 extends AppCompatActivity {
                                 String D_1d   = obj1.getString("percent_change_24h");
                                 String D_7d   = obj1.getString("percent_change_7d");
 
-                               //if (Double.parseDouble(D_1h) < 0 )
-
                                 HashMap<String, String> item = new HashMap<>();
                                 item.put("rank",   rank);
                                 item.put("name",   name);
@@ -92,7 +90,6 @@ public class Top_100 extends AppCompatActivity {
                                 rankList.add(item);
                             }
 
-
                             String[] from = {"rank","name","rate","d1h","d1d","d7d"};
                             int[] to = {R.id.list_rank, R.id.list_name, R.id.list_rate,
                                     R.id.h1,R.id.d1,R.id.d7};
@@ -101,12 +98,12 @@ public class Top_100 extends AppCompatActivity {
                                     rankList, R.layout.list_item, from, to)
                             {
                                 @Override
-                                public View getView(int position, View convertView, ViewGroup parent) {
-                                    View view = super.getView(position, convertView, parent);
+                                public View getView(int position, View cnvrtView, ViewGroup parent){
+                                    View view = super.getView(position, cnvrtView, parent);
                                     TextView delta_1h = view.findViewById(R.id.h1);
                                     TextView delta_1d = view.findViewById(R.id.d1);
                                     TextView delta_7d = view.findViewById(R.id.d7);
-                                    //Do what u want here, in my case I
+
                                     Map<String, String> currentRow = rankList.get(position);
 
                                     double    delta1h = Double.parseDouble(currentRow.get("d1h"));
@@ -125,16 +122,6 @@ public class Top_100 extends AppCompatActivity {
                             };
 
                             lv.setAdapter(listAdapter);
-
-//                            ListAdapter adapter = new SimpleAdapter(
-//                                    Top_100.this, rankList, R.layout.list_item,
-//
-//                                    new String[]{"rank","name","rate","d1h","d1d","d7d"},
-//                                    new int[]{R.id.list_rank, R.id.list_name, R.id.list_rate,
-//                                              R.id.h1,R.id.d1,R.id.d7});
-//
-//                            lv.setAdapter(adapter);
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
