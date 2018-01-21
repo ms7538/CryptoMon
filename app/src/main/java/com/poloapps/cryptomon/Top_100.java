@@ -2,7 +2,6 @@ package com.poloapps.cryptomon;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.provider.CalendarContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +27,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Top_100 extends AppCompatActivity {
     String LC_url = "https://api.coinmarketcap.com/v1/ticker/";
@@ -90,13 +90,13 @@ public class Top_100 extends AppCompatActivity {
                                 item.put("rate",   rate);
                                 item.put("d1h",    D_1h);
                                 item.put("d1d",    D_1d);
-                                item.put("d7d",    D_7d);
+                                item.put("d7_d",    D_7d);
                                 rankList.add(item);
                             }
 
-                            String[] from = {"rank","name","rate","d1h","d1d","d7d"};
+                            String[] from = {"rank","name","rate","d1h","d1d","d7_d"};
                             int[] to = {R.id.list_rank, R.id.list_name, R.id.list_rate,
-                                    R.id.h1,R.id.d1,R.id.d7};
+                                    R.id.h1,R.id.d1,R.id.delta7_d};
 
                             ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(),
                                     rankList, R.layout.list_item, from, to)
@@ -106,21 +106,31 @@ public class Top_100 extends AppCompatActivity {
                                     View view = super.getView(position, cnvrtView, parent);
                                     TextView delta_1h = view.findViewById(R.id.h1);
                                     TextView delta_1d = view.findViewById(R.id.d1);
-                                    TextView delta_7d = view.findViewById(R.id.d7);
+                                    TextView delta_7d = view.findViewById(R.id.delta7_d);
 
                                     Map<String, String> currentRow = rankList.get(position);
 
-                                    double    delta1h = Double.parseDouble(currentRow.get("d1h"));
+                                    double    delta1h = 0;
+                                    if (!Objects.equals(currentRow.get("d1h"), "null")){
+                                        delta1h = Double.parseDouble(currentRow.get("d1h"));
+                                    }
                                     if      ( delta1h < 0 ) delta_1h.setTextColor(RED);
                                     else if ( delta1h > 0 ) delta_1h.setTextColor(Color.GREEN);
 
-                                    double    delta1d = Double.parseDouble(currentRow.get("d1d"));
+                                    double    delta1d = 0;
+                                    if (!Objects.equals(currentRow.get("d1d"), "null")){
+                                        delta1d = Double.parseDouble(currentRow.get("d1d"));
+                                    }
                                     if      ( delta1d < 0 ) delta_1d.setTextColor(RED);
                                     else if ( delta1d > 0 ) delta_1d.setTextColor(Color.GREEN);
 
-                                    double    delta7d = Double.parseDouble(currentRow.get("d7d"));
+                                    double delta7d = 0;
+                                    if (!Objects.equals(currentRow.get("d7_d"), "null")){
+                                        delta7d = Double.parseDouble(currentRow.get("d7_d"));
+                                    }
                                     if      ( delta7d < 0 ) delta_7d.setTextColor(RED);
                                     else if ( delta7d > 0 ) delta_7d.setTextColor(Color.GREEN);
+
                                     return view;
                                 }
                             };
