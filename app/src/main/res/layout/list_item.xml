@@ -108,6 +108,27 @@
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
         </LinearLayout>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/green_D">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:text="@string/_24_hour_volume"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/list_24h_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:text="@string/x"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
     </TableRow>
 
