@@ -20,7 +20,7 @@
             android:layout_column="1"
             android:text="@string/x"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/list_name"
@@ -29,14 +29,14 @@
             android:layout_column="2"
             android:text="@string/x"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/green_D">
+        android:background="@color/price_bg_col">
 
         <TextView
             android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
             android:layout_column="2"
             android:text="@string/x"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </TableRow>
     <TableRow
