@@ -14,4 +14,5 @@
     <string name="_1h_1d_7d">(1h|1d|7d) \u0394 %:</string>
     <string name="for_slash"> \u00A0 | \u00A0</string>
     <string name="_24_hour_volume">24h Volume:</string>
+    <string name="dash">--</string>
 </resources>
