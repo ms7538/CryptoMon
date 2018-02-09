@@ -84,6 +84,8 @@ public class Top_100 extends AppCompatActivity {
                                 String delta_1d   = obj1.getString("percent_change_24h");
                                 String delta_7d   = obj1.getString("percent_change_7d");
                                 String link_id    = obj1.getString("id");
+                                link_id           = getString(R.string.cryptos_display_link)
+                                                  + link_id;
 
                                 HashMap<String, String> item = new HashMap<>();
                                 item.put("rank",    rank);
@@ -108,7 +110,9 @@ public class Top_100 extends AppCompatActivity {
                             {
                                 @Override
                                 public View getView(int position, View cnvrtView, ViewGroup parent){
+
                                     View view = super.getView(position, cnvrtView, parent);
+
                                     TextView delta_1h = view.findViewById(R.id.h1);
                                     TextView delta_1d = view.findViewById(R.id.d1);
                                     TextView delta_7d = view.findViewById(R.id.delta7_d);

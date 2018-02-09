@@ -15,6 +15,7 @@
     <string name="for_slash"> \u00A0 | \u00A0</string>
     <string name="_24_hour_volume">24h Volume:</string>
     <string name="dash">--</string>
-    <string name="link">Link</string>
-    <string name="cryptos_link">https://coinmarketcap.com/currencies/</string>
+    <string name="link">Link:</string>
+    <string name="cryptos_display_link">coinmarketcap-></string>
+
 </resources>
