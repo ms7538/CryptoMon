@@ -34,14 +34,12 @@ public class Top_100 extends AppCompatActivity {
     ProgressDialog dialog;
     ArrayList<HashMap<String, String>> rankList;
 
-
-
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_100);
-
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -73,8 +71,8 @@ public class Top_100 extends AppCompatActivity {
                                 String rate       = obj1.getString("price_usd");
                                 Double d_rate     = Double.parseDouble(rate);
                                 //
-                                String Volume_24h = "$" + formatter.format(Double.parseDouble(
-                                                    obj1.getString("24h_volume_usd")));
+                                String volume_24h = "$" + formatter.format(Double.parseDouble(
+                                                          obj1.getString("24h_volume_usd")));
                                 if (d_rate < .01) rate  = "$" + formatter2.format(d_rate);
                                 else              rate  = "$" + formatter.format(d_rate);
 
@@ -82,24 +80,28 @@ public class Top_100 extends AppCompatActivity {
                                 String symbol     = obj1.getString("symbol");
                                 name              = name + " / " + symbol;
                                 String rank       = obj1.getString("rank");
-                                String Delta_1h   = obj1.getString("percent_change_1h");
-                                String Delta_1d   = obj1.getString("percent_change_24h");
-                                String Delta_7d   = obj1.getString("percent_change_7d");
+                                String delta_1h   = obj1.getString("percent_change_1h");
+                                String delta_1d   = obj1.getString("percent_change_24h");
+                                String delta_7d   = obj1.getString("percent_change_7d");
+                                String link_id    = obj1.getString("id");
 
                                 HashMap<String, String> item = new HashMap<>();
                                 item.put("rank",    rank);
                                 item.put("name",    name);
                                 item.put("rate",    rate);
-                                item.put("d1h",     Delta_1h);
-                                item.put("d1d",     Delta_1d);
-                                item.put("d7_d",    Delta_7d);
-                                item.put("24h_vol", Volume_24h);
+                                item.put("d1h",     delta_1h);
+                                item.put("d1d",     delta_1d);
+                                item.put("d7_d",    delta_7d);
+                                item.put("24h_vol", volume_24h);
+                                item.put("id_link", link_id);
                                 rankList.add(item);
                             }
 
-                            String[] from = {"rank","name","rate","d1h","d1d","d7_d","24h_vol"};
+                            String[] from = {"rank","name","rate","d1h",
+                                             "d1d","d7_d","24h_vol","id_link"};
                             int[] to = {R.id.list_rank, R.id.list_name, R.id.list_rate,
-                                    R.id.h1,R.id.d1,R.id.delta7_d,R.id.list_24h_volume};
+                                    R.id.h1,R.id.d1,R.id.delta7_d,R.id.list_24h_volume,
+                                    R.id.list_coinmarketcap_link};
 
                             ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(),
                                     rankList, R.layout.list_item, from, to)

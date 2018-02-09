@@ -2,7 +2,9 @@
   <dictionary name="Marko_Samsung">
     <words>
       <w>bitcoin</w>
+      <w>coinmarketcap</w>
       <w>cryptomon</w>
+      <w>cryptos</w>
     </words>
   </dictionary>
 </component>
