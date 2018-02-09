@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Top_100 extends AppCompatActivity {
+
     String LC_url = "https://api.coinmarketcap.com/v1/ticker/";
     ProgressDialog dialog;
     ArrayList<HashMap<String, String>> rankList;
