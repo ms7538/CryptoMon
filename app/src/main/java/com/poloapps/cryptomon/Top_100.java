@@ -1,7 +1,9 @@
 package com.poloapps.cryptomon;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -84,8 +86,6 @@ public class Top_100 extends AppCompatActivity {
                                 String delta_1d   = obj1.getString("percent_change_24h");
                                 String delta_7d   = obj1.getString("percent_change_7d");
                                 String link_id    = obj1.getString("id");
-                                link_id           = getString(R.string.cryptos_display_link)
-                                                  + link_id;
 
                                 HashMap<String, String> item = new HashMap<>();
                                 item.put("rank",    rank);
@@ -103,7 +103,7 @@ public class Top_100 extends AppCompatActivity {
                                              "d1d","d7_d","24h_vol","id_link"};
                             int[] to = {R.id.list_rank, R.id.list_name, R.id.list_rate,
                                     R.id.h1,R.id.d1,R.id.delta7_d,R.id.list_24h_volume,
-                                    R.id.list_coinmarketcap_link};
+                                    R.id.id_link};
 
                             ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(),
                                     rankList, R.layout.list_item, from, to)
@@ -116,6 +116,7 @@ public class Top_100 extends AppCompatActivity {
                                     TextView delta_1h = view.findViewById(R.id.h1);
                                     TextView delta_1d = view.findViewById(R.id.d1);
                                     TextView delta_7d = view.findViewById(R.id.delta7_d);
+                                    final TextView link_id  = view.findViewById(R.id.id_link);
 
                                     Map<String, String> currentRow = rankList.get(position);
 
@@ -139,6 +140,18 @@ public class Top_100 extends AppCompatActivity {
                                     }
                                     if      ( delta7d < 0 ) delta_7d.setTextColor(RED);
                                     else if ( delta7d > 0 ) delta_7d.setTextColor(Color.GREEN);
+
+                                    link_id.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Uri uri = Uri.parse(getString(
+                                                    R.string.cryptos_display_link)
+                                                    + link_id.getText());
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                            startActivity(intent);
+
+                                        }
+                                    });
 
                                     return view;
                                 }

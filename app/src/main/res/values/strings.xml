@@ -16,6 +16,5 @@
     <string name="_24_hour_volume">24h Volume:</string>
     <string name="dash">--</string>
     <string name="link">Link:</string>
-    <string name="cryptos_display_link">coinmarketcap-></string>
-
+    <string name="cryptos_display_link">https://coinmarketcap.com/currencies/</string>
 </resources>

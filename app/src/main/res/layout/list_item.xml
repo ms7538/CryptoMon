@@ -148,14 +148,13 @@
             android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/list_coinmarketcap_link"
+            android:id="@+id/id_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
             android:text="@string/x"
             android:textColor="@color/navy_blue"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp" />
 
     </TableRow>
 
