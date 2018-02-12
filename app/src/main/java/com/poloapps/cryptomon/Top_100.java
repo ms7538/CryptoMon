@@ -58,8 +58,9 @@ public class Top_100 extends AppCompatActivity {
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         final Integer RED = ContextCompat.getColor(getApplicationContext(),(R.color.red));
 
-        final DecimalFormat formatter  = new DecimalFormat("#,###,###,###.##");
-        final DecimalFormat formatter2 = new DecimalFormat("#.######");
+        final DecimalFormat form  = new DecimalFormat("#,###,###,###.##");
+        final DecimalFormat form2 = new DecimalFormat("#.######");
+        final DecimalFormat form3  = new DecimalFormat("#,###,###,###");
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading....");
         dialog.show();
@@ -92,12 +93,11 @@ public class Top_100 extends AppCompatActivity {
                                 String rate       = obj1.getString(price_key);
                                 Double d_rate     = Double.parseDouble(rate);
                                 //
-                                String volume_24h = curr_symbol +
-                                                    formatter.format(Double.parseDouble
-                                                            (obj1.getString(volume_24h_key)));
+                                String volume_24h = curr_symbol + form3.format(Double.parseDouble
+                                                    (obj1.getString(volume_24h_key)));
 
-                                if (d_rate < .01) rate  = curr_symbol + formatter2.format(d_rate);
-                                else              rate  = curr_symbol + formatter.format(d_rate);
+                                if (d_rate < .01) rate  = curr_symbol + form2.format(d_rate);
+                                else              rate  = curr_symbol + form.format(d_rate);
 
                                 String name       = obj1.getString("name");
                                 String symbol     = obj1.getString("symbol");
