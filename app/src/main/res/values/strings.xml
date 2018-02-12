@@ -17,4 +17,9 @@
     <string name="dash">--</string>
     <string name="link">Link:</string>
     <string name="cryptos_display_link">https://coinmarketcap.com/currencies/</string>
+    <string name="currency">Currency:</string>
+    <string name="dollars">($) Dollar</string>
+    <string name="euro">(\u20AC) Euro</string>
+    <string name="ok">OK</string>
+    <string name="currency_sel">Currencies</string>
 </resources>
