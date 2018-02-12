@@ -38,6 +38,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
+
 public class Top_100 extends AppCompatActivity {
 
     String LC_url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR";
@@ -53,6 +57,10 @@ public class Top_100 extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
