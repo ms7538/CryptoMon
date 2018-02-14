@@ -139,7 +139,7 @@ public class Top_100 extends AppCompatActivity {
                             {
 
                                 @Override
-                                public View getView(int position, View cnvrtView, ViewGroup parent) {
+                                public View getView(int position, View cnvrtView, ViewGroup parent){
 
                                     View view = super.getView(position, cnvrtView, parent);
 
@@ -179,20 +179,15 @@ public class Top_100 extends AppCompatActivity {
                                                     + link_id.getText());
                                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                                             startActivity(intent);
-
                                         }
                                     });
-
                                     return view;
                                 }
                             };
-
                             lv.setAdapter(listAdapter);
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                         dialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
@@ -205,7 +200,6 @@ public class Top_100 extends AppCompatActivity {
             }
 
         });
-
         RequestQueue rQueue = Volley.newRequestQueue(Top_100.this);
         rQueue.add(crypto100_request);
 
@@ -228,25 +222,21 @@ public class Top_100 extends AppCompatActivity {
 
             case R.id.action_currency_sel:
                 AlertDialog.Builder builder;
-
                 builder = new AlertDialog.Builder(Top_100.this);
                 @SuppressLint("InflateParams")
                 View mView2 = getLayoutInflater().inflate(R.layout.currency_diag, null);
-
                 builder.setView(mView2);
                 final AlertDialog dialog2 = builder.create();
-
                 final RadioButton Currency_Dollar = mView2.findViewById(R.id.radio_currency_dollar);
                 final RadioButton Currency_Euro = mView2.findViewById(R.id.radio_currency_euro);
-
                 if (Dollar) Currency_Dollar.setChecked(true);
                 else Currency_Euro.setChecked(true);
 
                 Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
                 Unit_OK.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View arg0) {
-
                         Boolean Dollar_Sel = false;
                         if (Currency_Dollar.isChecked()) Dollar_Sel = true;
                         editor.putBoolean("Dollar", Dollar_Sel);
@@ -261,8 +251,6 @@ public class Top_100 extends AppCompatActivity {
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
-
         }
     }
 
