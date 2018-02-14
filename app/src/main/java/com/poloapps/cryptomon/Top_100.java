@@ -220,8 +220,19 @@ public class Top_100 extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.action_currency_sel:
+            case R.id.action_subreddits:
                 AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(Top_100.this);
+                @SuppressLint("InflateParams")
+                View mView = getLayoutInflater().inflate(R.layout.reddit_links_diag, null);
+                builder.setView(mView);
+                final AlertDialog dialog = builder.create();
+
+                dialog.show();
+                return true;
+
+            case R.id.action_currency_sel:
+
                 builder = new AlertDialog.Builder(Top_100.this);
                 @SuppressLint("InflateParams")
                 View mView2 = getLayoutInflater().inflate(R.layout.currency_diag, null);
@@ -246,6 +257,7 @@ public class Top_100 extends AppCompatActivity {
                     }});
                 dialog2.show();
                 return true;
+
 
             default:
                 // If we got here, the user's action was not recognized.

@@ -23,4 +23,6 @@
     <string name="ok">OK</string>
     <string name="currency_sel">Currencies</string>
     <string name="banner_ad_unit_id">ca-app-pub-6002737231550640/6485035382</string>
+    <string name="subreddit_links">Subreddit Links</string>
+    <string name="reddit_links">Reddit Links</string>
 </resources>
