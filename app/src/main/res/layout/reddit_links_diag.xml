@@ -26,7 +26,8 @@
             android:gravity="center"
             android:text="@string/r_cryptocurrency"
             android:textColor="@color/green_B"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:id="@+id/r_bitcoin_link"
@@ -35,7 +36,8 @@
             android:gravity="center"
             android:text="@string/r_bitcoin"
             android:textColor="@color/green_B"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:id="@+id/r_ethereum_link"
@@ -44,7 +46,8 @@
             android:gravity="center"
             android:text="@string/r_ethereum"
             android:textColor="@color/green_B"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
 
     </LinearLayout>
 

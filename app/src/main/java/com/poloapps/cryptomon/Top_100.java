@@ -32,11 +32,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -233,11 +232,21 @@ public class Top_100 extends AppCompatActivity {
                 //getIdentifier()
                 int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_bitcoin_link,
                         R.id.r_ethereum_link};
-                //String[] TV_names = new String[]{"tvL1","tvL2","tvL3"};
-                //https://stackoverflow.com/questions/4865244/android-using-findviewbyid-with-a-string-in-a-loop
+                final String[] Link_Strings = new String[] {"cryptocurrency","bitcoin","ethereum"};
+                //ripple, bitcoincash , litecoin, cardano, stellar
+                for(int i = 0; i < TV_IDs.length ;i++) {
+                    final int j = i;
+                    TextView TV_name = mView.findViewById(TV_IDs[i]);
+                    TV_name.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View arg0) {
+                            Uri uri = Uri.parse(getString(
+                                    R.string.subreddit_link_text)
+                                    + Link_Strings[j]+"/");
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
 
-                for(int i = 0; i < 3;i++) {
-                    TextView TV_names = mView.findViewById(TV_IDs[i]);
+                        }});
                 }
                 dialog.show();
                 return true;

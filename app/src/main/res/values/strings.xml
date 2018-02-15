@@ -17,6 +17,7 @@
     <string name="dash">--</string>
     <string name="link">Link:</string>
     <string name="cryptos_display_link">https://coinmarketcap.com/currencies/</string>
+    <string name="subreddit_link_text">https://www.reddit.com/r/</string>
     <string name="currency">Currency:</string>
     <string name="dollars">($) Dollar</string>
     <string name="euro">(\u20AC) Euro</string>
