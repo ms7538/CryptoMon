@@ -32,9 +32,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -228,15 +230,26 @@ public class Top_100 extends AppCompatActivity {
                 builder.setView(mView);
                 final AlertDialog dialog = builder.create();
 
+                //getIdentifier()
+                int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_bitcoin_link,
+                        R.id.r_ethereum_link};
+                //String[] TV_names = new String[]{"tvL1","tvL2","tvL3"};
+                //https://stackoverflow.com/questions/4865244/android-using-findviewbyid-with-a-string-in-a-loop
+
+                for(int i = 0; i < 3;i++) {
+                    TextView TV_names = mView.findViewById(TV_IDs[i]);
+                }
                 dialog.show();
                 return true;
 
             case R.id.action_currency_sel:
 
                 builder = new AlertDialog.Builder(Top_100.this);
+
                 @SuppressLint("InflateParams")
                 View mView2 = getLayoutInflater().inflate(R.layout.currency_diag, null);
                 builder.setView(mView2);
+
                 final AlertDialog dialog2 = builder.create();
                 final RadioButton Currency_Dollar = mView2.findViewById(R.id.radio_currency_dollar);
                 final RadioButton Currency_Euro = mView2.findViewById(R.id.radio_currency_euro);

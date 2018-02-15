@@ -25,4 +25,7 @@
     <string name="banner_ad_unit_id">ca-app-pub-6002737231550640/6485035382</string>
     <string name="subreddit_links">Subreddit Links</string>
     <string name="reddit_links">Reddit Links</string>
+    <string name="r_cryptocurrency">r/cryptocurrency</string>
+    <string name="r_bitcoin">r/bitcoin</string>
+    <string name="r_ethereum">r/ethereum</string>
 </resources>
