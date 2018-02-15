@@ -231,9 +231,16 @@ public class Top_100 extends AppCompatActivity {
 
                 //getIdentifier()
                 int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_bitcoin_link,
-                        R.id.r_ethereum_link};
-                final String[] Link_Strings = new String[] {"cryptocurrency","bitcoin","ethereum"};
-                //ripple, bitcoincash , litecoin, cardano, stellar
+                        R.id.r_ethereum_link,R.id.r_ripple_link,R.id.r_bitcoincash_link,
+                        R.id.r_litecoin_link,R.id.r_cardano_link,R.id.r_stellar_link,
+                        R.id.r_neo_link,R.id.r_eos_link,R.id.r_iota_link,R.id.r_dashpay_link,
+                        R.id.r_nem_link};
+
+                final String[] Link_Strings = new String[] {"cryptocurrency","bitcoin","ethereum",
+                        "ripple","bitcoincash" ,"litecoin","cardano","stellar","neo","eos","iota",
+                        "dashpay","nem"};
+                //
+
                 for(int i = 0; i < TV_IDs.length ;i++) {
                     final int j = i;
                     TextView TV_name = mView.findViewById(TV_IDs[i]);

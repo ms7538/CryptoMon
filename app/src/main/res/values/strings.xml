@@ -29,4 +29,14 @@
     <string name="r_cryptocurrency">r/cryptocurrency</string>
     <string name="r_bitcoin">r/bitcoin</string>
     <string name="r_ethereum">r/ethereum</string>
+    <string name="r_ripple">r/ripple</string>
+    <string name="r_bitcash">r/bitcoincash</string>
+    <string name="r_litecoin">r/litecoin</string>
+    <string name="r_cardano">r/cardano</string>
+    <string name="r_stellar">r/stellar</string>
+    <string name="r_neo">r/neo</string>
+    <string name="r_eos">r/eos</string>
+    <string name="r_iota">r/iota</string>
+    <string name="r_dashpay">r/dashpay</string>
+    <string name="r_nem">r/nem</string>
 </resources>

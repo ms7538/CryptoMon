@@ -43,8 +43,108 @@
             android:id="@+id/r_ethereum_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="@string/r_ethereum"
+            android:textColor="@color/green_B"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/r_ripple_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_ripple"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_bitcoincash_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_bitcash"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_litecoin_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_litecoin"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_cardano_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_cardano"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_stellar_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_stellar"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_neo_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_neo"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_eos_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_eos"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_iota_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_iota"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_dashpay_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_dashpay"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_nem_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_nem"
             android:textColor="@color/green_B"
             android:textSize="15sp"
             android:layout_marginBottom="5dp"/>
