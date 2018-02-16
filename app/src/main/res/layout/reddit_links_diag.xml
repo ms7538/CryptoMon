@@ -149,6 +149,66 @@
             android:textSize="15sp"
             android:layout_marginBottom="5dp"/>
 
+        <TextView
+            android:id="@+id/r_monero_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_monero"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_lisk_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_lisk"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_ethclassic_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_ethereumclassic"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_tron_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_tronix"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_vechain_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_vechain"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/r_qtum_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/r_qtum"
+            android:textColor="@color/green_B"
+            android:textSize="15sp"
+            android:layout_marginBottom="5dp"/>
+
     </LinearLayout>
 
 </ScrollView>

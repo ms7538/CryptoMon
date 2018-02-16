@@ -234,11 +234,13 @@ public class Top_100 extends AppCompatActivity {
                         R.id.r_ethereum_link,R.id.r_ripple_link,R.id.r_bitcoincash_link,
                         R.id.r_litecoin_link,R.id.r_cardano_link,R.id.r_stellar_link,
                         R.id.r_neo_link,R.id.r_eos_link,R.id.r_iota_link,R.id.r_dashpay_link,
-                        R.id.r_nem_link};
+                        R.id.r_nem_link,R.id.r_monero_link,R.id.r_lisk_link,R.id.r_ethclassic_link,
+                        R.id.r_tron_link,R.id.r_vechain_link,R.id.r_qtum_link};
 
                 final String[] Link_Strings = new String[] {"cryptocurrency","bitcoin","ethereum",
                         "ripple","bitcoincash" ,"litecoin","cardano","stellar","neo","eos","iota",
-                        "dashpay","nem"};
+                        "dashpay","nem","monero","lisk","ethereumclassic","tronix","vechain","qtum"
+                };
                 //
 
                 for(int i = 0; i < TV_IDs.length ;i++) {

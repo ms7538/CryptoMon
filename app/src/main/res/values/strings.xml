@@ -39,4 +39,10 @@
     <string name="r_iota">r/iota</string>
     <string name="r_dashpay">r/dashpay</string>
     <string name="r_nem">r/nem</string>
+    <string name="r_monero">r/monero</string>
+    <string name="r_lisk">r/lisk</string>
+    <string name="r_ethereumclassic">r/ethereumclassic</string>
+    <string name="r_tronix">r/tronix</string>
+    <string name="r_vechain">r/vechain</string>
+    <string name="r_qtum">r/qtum</string>
 </resources>
