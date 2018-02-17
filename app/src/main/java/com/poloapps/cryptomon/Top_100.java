@@ -206,7 +206,6 @@ public class Top_100 extends AppCompatActivity {
 
    }
     @Override
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top100_settings_menu, menu);
         return true;
@@ -222,14 +221,16 @@ public class Top_100 extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.action_subreddits:
+
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(Top_100.this);
                 @SuppressLint("InflateParams")
                 View mView = getLayoutInflater().inflate(R.layout.reddit_links_diag, null);
                 builder.setView(mView);
+
                 final AlertDialog dialog = builder.create();
                 final Button Dismiss_btn = mView.findViewById(R.id.dismiss_btn_menu);
-                //getIdentifier()
+
                 int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_bitcoin_link,
                         R.id.r_ethereum_link,R.id.r_ripple_link,R.id.r_bitcoincash_link,
                         R.id.r_litecoin_link,R.id.r_cardano_link,R.id.r_stellar_link,
@@ -259,13 +260,12 @@ public class Top_100 extends AppCompatActivity {
 
                         }});
                 }
+
                 Dismiss_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
                         dialog.dismiss();
-                    }
-                });
-
+                    }});
 
                 dialog.show();
                 return true;
