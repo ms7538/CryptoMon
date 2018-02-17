@@ -228,20 +228,22 @@ public class Top_100 extends AppCompatActivity {
                 View mView = getLayoutInflater().inflate(R.layout.reddit_links_diag, null);
                 builder.setView(mView);
                 final AlertDialog dialog = builder.create();
-
+                final Button Dismiss_btn = mView.findViewById(R.id.dismiss_btn_menu);
                 //getIdentifier()
                 int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_bitcoin_link,
                         R.id.r_ethereum_link,R.id.r_ripple_link,R.id.r_bitcoincash_link,
                         R.id.r_litecoin_link,R.id.r_cardano_link,R.id.r_stellar_link,
                         R.id.r_neo_link,R.id.r_eos_link,R.id.r_iota_link,R.id.r_dashpay_link,
                         R.id.r_nem_link,R.id.r_monero_link,R.id.r_lisk_link,R.id.r_ethclassic_link,
-                        R.id.r_tron_link,R.id.r_vechain_link,R.id.r_qtum_link};
+                        R.id.r_tron_link,R.id.r_vechain_link,R.id.r_qtum_link,
+                        R.id.r_bitcoin_gold_link,R.id.r_tether_link,R.id.r_helloicon_link,
+                        R.id.r_omise_go_link,R.id.r_zcash_link,R.id.r_verge_link};
 
                 final String[] Link_Strings = new String[] {"cryptocurrency","bitcoin","ethereum",
                         "ripple","bitcoincash" ,"litecoin","cardano","stellar","neo","eos","iota",
                         "dashpay","nem","monero","lisk","ethereumclassic","tronix","vechain","qtum"
-                };
-                //
+                        ,"BitcoinGoldHQ","Tether","helloicon","omise_go","zcash","verge"};
+
 
                 for(int i = 0; i < TV_IDs.length ;i++) {
                     final int j = i;
@@ -257,6 +259,14 @@ public class Top_100 extends AppCompatActivity {
 
                         }});
                 }
+                Dismiss_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        dialog.dismiss();
+                    }
+                });
+
+
                 dialog.show();
                 return true;
 
