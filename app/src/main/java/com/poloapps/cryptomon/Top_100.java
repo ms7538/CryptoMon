@@ -238,12 +238,17 @@ public class Top_100 extends AppCompatActivity {
                         R.id.r_nem_link,R.id.r_monero_link,R.id.r_lisk_link,R.id.r_ethclassic_link,
                         R.id.r_tron_link,R.id.r_vechain_link,R.id.r_qtum_link,
                         R.id.r_bitcoin_gold_link,R.id.r_tether_link,R.id.r_helloicon_link,
-                        R.id.r_omise_go_link,R.id.r_zcash_link,R.id.r_verge_link};
+                        R.id.r_omise_go_link,R.id.r_zcash_link,R.id.r_verge_link,R.id.r_nano_link,
+                        R.id.r_binance_link,R.id.r_steem_link,R.id.r_populous_link,
+                        R.id.r_bytecoin_link,R.id.r_rchain_link,R.id.r_statusim_link,
+                        R.id.r_dogecoin_link,R.id.r_waves_link,R.id.r_bitshares_link};
 
                 final String[] Link_Strings = new String[] {"cryptocurrency","bitcoin","ethereum",
                         "ripple","bitcoincash" ,"litecoin","cardano","stellar","neo","eos","iota",
-                        "dashpay","nem","monero","lisk","ethereumclassic","tronix","vechain","qtum"
-                        ,"BitcoinGoldHQ","Tether","helloicon","omise_go","zcash","verge"};
+                        "dashpay","nem","monero","lisk","ethereumclassic","tronix","vechain","qtum",
+                        "BitcoinGoldHQ","Tether","helloicon","omise_go","zcash","verge",
+                        "nanocurrency","BinanceExchange","steem","populous","bytecoin","RChain",
+                        "statusim","dogecoin","Wavesplatform","BitShares"};
 
 
                 for(int i = 0; i < TV_IDs.length ;i++) {

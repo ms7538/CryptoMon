@@ -287,6 +287,107 @@
                 android:textColor="@color/green2"
                 android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/r_nano_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_nanocurrency"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_binance_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_binanceexchange"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_steem_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_steem"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_populous_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_populous"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bytecoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bytecoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_rchain_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_rchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_statusim_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_statusim"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_dogecoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_dogecoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_waves_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_wavesplatform"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bitshares_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bitshares"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+
 
         </LinearLayout>
 

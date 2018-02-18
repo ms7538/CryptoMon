@@ -53,4 +53,13 @@
     <string name="r_omisego">r/omise_go</string>
     <string name="r_zcash">r/zcash</string>
     <string name="r_verge">r/verge</string>
+    <string name="r_nanocurrency">r/nanocurrency</string>
+    <string name="r_binanceexchange">r/BinanceExchange</string>
+    <string name="r_populous">r/populous</string>
+    <string name="r_bytecoin">r/bytecoin</string>
+    <string name="r_rchain">r/RChain</string>
+    <string name="r_statusim">r/statusim</string>
+    <string name="r_dogecoin">r/dogecoin</string>
+    <string name="r_wavesplatform">r/Wavesplatform</string>
+    <string name="r_bitshares">r/BitShares</string>
 </resources>
