@@ -62,4 +62,18 @@
     <string name="r_dogecoin">r/dogecoin</string>
     <string name="r_wavesplatform">r/Wavesplatform</string>
     <string name="r_bitshares">r/BitShares</string>
+    <string name="r_cryptomarkets">r/CryptoMarkets</string>
+    <string name="r_makerdao">r/MakerDAO</string>
+    <string name="r_digix">r/digix</string>
+    <string name="r_waltonchain">r/Waltonchain</string>
+    <string name="r_zerox">r/Zerox</string>
+    <string name="r_augur">r/Augur</string>
+    <string name="r_aeternity">r/Aeternity</string>
+    <string name="r_zclassic">r/ZClassic</string>
+    <string name="r_decred">r/decred</string>
+    <string name="r_veritaseum">r/Veritaseum</string>
+    <string name="r_hshare">r/hshare</string>
+    <string name="r_electroneum">r/Electroneum</string>
+    <string name="r_komodoplatform">r/komodoplatform</string>
+    <string name="r_kucoin">r/kucoin</string>
 </resources>

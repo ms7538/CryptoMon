@@ -48,6 +48,16 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/r_cryptomarkets_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_cryptomarkets"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
                 android:id="@+id/r_bitcoin_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -387,6 +397,135 @@
                 android:textColor="@color/green2"
                 android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/r_maker_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_makerdao"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_digix_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_digix"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_walton_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_waltonchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_zerox_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_zerox"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_augur_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_augur"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aeternity_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aeternity"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_zclassic_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_zclassic"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_decred_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_decred"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_veritaseum_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_veritaseum"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_hshare_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_hshare"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_electroneum_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_electroneum"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_komodo_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_komodoplatform"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_kucoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_kucoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
 
 
         </LinearLayout>

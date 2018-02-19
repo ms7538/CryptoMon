@@ -231,24 +231,31 @@ public class Top_100 extends AppCompatActivity {
                 final AlertDialog dialog = builder.create();
                 final Button Dismiss_btn = mView.findViewById(R.id.dismiss_btn_menu);
 
-                int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_bitcoin_link,
-                        R.id.r_ethereum_link,R.id.r_ripple_link,R.id.r_bitcoincash_link,
-                        R.id.r_litecoin_link,R.id.r_cardano_link,R.id.r_stellar_link,
-                        R.id.r_neo_link,R.id.r_eos_link,R.id.r_iota_link,R.id.r_dashpay_link,
-                        R.id.r_nem_link,R.id.r_monero_link,R.id.r_lisk_link,R.id.r_ethclassic_link,
-                        R.id.r_tron_link,R.id.r_vechain_link,R.id.r_qtum_link,
-                        R.id.r_bitcoin_gold_link,R.id.r_tether_link,R.id.r_helloicon_link,
-                        R.id.r_omise_go_link,R.id.r_zcash_link,R.id.r_verge_link,R.id.r_nano_link,
-                        R.id.r_binance_link,R.id.r_steem_link,R.id.r_populous_link,
-                        R.id.r_bytecoin_link,R.id.r_rchain_link,R.id.r_statusim_link,
-                        R.id.r_dogecoin_link,R.id.r_waves_link,R.id.r_bitshares_link};
+                int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_cryptomarkets_link,
+                        R.id.r_bitcoin_link,R.id.r_ethereum_link,R.id.r_ripple_link,
+                        R.id.r_bitcoincash_link,R.id.r_litecoin_link,R.id.r_cardano_link,
+                        R.id.r_stellar_link,R.id.r_neo_link,R.id.r_eos_link,R.id.r_iota_link,
+                        R.id.r_dashpay_link,R.id.r_nem_link,R.id.r_monero_link,R.id.r_lisk_link,
+                        R.id.r_ethclassic_link,R.id.r_tron_link,R.id.r_vechain_link,
+                        R.id.r_qtum_link,R.id.r_bitcoin_gold_link,R.id.r_tether_link,
+                        R.id.r_helloicon_link,R.id.r_omise_go_link,R.id.r_zcash_link,
+                        R.id.r_verge_link,R.id.r_nano_link,R.id.r_binance_link,R.id.r_steem_link,
+                        R.id.r_populous_link,R.id.r_bytecoin_link,R.id.r_rchain_link,
+                        R.id.r_statusim_link,R.id.r_dogecoin_link,R.id.r_waves_link,
+                        R.id.r_bitshares_link,R.id.r_maker_link,R.id.r_digix_link,
+                        R.id.r_walton_link,R.id.r_zerox_link,R.id.r_augur_link,
+                        R.id.r_aeternity_link,R.id.r_zclassic_link,R.id.r_decred_link,
+                        R.id.r_veritaseum_link,R.id.r_hshare_link,R.id.r_electroneum_link,
+                        R.id.r_komodo_link,R.id.r_kucoin_link};
 
-                final String[] Link_Strings = new String[] {"cryptocurrency","bitcoin","ethereum",
-                        "ripple","bitcoincash" ,"litecoin","cardano","stellar","neo","eos","iota",
-                        "dashpay","nem","monero","lisk","ethereumclassic","tronix","vechain","qtum",
-                        "BitcoinGoldHQ","Tether","helloicon","omise_go","zcash","verge",
-                        "nanocurrency","BinanceExchange","steem","populous","bytecoin","RChain",
-                        "statusim","dogecoin","Wavesplatform","BitShares"};
+                final String[] Link_Strings = new String[] {"cryptocurrency","CryptoMarkets",
+                        "bitcoin","ethereum","ripple","bitcoincash" ,"litecoin","cardano","stellar",
+                        "neo","eos","iota","dashpay","nem","monero","lisk","ethereumclassic",
+                        "tronix","vechain","qtum","BitcoinGoldHQ","Tether","helloicon","omise_go",
+                        "zcash","verge","nanocurrency","BinanceExchange","steem","populous",
+                        "bytecoin","RChain","statusim","dogecoin","Wavesplatform","BitShares",
+                        "MakerDAO","digix","Waltonchain","Zerox","Augur","Aeternity","ZClassic",
+                        "Decred","Veritaseum","hshare","Electroneum","komodoplatform","kucoin"};
 
 
                 for(int i = 0; i < TV_IDs.length ;i++) {

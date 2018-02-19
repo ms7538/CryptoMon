@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Marko">
     <words>
+      <w>aeternity</w>
       <w>binance</w>
       <w>binanceexchange</w>
       <w>bitcoingoldhq</w>
@@ -8,11 +9,20 @@
       <w>bytecoin</w>
       <w>cnvrt</w>
       <w>coindesk</w>
+      <w>cryptomarkets</w>
       <w>currentprice</w>
+      <w>decred</w>
       <w>diag</w>
+      <w>digix</w>
       <w>dogecoin</w>
+      <w>electroneum</w>
       <w>helloicon</w>
+      <w>hshare</w>
+      <w>komodo</w>
+      <w>komodoplatform</w>
+      <w>kucoin</w>
       <w>litecoin</w>
+      <w>makerdao</w>
       <w>nanocurrency</w>
       <w>omise</w>
       <w>omisego</w>
@@ -21,8 +31,12 @@
       <w>reddits</w>
       <w>statusim</w>
       <w>steem</w>
+      <w>veritaseum</w>
+      <w>waltonchain</w>
       <w>wavesplatform</w>
       <w>zcash</w>
+      <w>zclassic</w>
+      <w>zerox</w>
     </words>
   </dictionary>
 </component>
