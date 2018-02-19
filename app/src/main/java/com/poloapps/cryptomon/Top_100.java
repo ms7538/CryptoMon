@@ -232,7 +232,7 @@ public class Top_100 extends AppCompatActivity {
                 final Button Dismiss_btn = mView.findViewById(R.id.dismiss_btn_menu);
 
                 int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_cryptomarkets_link,
-                        R.id.r_cryptocurrencies_link,
+                        R.id.r_bitplaceex_link,R.id.r_cryptocurrencies_link,
                         R.id.r_bitcoin_link,R.id.r_ethereum_link,R.id.r_ripple_link,
                         R.id.r_bitcoincash_link,R.id.r_litecoin_link,R.id.r_cardano_link,
                         R.id.r_stellar_link,R.id.r_neo_link,R.id.r_eos_link,R.id.r_iota_link,
@@ -253,7 +253,7 @@ public class Top_100 extends AppCompatActivity {
                         R.id.r_basicatttoken_link};
 
                 final String[] Link_Strings = new String[] {"cryptocurrency","CryptoMarkets",
-                        "CryptoCurrencies",
+                        "BitplaceExchange","CryptoCurrencies",
                         "bitcoin","ethereum","ripple","bitcoincash" ,"litecoin","cardano","stellar",
                         "neo","eos","iota","dashpay","nem","monero","lisk","ethereumclassic",
                         "tronix","vechain","qtum","BitcoinGoldHQ","Tether","helloicon","omise_go",
@@ -262,7 +262,9 @@ public class Top_100 extends AppCompatActivity {
                         "MakerDAO","digix","Waltonchain","Zerox","Augur","Aeternity","ZClassic",
                         "Decred","Veritaseum","hshare","Electroneum","komodoplatform","kucoin",
                         "Ardor","ArkEcosystem","Arkcoin","Neotrader","Dragonchain","Digibyte",
-                        "loopring","zilliqa","BasicAttentionToken"};
+                        "loopring","zilliqa","BATProject"};
+
+                // ,"ByteBall","aelf","aelfofficial","AElfTrader"
 
 
                 for(int i = 0; i < TV_IDs.length ;i++) {

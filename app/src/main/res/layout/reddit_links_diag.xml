@@ -58,6 +58,16 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/r_bitplaceex_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bitplaceexchange"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
                 android:id="@+id/r_cryptocurrencies_link"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -623,7 +633,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
-                android:text="@string/r_basicattentiontoken"
+                android:text="@string/r_batproject"
                 android:textColor="@color/green2"
                 android:textSize="15sp" />
 
