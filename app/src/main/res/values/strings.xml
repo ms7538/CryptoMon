@@ -24,7 +24,7 @@
     <string name="ok">OK</string>
     <string name="currency_sel">Currencies</string>
     <string name="banner_ad_unit_id">ca-app-pub-6002737231550640/6485035382</string>
-    <string name="subreddit_links">Subreddits</string>
+    <string name="subreddit_links">Subreddit Links</string>
     <string name="reddit_links">Reddit Links</string>
     <string name="r_cryptocurrency">r/CryptoCurrency</string>
     <string name="r_bitcoin">r/Bitcoin</string>
@@ -76,4 +76,14 @@
     <string name="r_electroneum">r/Electroneum</string>
     <string name="r_komodoplatform">r/komodoplatform</string>
     <string name="r_kucoin">r/kucoin</string>
+    <string name="r_cryptocurrencies">r/CryptoCurrencies</string>
+    <string name="r_ardor">r/Ardor</string>
+    <string name="r_arkecosystem">r/ArkEcosystem</string>
+    <string name="r_arkcoin">r/Arkcoin</string>
+    <string name="r_neotrader">r/Neotrader</string>
+    <string name="r_dragonchain">r/Dragonchain</string>
+    <string name="r_digibyte">r/Digibyte</string>
+    <string name="r_loopring">r/loopring</string>
+    <string name="r_zilliqa">r/zilliqa</string>
+    <string name="r_basicattentiontoken">r/BasicAttentionToken</string>
 </resources>

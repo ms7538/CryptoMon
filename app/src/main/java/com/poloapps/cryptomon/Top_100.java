@@ -232,6 +232,7 @@ public class Top_100 extends AppCompatActivity {
                 final Button Dismiss_btn = mView.findViewById(R.id.dismiss_btn_menu);
 
                 int[] TV_IDs = new int[]{R.id.r_crypto_link,R.id.r_cryptomarkets_link,
+                        R.id.r_cryptocurrencies_link,
                         R.id.r_bitcoin_link,R.id.r_ethereum_link,R.id.r_ripple_link,
                         R.id.r_bitcoincash_link,R.id.r_litecoin_link,R.id.r_cardano_link,
                         R.id.r_stellar_link,R.id.r_neo_link,R.id.r_eos_link,R.id.r_iota_link,
@@ -246,16 +247,22 @@ public class Top_100 extends AppCompatActivity {
                         R.id.r_walton_link,R.id.r_zerox_link,R.id.r_augur_link,
                         R.id.r_aeternity_link,R.id.r_zclassic_link,R.id.r_decred_link,
                         R.id.r_veritaseum_link,R.id.r_hshare_link,R.id.r_electroneum_link,
-                        R.id.r_komodo_link,R.id.r_kucoin_link};
+                        R.id.r_komodo_link,R.id.r_kucoin_link,R.id.r_ardor_link,R.id.r_arkeco_link,
+                        R.id.r_arkcoin_link,R.id.r_neotrader_link,R.id.r_dragonchain_link,
+                        R.id.r_digibyte_link,R.id.r_loopring_link,R.id.r_zilliqa_link,
+                        R.id.r_basicatttoken_link};
 
                 final String[] Link_Strings = new String[] {"cryptocurrency","CryptoMarkets",
+                        "CryptoCurrencies",
                         "bitcoin","ethereum","ripple","bitcoincash" ,"litecoin","cardano","stellar",
                         "neo","eos","iota","dashpay","nem","monero","lisk","ethereumclassic",
                         "tronix","vechain","qtum","BitcoinGoldHQ","Tether","helloicon","omise_go",
                         "zcash","verge","nanocurrency","BinanceExchange","steem","populous",
                         "bytecoin","RChain","statusim","dogecoin","Wavesplatform","BitShares",
                         "MakerDAO","digix","Waltonchain","Zerox","Augur","Aeternity","ZClassic",
-                        "Decred","Veritaseum","hshare","Electroneum","komodoplatform","kucoin"};
+                        "Decred","Veritaseum","hshare","Electroneum","komodoplatform","kucoin",
+                        "Ardor","ArkEcosystem","Arkcoin","Neotrader","Dragonchain","Digibyte",
+                        "loopring","zilliqa","BasicAttentionToken"};
 
 
                 for(int i = 0; i < TV_IDs.length ;i++) {
