@@ -24,6 +24,7 @@
     <string name="ok">OK</string>
     <string name="currency_sel">Currencies</string>
     <string name="banner_ad_unit_id">ca-app-pub-6002737231550640/6485035382</string>
+    <string name="banner_ad_unit_id2">ca-app-pub-6002737231550640/5401674534</string>
     <string name="subreddit_links">Subreddit Links</string>
     <string name="reddit_links">Reddit Links</string>
     <string name="r_cryptocurrency">r/CryptoCurrency</string>
@@ -103,4 +104,6 @@
     <string name="r_golem">r/Golem</string>
     <string name="r_golemproject">r/GolemProject</string>
     <string name="r_golemtrader">r/GolemTrader</string>
+    <string name="name">Name:</string>
+    <string name="rank">Rank:</string>
 </resources>
