@@ -637,6 +637,97 @@
                 android:textColor="@color/green2"
                 android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/r_byteball_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_byteball"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aelf_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aelf"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aelfofficial_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aelfofficial"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aelftrader_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aelfTrader"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_polymath_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_polymathnetwork"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bytomblock_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bytomblockchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bytomchain_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bytomchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/r_monacoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_monacoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_qash_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_qash"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
 
         </LinearLayout>
 

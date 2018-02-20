@@ -250,7 +250,10 @@ public class Top_100 extends AppCompatActivity {
                         R.id.r_komodo_link,R.id.r_kucoin_link,R.id.r_ardor_link,R.id.r_arkeco_link,
                         R.id.r_arkcoin_link,R.id.r_neotrader_link,R.id.r_dragonchain_link,
                         R.id.r_digibyte_link,R.id.r_loopring_link,R.id.r_zilliqa_link,
-                        R.id.r_basicatttoken_link};
+                        R.id.r_basicatttoken_link,R.id.r_byteball_link,R.id.r_aelf_link,
+                        R.id.r_aelfofficial_link,R.id.r_aelftrader_link,R.id.r_polymath_link,
+                        R.id.r_bytomblock_link,R.id.r_bytomchain_link,R.id.r_monacoin_link,
+                        R.id.r_qash_link};
 
                 final String[] Link_Strings = new String[] {"cryptocurrency","CryptoMarkets",
                         "BitplaceExchange","CryptoCurrencies",
@@ -262,9 +265,11 @@ public class Top_100 extends AppCompatActivity {
                         "MakerDAO","digix","Waltonchain","Zerox","Augur","Aeternity","ZClassic",
                         "Decred","Veritaseum","hshare","Electroneum","komodoplatform","kucoin",
                         "Ardor","ArkEcosystem","Arkcoin","Neotrader","Dragonchain","Digibyte",
-                        "loopring","zilliqa","BATProject"};
+                        "loopring","zilliqa","BATProject","ByteBall","aelf","aelfofficial",
+                        "AElfTrader","PolymathNetwork","BytomBlockchain","Bytomchain","monacoin",
+                        "QASH"};
 
-                // ,"ByteBall","aelf","aelfofficial","AElfTrader"
+
 
 
                 for(int i = 0; i < TV_IDs.length ;i++) {

@@ -88,4 +88,13 @@
     <string name="r_basicattentiontoken">r/BasicAttentionToken</string>
     <string name="r_bitplaceexchange">r/BitplaceExchange</string>
     <string name="r_batproject">r/BATProject</string>
+    <string name="r_byteball">r/ByteBall</string>
+    <string name="r_aelf">r/aelf</string>
+    <string name="r_aelfofficial">r/aelfofficial</string>
+    <string name="r_aelfTrader">r/AElfTrader</string>
+    <string name="r_polymathnetwork">r/PolymathNetwork</string>
+    <string name="r_bytomblockchain">r/BytomBlockchain</string>
+    <string name="r_monacoin">r/monacoin</string>
+    <string name="r_qash">r/QASH</string>
+    <string name="r_bytomchain">r/Bytomchain</string>
 </resources>
