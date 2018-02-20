@@ -253,7 +253,8 @@ public class Top_100 extends AppCompatActivity {
                         R.id.r_basicatttoken_link,R.id.r_byteball_link,R.id.r_aelf_link,
                         R.id.r_aelfofficial_link,R.id.r_aelftrader_link,R.id.r_polymath_link,
                         R.id.r_bytomblock_link,R.id.r_bytomchain_link,R.id.r_monacoin_link,
-                        R.id.r_qash_link};
+                        R.id.r_qash_link,R.id.r_redcoin_link,R.id.r_aionnetwork_link,
+                        R.id.r_aiontrader_link,R.id.r_golemproject_link,R.id.r_golemtrader_link};
 
                 final String[] Link_Strings = new String[] {"cryptocurrency","CryptoMarkets",
                         "BitplaceExchange","CryptoCurrencies",
@@ -267,7 +268,7 @@ public class Top_100 extends AppCompatActivity {
                         "Ardor","ArkEcosystem","Arkcoin","Neotrader","Dragonchain","Digibyte",
                         "loopring","zilliqa","BATProject","ByteBall","aelf","aelfofficial",
                         "AElfTrader","PolymathNetwork","BytomBlockchain","Bytomchain","monacoin",
-                        "QASH"};
+                        "QASH","ReddCoin","AionNetwork","AionTrader","GolemProject","GolemTrader"};
 
 
 

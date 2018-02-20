@@ -97,4 +97,10 @@
     <string name="r_monacoin">r/monacoin</string>
     <string name="r_qash">r/QASH</string>
     <string name="r_bytomchain">r/Bytomchain</string>
+    <string name="r_reddcoin">r/ReddCoin</string>
+    <string name="r_aionnetwork">r/AionNetwork</string>
+    <string name="r_aiontrader">r/AionTrader</string>
+    <string name="r_golem">r/Golem</string>
+    <string name="r_golemproject">r/GolemProject</string>
+    <string name="r_golemtrader">r/GolemTrader</string>
 </resources>

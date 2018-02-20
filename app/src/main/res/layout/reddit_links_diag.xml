@@ -728,6 +728,57 @@
                 android:textColor="@color/green2"
                 android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/r_redcoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_reddcoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aionnetwork_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aionnetwork"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aiontrader_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aiontrader"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/r_golemproject_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_golemproject"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_golemtrader_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_golemtrader"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
 
         </LinearLayout>
 
