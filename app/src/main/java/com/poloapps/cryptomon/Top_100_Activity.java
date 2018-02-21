@@ -174,7 +174,8 @@ public class Top_100_Activity extends AppCompatActivity {
 
                                     link_id.setOnClickListener(new View.OnClickListener() {
                                         @Override
-                                        public void onClick(View v) {Intent intent = new Intent(
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(
                                                     Top_100_Activity.this,
                                                     CryptoSelectActivity.class);
                                             intent.putExtra("crypto_id", link_id.getText());

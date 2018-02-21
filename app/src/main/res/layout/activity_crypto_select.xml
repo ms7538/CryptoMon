@@ -3,61 +3,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/light_blue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.poloapps.cryptomon.CryptoSelectActivity">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-            android:background="@android:color/black">
+    <TextView
+        android:id="@+id/select_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/name2"
+        android:layout_marginBottom="5sp"
+        android:textColor="@color/delta_col"
+        android:textSize="15sp" />
 
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="@string/name"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
+    <TextView
+        android:id="@+id/textView_Rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/select_name"
+        android:text="@string/rank"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/select_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="2"
-                android:text="@string/x"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-            android:background="@android:color/white">
 
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:text="@string/rank"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_Rank"
+        android:text="@string/symbol"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/select_rank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="2"
-                android:text="@string/x"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
-        </TableRow>
 
-    </TableLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView2"
@@ -69,5 +50,38 @@
         android:foregroundGravity="center"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id2" />
+
+    <TextView
+        android:id="@+id/sel_crypto_coinmarketcap_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/adView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:text="@string/coinmarketcap"
+        android:textColor="@color/delta_col"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/select_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/select_name"
+        android:layout_centerHorizontal="true"
+        android:text="@string/x"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/select_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/select_rank"
+        android:text="@string/x"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+
 
 </RelativeLayout>

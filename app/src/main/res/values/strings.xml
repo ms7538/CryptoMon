@@ -9,7 +9,7 @@
     <string name="coindesk"><u>CoinDesk</u></string>
     <string name="top_100_crypto">TOP 100 Crypto</string>
     <string name="txt_test">test</string>
-    <string name="x">X</string>
+    <string name="x">XXX</string>
     <string name="price">Price:</string>
     <string name="_1h_1d_7d">(1h|1d|7d) \u0394 %:</string>
     <string name="for_slash"> \u00A0 | \u00A0</string>
@@ -106,4 +106,8 @@
     <string name="r_golemtrader">r/GolemTrader</string>
     <string name="name">Name:</string>
     <string name="rank">Rank:</string>
+    <string name="expand">Expand  \u00A0 \u00A0 -> </string>
+    <string name="coinmarketcap">Coinmarketcap Link</string>
+    <string name="name2">NAME</string>
+    <string name="symbol">Symbol:</string>
 </resources>
