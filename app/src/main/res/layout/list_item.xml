@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:visibility="visible"
-    tools:context=".Top_100">
+    tools:context=".Top_100_Activity">
 
     <TableRow
         android:layout_width="match_parent"

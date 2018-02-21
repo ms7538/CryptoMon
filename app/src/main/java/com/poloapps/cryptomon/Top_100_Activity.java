@@ -43,7 +43,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 //v0.85 created
-public class Top_100 extends AppCompatActivity {
+public class Top_100_Activity extends AppCompatActivity {
 
     String LC_url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR";
     ProgressDialog dialog;
@@ -175,11 +175,11 @@ public class Top_100 extends AppCompatActivity {
                                     link_id.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Uri uri = Uri.parse(getString(
-                                                    R.string.cryptos_display_link)
-                                                    + link_id.getText());
-                                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                            startActivity(intent);
+//                                            Uri uri = Uri.parse(getString(
+//                                                    R.string.cryptos_display_link)
+//                                                    + link_id.getText());
+//                                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                                            startActivity(intent);
                                         }
                                     });
                                     return view;
@@ -201,7 +201,7 @@ public class Top_100 extends AppCompatActivity {
             }
 
         });
-        RequestQueue rQueue = Volley.newRequestQueue(Top_100.this);
+        RequestQueue rQueue = Volley.newRequestQueue(Top_100_Activity.this);
         rQueue.add(crypto100_request);
 
    }
@@ -223,7 +223,7 @@ public class Top_100 extends AppCompatActivity {
             case R.id.action_subreddits:
 
                 AlertDialog.Builder builder;
-                builder = new AlertDialog.Builder(Top_100.this);
+                builder = new AlertDialog.Builder(Top_100_Activity.this);
                 @SuppressLint("InflateParams")
                 View mView = getLayoutInflater().inflate(R.layout.reddit_links_diag, null);
                 builder.setView(mView);
@@ -299,7 +299,7 @@ public class Top_100 extends AppCompatActivity {
 
             case R.id.action_currency_sel:
 
-                builder = new AlertDialog.Builder(Top_100.this);
+                builder = new AlertDialog.Builder(Top_100_Activity.this);
 
                 @SuppressLint("InflateParams")
                 View mView2 = getLayoutInflater().inflate(R.layout.currency_diag, null);
