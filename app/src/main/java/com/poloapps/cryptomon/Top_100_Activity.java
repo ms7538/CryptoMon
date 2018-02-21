@@ -174,22 +174,23 @@ public class Top_100_Activity extends AppCompatActivity {
 
                                     link_id.setOnClickListener(new View.OnClickListener() {
                                         @Override
-                                        public void onClick(View v) {
-//                                            Uri uri = Uri.parse(getString(
-//                                                    R.string.cryptos_display_link)
-//                                                    + link_id.getText());
-//                                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                                            startActivity(intent);
+                                        public void onClick(View v) {Intent intent = new Intent(
+                                                    Top_100_Activity.this,
+                                                    CryptoSelectActivity.class);
+                                            intent.putExtra("crypto_id", link_id.getText());
+                                            Top_100_Activity.this.startActivity(intent);
                                         }
                                     });
+                                    dialog.dismiss();
                                     return view;
                                 }
                             };
                             lv.setAdapter(listAdapter);
                         } catch (JSONException e) {
+                            dialog.dismiss();
                             e.printStackTrace();
                         }
-                        dialog.dismiss();
+
                     }
                 }, new Response.ErrorListener() {
 
@@ -269,8 +270,6 @@ public class Top_100_Activity extends AppCompatActivity {
                         "loopring","zilliqa","BATProject","ByteBall","aelf","aelfofficial",
                         "AElfTrader","PolymathNetwork","BytomBlockchain","Bytomchain","monacoin",
                         "QASH","ReddCoin","AionNetwork","AionTrader","GolemProject","GolemTrader"};
-
-
 
 
                 for(int i = 0; i < TV_IDs.length ;i++) {
