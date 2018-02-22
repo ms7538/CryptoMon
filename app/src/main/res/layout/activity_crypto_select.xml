@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -24,12 +22,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fadeScrollbars="false"
-        android:orientation="vertical"
         android:scrollbarThumbVertical="@color/green2">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:background="@android:color/black">
 
             <TextView
@@ -143,9 +141,9 @@
                 android:id="@+id/select_avail_supply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@+id/select_total_supply"
                 android:layout_below="@+id/select_price_btc"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/x"
                 android:textColor="@color/l3col"
                 android:textSize="16sp" />
@@ -182,6 +180,26 @@
                 android:textColor="@color/bright_yellow"
                 android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/select_max_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/select_price_btc"
+                android:layout_below="@+id/select_total_supply"
+                android:text="@string/x"
+                android:textColor="@color/l3col"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_max_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/select_max_supply"
+                android:layout_alignBottom="@+id/select_max_supply"
+                android:layout_alignParentStart="true"
+                android:text="@string/max_supply"
+                android:textColor="@color/l3col"
+                android:textSize="14sp" />
 
 
         </RelativeLayout>

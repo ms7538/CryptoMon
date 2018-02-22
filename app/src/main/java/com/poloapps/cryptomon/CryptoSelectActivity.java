@@ -21,6 +21,7 @@ import com.google.android.gms.ads.AdView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.Objects;
 
 import java.text.DecimalFormat;
 
@@ -45,14 +46,17 @@ public class CryptoSelectActivity extends AppCompatActivity {
         final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
         final DecimalFormat frmt2 = new DecimalFormat("#.########");
 
-        final TextView Name       = findViewById(R.id.select_name);
-        final TextView Rank       = findViewById(R.id.select_rank);
-        final TextView Symbol     = findViewById(R.id.select_symbol);
+        final TextView Name          = findViewById(R.id.select_name);
+        final TextView Rank          = findViewById(R.id.select_rank);
+        final TextView Symbol        = findViewById(R.id.select_symbol);
 
-        final TextView PriceUSD   = findViewById(R.id.select_price_usd);
-        final TextView PriceEUR   = findViewById(R.id.select_price_eur);
-        final TextView PriceBTC   = findViewById(R.id.select_price_btc);
+        final TextView PriceUSD      = findViewById(R.id.select_price_usd);
+        final TextView PriceEUR      = findViewById(R.id.select_price_eur);
+        final TextView PriceBTC      = findViewById(R.id.select_price_btc);
 
+        final TextView AvailSupply   = findViewById(R.id.select_avail_supply);
+        final TextView TotalSupply   = findViewById(R.id.select_total_supply);
+        final TextView MaxSupply     = findViewById(R.id.select_max_supply);
 
 
         final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
@@ -75,6 +79,10 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             String Sel_Rank  = object.getString("rank");
                             String Sel_Symb  = object.getString("symbol");
 
+                            Name.setText(Sel_Name);
+                            Rank.setText(Sel_Rank);
+                            Symbol.setText(Sel_Symb);
+
                             DecimalFormat USD_frmt = frmt;
                             DecimalFormat EUR_frmt = frmt;
                             DecimalFormat BTC_frmt = frmt;
@@ -87,18 +95,35 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             if(eurP < 0.01) EUR_frmt = frmt2;
                             if(btcP < 0.01) BTC_frmt = frmt2;
 
-
-                            String Price_USD = "$" + USD_frmt.format(usdP);
+                            String Price_USD = "$"      + USD_frmt.format(usdP);
                             String Price_EUR = "\u20AC" + EUR_frmt.format(eurP);
                             String Price_BTC = "\u0E3F" + BTC_frmt.format(btcP);
-
-                            Name.setText(Sel_Name);
-                            Rank.setText(Sel_Rank);
-                            Symbol.setText(Sel_Symb);
 
                             PriceUSD.setText(Price_USD);
                             PriceEUR.setText(Price_EUR);
                             PriceBTC.setText(Price_BTC);
+
+                            String Av_Supply = "Not Available";
+                            String Av_Supply_val = object.getString("available_supply");
+                            if (!Objects.equals(Av_Supply_val, "null")) {
+                                Av_Supply = frmt.format(Double.parseDouble(Av_Supply_val));
+                            }
+                            AvailSupply.setText(Av_Supply);
+
+                            String T_Supply  = "Not Available";
+                            String T_Supply_val = object.getString("total_supply");
+                            if (!Objects.equals(T_Supply_val, "null")) {
+                                T_Supply = frmt.format(Double.parseDouble(T_Supply_val));
+                            }
+                            TotalSupply.setText(T_Supply);
+
+                            String Max_Supply  = "Not Available";
+                            String Max_Supply_val = object.getString("max_supply");
+                            if (!Objects.equals(Max_Supply_val, "null")) {
+                                Max_Supply = frmt.format(Double.parseDouble(Max_Supply_val));
+                            }
+                            MaxSupply.setText(Max_Supply);
+
 
                             dialog.dismiss();
 
