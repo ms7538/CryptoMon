@@ -110,4 +110,10 @@
     <string name="coinmarketcap">Coinmarketcap Link</string>
     <string name="name2">NAME</string>
     <string name="symbol">Symbol:</string>
+    <string name="price_usd">Price USD:</string>
+    <string name="price_eur">Price EUR:</string>
+    <string name="price_btc">Price BTC:</string>
+    <string name="avail_supply">Avail. Supply:</string>
+    <string name="total_supply">Total Supply:</string>
+    <string name="max_supply">Max. Supply:</string>
 </resources>

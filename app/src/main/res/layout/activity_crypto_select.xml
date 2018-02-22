@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/light_blue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     tools:context="com.poloapps.cryptomon.CryptoSelectActivity">
 
     <TextView
@@ -13,31 +14,197 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/name2"
         android:layout_marginBottom="5sp"
-        android:textColor="@color/delta_col"
-        android:textSize="15sp" />
+        android:text="@string/name2"
+        android:textColor="@color/orange"
+        android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/textView_Rank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+    <ScrollView
         android:layout_below="@+id/select_name"
-        android:text="@string/rank"
-        android:textColor="@android:color/black"
-        android:textSize="14sp" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView_Rank"
-        android:text="@string/symbol"
-        android:textColor="@android:color/black"
-        android:textSize="14sp" />
+        android:fadeScrollbars="false"
+        android:orientation="vertical"
+        android:scrollbarThumbVertical="@color/green2">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black">
+
+            <TextView
+                android:id="@+id/textView_Rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/rank"
+                android:textColor="@color/bright_yellow"
+                android:layout_marginBottom="155dp"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/select_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/x"
+                android:textColor="@color/bright_yellow"
+                android:textSize="16sp"
+                tools:ignore="RelativeOverlap" />
+
+            <TextView
+                android:id="@+id/select_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/select_rank"
+                android:text="@string/x"
+                android:textColor="@color/l3col"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_Symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/select_symbol"
+                android:layout_alignBottom="@+id/select_symbol"
+                android:layout_alignParentStart="true"
+                android:text="@string/symbol"
+                android:textColor="@color/l3col"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/select_price_usd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/select_symbol"
+                android:text="@string/x"
+                android:textColor="@color/bright_yellow"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_price_usd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/select_price_usd"
+                android:layout_alignBottom="@+id/select_price_usd"
+                android:layout_alignParentStart="true"
+                android:text="@string/price_usd"
+                android:textColor="@color/bright_yellow"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/select_price_eur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/select_price_usd"
+                android:text="@string/x"
+                android:textColor="@color/l3col"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_price_eur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/select_price_eur"
+                android:layout_alignBottom="@+id/select_price_eur"
+                android:layout_alignParentStart="true"
+                android:text="@string/price_eur"
+                android:textColor="@color/l3col"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/select_price_btc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/textView_price_eur"
+                android:text="@string/x"
+                android:textColor="@color/bright_yellow"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_price_btc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/select_price_btc"
+                android:layout_alignBottom="@+id/select_price_btc"
+                android:layout_alignParentStart="true"
+                android:text="@string/price_btc"
+                android:textColor="@color/bright_yellow"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/select_avail_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/select_price_btc"
+                android:text="@string/x"
+                android:textColor="@color/l3col"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_avail_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/select_avail_supply"
+                android:layout_alignBottom="@+id/select_avail_supply"
+                android:layout_alignParentStart="true"
+                android:text="@string/avail_supply"
+                android:textColor="@color/l3col"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/select_total_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/select_avail_supply"
+                android:text="@string/x"
+                android:textColor="@color/bright_yellow"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_total_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/select_total_supply"
+                android:layout_alignBottom="@+id/select_total_supply"
+                android:layout_alignParentStart="true"
+                android:text="@string/total_supply"
+                android:textColor="@color/bright_yellow"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/select_max_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/select_price_btc"
+                android:layout_below="@+id/select_total_supply"
+                android:text="@string/x"
+                android:textColor="@color/l3col"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView_max_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/select_max_supply"
+                android:layout_alignBottom="@+id/select_max_supply"
+                android:layout_alignParentStart="true"
+                android:text="@string/max_supply"
+                android:textColor="@color/l3col"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 
     <com.google.android.gms.ads.AdView
@@ -59,29 +226,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="11dp"
         android:text="@string/coinmarketcap"
-        android:textColor="@color/delta_col"
+        android:textColor="@color/navy_blue"
         android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/select_rank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/select_name"
-        android:layout_centerHorizontal="true"
-        android:text="@string/x"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/select_symbol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/select_rank"
-        android:text="@string/x"
-        android:layout_centerHorizontal="true"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
-
 
 
 </RelativeLayout>
