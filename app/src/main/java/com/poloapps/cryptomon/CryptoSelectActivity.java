@@ -42,13 +42,19 @@ public class CryptoSelectActivity extends AppCompatActivity {
         String Select_url = Select_url1 + crypto_id + Select_url2;
         final String CMC_url = getString(R.string.cryptos_display_link) + crypto_id + "/";
 
-        final DecimalFormat frmt  = new DecimalFormat("#,###,###,###.##");
-        final DecimalFormat frmt2 = new DecimalFormat("#.######");
-        final DecimalFormat frmt3 = new DecimalFormat("#,###,###,###");
+        final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
+        final DecimalFormat frmt2 = new DecimalFormat("#.########");
 
-        final TextView Name     = findViewById(R.id.select_name);
-        final TextView Rank     = findViewById(R.id.select_rank);
-        final TextView Symbol   = findViewById(R.id.select_symbol);
+        final TextView Name       = findViewById(R.id.select_name);
+        final TextView Rank       = findViewById(R.id.select_rank);
+        final TextView Symbol     = findViewById(R.id.select_symbol);
+
+        final TextView PriceUSD   = findViewById(R.id.select_price_usd);
+        final TextView PriceEUR   = findViewById(R.id.select_price_eur);
+        final TextView PriceBTC   = findViewById(R.id.select_price_btc);
+
+
+
         final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
         CMC_link.setPaintFlags(CMC_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
@@ -64,13 +70,36 @@ public class CryptoSelectActivity extends AppCompatActivity {
                         try {
                             JSONArray Selected = new JSONArray(string);
                             JSONObject object = Selected.getJSONObject(0);
-                            String Sel_Name = object.getString("name");
-                            String Sel_Rank = object.getString("rank");
-                            String Sel_Symb = object.getString("symbol");
+
+                            String Sel_Name  = object.getString("name");
+                            String Sel_Rank  = object.getString("rank");
+                            String Sel_Symb  = object.getString("symbol");
+
+                            DecimalFormat USD_frmt = frmt;
+                            DecimalFormat EUR_frmt = frmt;
+                            DecimalFormat BTC_frmt = frmt;
+
+                            double usdP = Double.parseDouble(object.getString("price_usd"));
+                            double eurP = Double.parseDouble(object.getString("price_eur"));
+                            double btcP = Double.parseDouble(object.getString("price_btc"));
+
+                            if(usdP < 0.01) USD_frmt = frmt2;
+                            if(eurP < 0.01) EUR_frmt = frmt2;
+                            if(btcP < 0.01) BTC_frmt = frmt2;
+
+
+                            String Price_USD = "$" + USD_frmt.format(usdP);
+                            String Price_EUR = "\u20AC" + EUR_frmt.format(eurP);
+                            String Price_BTC = "\u0E3F" + BTC_frmt.format(btcP);
 
                             Name.setText(Sel_Name);
                             Rank.setText(Sel_Rank);
                             Symbol.setText(Sel_Symb);
+
+                            PriceUSD.setText(Price_USD);
+                            PriceEUR.setText(Price_EUR);
+                            PriceBTC.setText(Price_BTC);
+
                             dialog.dismiss();
 
                         } catch (JSONException e) {

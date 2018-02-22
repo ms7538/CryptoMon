@@ -9,7 +9,7 @@
     <string name="coindesk"><u>CoinDesk</u></string>
     <string name="top_100_crypto">TOP 100 Crypto</string>
     <string name="txt_test">test</string>
-    <string name="x">XXX</string>
+    <string name="x">LOADING</string>
     <string name="price">Price:</string>
     <string name="_1h_1d_7d">(1h|1d|7d) \u0394 %:</string>
     <string name="for_slash"> \u00A0 | \u00A0</string>
