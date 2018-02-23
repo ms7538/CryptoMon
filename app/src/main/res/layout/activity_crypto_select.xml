@@ -35,7 +35,7 @@
         android:background="@color/delta_col"
         android:foregroundGravity="center"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id2" />
+        ads:adUnitId="@string/banner_ad_unit_id" />
 
     <ScrollView
         android:layout_width="match_parent"
