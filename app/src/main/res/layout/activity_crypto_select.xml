@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/x"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     tools:ignore="RelativeOverlap" />
 
@@ -228,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/x"
-                    android:textColor="@color/bright_yellow"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     tools:ignore="RelativeOverlap" />
 
@@ -254,7 +254,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/x"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     tools:ignore="RelativeOverlap" />
 

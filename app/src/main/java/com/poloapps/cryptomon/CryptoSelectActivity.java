@@ -45,6 +45,9 @@ public class CryptoSelectActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
+        CMC_link.setPaintFlags(CMC_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         String crypto_id = getIntent().getStringExtra("crypto_id");
         String Select_url = Select_url1 + crypto_id + Select_url2;
         final String CMC_url = getString(R.string.cryptos_display_link) + crypto_id + "/";
@@ -64,8 +67,10 @@ public class CryptoSelectActivity extends AppCompatActivity {
         final TextView TotalSupply   = findViewById(R.id.select_total_supply);
         final TextView MaxSupply     = findViewById(R.id.select_max_supply);
 
-        final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
-        CMC_link.setPaintFlags(CMC_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        final TextView Delta1h       = findViewById(R.id.select_delta_1h);
+        final TextView Delta1d       = findViewById(R.id.select_delta_24h);
+        final TextView Delta7d       = findViewById(R.id.select_delta_7d);
+
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading....");
@@ -107,6 +112,46 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             PriceUSD.setText(Price_USD);
                             PriceEUR.setText(Price_EUR);
                             PriceBTC.setText(Price_BTC);
+
+
+                            String Delta_1h = "Not Available";
+                            String Delta_1h_val = object.getString("percent_change_1h");
+                            if (!Objects.equals(Delta_1h_val, "null")) {
+                                Delta_1h = Delta_1h_val + "%";
+                                if( Double.parseDouble(Delta_1h_val) < 0 ) {
+                                    Delta1h.setTextColor(getResources().getColor(R.color.red));
+                                }else if ( Double.parseDouble(Delta_1h_val) > 0 ){
+                                    Delta_1h = "+" + Delta_1h;
+                                    Delta1h.setTextColor(getResources().getColor(R.color.green2));
+                                }
+                            }
+                            Delta1h.setText(Delta_1h);
+
+                            String Delta_1d = "Not Available";
+                            String Delta_1d_val = object.getString("percent_change_24h");
+                            if (!Objects.equals(Delta_1d_val, "null")) {
+                                Delta_1d = Delta_1d_val + "%";
+                                if( Double.parseDouble(Delta_1d_val) < 0 ) {
+                                    Delta1d.setTextColor(getResources().getColor(R.color.red));
+                                }else if ( Double.parseDouble(Delta_1d_val) > 0 ){
+                                    Delta_1d = "+" + Delta_1d;
+                                    Delta1d.setTextColor(getResources().getColor(R.color.green2));
+                                }
+                            }
+                            Delta1d.setText(Delta_1d);
+
+                            String Delta_7d = "Not Available";
+                            String Delta_7d_val = object.getString("percent_change_7d");
+                            if (!Objects.equals(Delta_7d_val, "null")) {
+                                Delta_7d = Delta_7d_val + "%";
+                                if( Double.parseDouble(Delta_7d_val) < 0 ) {
+                                    Delta7d.setTextColor(getResources().getColor(R.color.red));
+                                }else if ( Double.parseDouble(Delta_7d_val) > 0 ){
+                                    Delta_7d = "+" + Delta_7d;
+                                    Delta7d.setTextColor(getResources().getColor(R.color.green2));
+                                }
+                            }
+                            Delta7d.setText(Delta_7d);
 
                             String Av_Supply = "Not Available";
                             String Av_Supply_val = object.getString("available_supply");

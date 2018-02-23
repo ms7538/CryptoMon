@@ -51,162 +51,159 @@ public class Top_100_Activity extends AppCompatActivity {
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_top_100);
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_top_100);
+       AdView mAdView = findViewById(R.id.adView);
+       AdRequest adRequest = new AdRequest.Builder().build();
+       mAdView.loadAd(adRequest);
+
+       final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+
+       final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+       final Integer RED    = ContextCompat.getColor(getApplicationContext(), (R.color.red));
+
+       final DecimalFormat form  = new DecimalFormat("#,###,###,###.##");
+       final DecimalFormat form2 = new DecimalFormat("#.######");
+       final DecimalFormat form3 = new DecimalFormat("#,###,###,###");
+
+       dialog = new ProgressDialog(this);
+       dialog.setMessage("Loading....");
+       dialog.show();
+
+       StringRequest crypto100_request = new StringRequest(LC_url,
+
+               new Response.Listener<String>() {
+                   @Override
+                   public void onResponse(String string) {
+
+                       try {
+                           String price_key      = "price_usd";
+                           String curr_symbol    = "$";
+                           String volume_24h_key = "24h_volume_usd";
+
+                           if(!Dollar){
+                               price_key      = "price_eur";
+                               curr_symbol    = "\u20AC";
+                               volume_24h_key = "24h_volume_eur";
+                           }
+                           rankList = new ArrayList<>();
+                           ListView lv = findViewById(R.id.list);
+
+                           JSONArray T100_Array = new JSONArray(string);
+
+                           for (int i = 0; i < T100_Array.length(); i++) {
+
+                               JSONObject obj1 = T100_Array.getJSONObject(i);
+
+                               String rate       = obj1.getString(price_key);
+                               Double d_rate     = Double.parseDouble(rate);
+                               //
+                               String volume_24h = curr_symbol + form3.format(Double.parseDouble
+                                       (obj1.getString(volume_24h_key)));
+
+                               if (d_rate < .01) rate  = curr_symbol + form2.format(d_rate);
+                               else              rate  = curr_symbol + form.format(d_rate);
+
+                               String name       = obj1.getString("name");
+                               String symbol     = obj1.getString("symbol");
+                               name              = name + " / " + symbol;
+                               String rank       = obj1.getString("rank");
+                               String delta_1h   = obj1.getString("percent_change_1h");
+                               String delta_1d   = obj1.getString("percent_change_24h");
+                               String delta_7d   = obj1.getString("percent_change_7d");
+                               String link_id    = obj1.getString("id");
+
+                               HashMap<String, String> item = new HashMap<>();
+                               item.put("rank",    rank);
+                               item.put("name",    name);
+                               item.put("rate",    rate);
+                               item.put("d1h",     delta_1h);
+                               item.put("d1d",     delta_1d);
+                               item.put("d7_d",    delta_7d);
+                               item.put("24h_vol", volume_24h);
+                               item.put("id_link", link_id);
+                               rankList.add(item);
+                           }
+
+                           String[] from = {"rank","name","rate","d1h",
+                                   "d1d","d7_d","24h_vol","id_link"};
+                           int[] to = {R.id.list_rank, R.id.list_name, R.id.list_rate,
+                                   R.id.h1,R.id.d1,R.id.delta7_d,R.id.list_24h_volume,
+                                   R.id.id_link};
+
+                           ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(),
+                                   rankList, R.layout.list_item, from, to)
+                           {
+
+                               @Override
+                               public View getView(int position, View cnvrtView, ViewGroup parent){
+
+                                   View view = super.getView(position, cnvrtView, parent);
+
+                                   TextView delta_1h = view.findViewById(R.id.h1);
+                                   TextView delta_1d = view.findViewById(R.id.d1);
+                                   TextView delta_7d = view.findViewById(R.id.delta7_d);
+                                   final TextView link_id = view.findViewById(R.id.id_link);
+
+                                   Map<String, String> currentRow = rankList.get(position);
+
+                                   double delta1h = 0;
+                                   if (!Objects.equals(currentRow.get("d1h"), "null")) {
+                                       delta1h = Double.parseDouble(currentRow.get("d1h"));
+                                   }
+                                   if (delta1h < 0) delta_1h.setTextColor(RED);
+                                   else if (delta1h > 0) delta_1h.setTextColor(Color.GREEN);
+
+                                   double delta1d = 0;
+                                   if (!Objects.equals(currentRow.get("d1d"), "null")) {
+                                       delta1d = Double.parseDouble(currentRow.get("d1d"));
+                                   }
+                                   if (delta1d < 0) delta_1d.setTextColor(RED);
+                                   else if (delta1d > 0) delta_1d.setTextColor(Color.GREEN);
+
+                                   double delta7d = 0;
+                                   if (!Objects.equals(currentRow.get("d7_d"), "null")) {
+                                       delta7d = Double.parseDouble(currentRow.get("d7_d"));
+                                   }
+                                   if (delta7d < 0) delta_7d.setTextColor(RED);
+                                   else if (delta7d > 0) delta_7d.setTextColor(Color.GREEN);
+
+                                   link_id.setOnClickListener(new View.OnClickListener() {
+                                       @Override
+                                       public void onClick(View v) {
+                                           Intent intent = new Intent(
+                                                   Top_100_Activity.this,
+                                                   CryptoSelectActivity.class);
+                                           intent.putExtra("crypto_id", link_id.getText());
+                                           Top_100_Activity.this.startActivity(intent);
+                                       }
+                                   });
+                                   dialog.dismiss();
+                                   return view;
+                               }
+                           };
+                           lv.setAdapter(listAdapter);
+                       } catch (JSONException e) {
+                           dialog.dismiss();
+                           e.printStackTrace();
+                       }
+
+                   }
+               }, new Response.ErrorListener() {
+
+           @Override
+           public void onErrorResponse(VolleyError volleyError) {
+               Toast.makeText(getApplicationContext(), "Some error occurred!!",
+                       Toast.LENGTH_SHORT).show();
+               dialog.dismiss();
+           }
+
+       });
+       RequestQueue rQueue = Volley.newRequestQueue(Top_100_Activity.this);
+       rQueue.add(crypto100_request);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-        AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
-        final Integer RED = ContextCompat.getColor(getApplicationContext(),(R.color.red));
-
-        final DecimalFormat form  = new DecimalFormat("#,###,###,###.##");
-        final DecimalFormat form2 = new DecimalFormat("#.######");
-        final DecimalFormat form3  = new DecimalFormat("#,###,###,###");
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading....");
-        dialog.show();
-
-        StringRequest crypto100_request = new StringRequest(LC_url,
-
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String string) {
-
-                        try {
-                            String price_key      = "price_usd";
-                            String curr_symbol    = "$";
-                            String volume_24h_key = "24h_volume_usd";
-
-                            if(!Dollar){
-                                price_key      = "price_eur";
-                                curr_symbol    = "\u20AC";
-                                volume_24h_key = "24h_volume_eur";
-                            }
-                            rankList = new ArrayList<>();
-                            ListView lv = findViewById(R.id.list);
-
-                            JSONArray T100_Array = new JSONArray(string);
-
-                            for (int i = 0; i < T100_Array.length(); i++) {
-
-                                JSONObject obj1 = T100_Array.getJSONObject(i);
-
-                                String rate       = obj1.getString(price_key);
-                                Double d_rate     = Double.parseDouble(rate);
-                                //
-                                String volume_24h = curr_symbol + form3.format(Double.parseDouble
-                                                    (obj1.getString(volume_24h_key)));
-
-                                if (d_rate < .01) rate  = curr_symbol + form2.format(d_rate);
-                                else              rate  = curr_symbol + form.format(d_rate);
-
-                                String name       = obj1.getString("name");
-                                String symbol     = obj1.getString("symbol");
-                                name              = name + " / " + symbol;
-                                String rank       = obj1.getString("rank");
-                                String delta_1h   = obj1.getString("percent_change_1h");
-                                String delta_1d   = obj1.getString("percent_change_24h");
-                                String delta_7d   = obj1.getString("percent_change_7d");
-                                String link_id    = obj1.getString("id");
-
-                                HashMap<String, String> item = new HashMap<>();
-                                item.put("rank",    rank);
-                                item.put("name",    name);
-                                item.put("rate",    rate);
-                                item.put("d1h",     delta_1h);
-                                item.put("d1d",     delta_1d);
-                                item.put("d7_d",    delta_7d);
-                                item.put("24h_vol", volume_24h);
-                                item.put("id_link", link_id);
-                                rankList.add(item);
-                            }
-
-                            String[] from = {"rank","name","rate","d1h",
-                                             "d1d","d7_d","24h_vol","id_link"};
-                            int[] to = {R.id.list_rank, R.id.list_name, R.id.list_rate,
-                                    R.id.h1,R.id.d1,R.id.delta7_d,R.id.list_24h_volume,
-                                    R.id.id_link};
-
-                            ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(),
-                                    rankList, R.layout.list_item, from, to)
-                            {
-
-                                @Override
-                                public View getView(int position, View cnvrtView, ViewGroup parent){
-
-                                    View view = super.getView(position, cnvrtView, parent);
-
-                                    TextView delta_1h = view.findViewById(R.id.h1);
-                                    TextView delta_1d = view.findViewById(R.id.d1);
-                                    TextView delta_7d = view.findViewById(R.id.delta7_d);
-                                    final TextView link_id = view.findViewById(R.id.id_link);
-
-                                    Map<String, String> currentRow = rankList.get(position);
-
-                                    double delta1h = 0;
-                                    if (!Objects.equals(currentRow.get("d1h"), "null")) {
-                                        delta1h = Double.parseDouble(currentRow.get("d1h"));
-                                    }
-                                    if (delta1h < 0) delta_1h.setTextColor(RED);
-                                    else if (delta1h > 0) delta_1h.setTextColor(Color.GREEN);
-
-                                    double delta1d = 0;
-                                    if (!Objects.equals(currentRow.get("d1d"), "null")) {
-                                        delta1d = Double.parseDouble(currentRow.get("d1d"));
-                                    }
-                                    if (delta1d < 0) delta_1d.setTextColor(RED);
-                                    else if (delta1d > 0) delta_1d.setTextColor(Color.GREEN);
-
-                                    double delta7d = 0;
-                                    if (!Objects.equals(currentRow.get("d7_d"), "null")) {
-                                        delta7d = Double.parseDouble(currentRow.get("d7_d"));
-                                    }
-                                    if (delta7d < 0) delta_7d.setTextColor(RED);
-                                    else if (delta7d > 0) delta_7d.setTextColor(Color.GREEN);
-
-                                    link_id.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent(
-                                                    Top_100_Activity.this,
-                                                    CryptoSelectActivity.class);
-                                            intent.putExtra("crypto_id", link_id.getText());
-                                            Top_100_Activity.this.startActivity(intent);
-                                        }
-                                    });
-                                    dialog.dismiss();
-                                    return view;
-                                }
-                            };
-                            lv.setAdapter(listAdapter);
-                        } catch (JSONException e) {
-                            dialog.dismiss();
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getApplicationContext(), "Some error occurred!!",
-                        Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-
-        });
-        RequestQueue rQueue = Volley.newRequestQueue(Top_100_Activity.this);
-        rQueue.add(crypto100_request);
-
-   }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top100_settings_menu, menu);
@@ -221,6 +218,10 @@ public class Top_100_Activity extends AppCompatActivity {
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
 
         switch (item.getItemId()) {
+
+            case R.id.action_refresh:
+                restart();
+                return true;
 
             case R.id.action_subreddits:
 
