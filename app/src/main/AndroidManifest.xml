@@ -33,6 +33,7 @@
         </activity>
         <activity
             android:name=".CryptoSelectActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Top_100_Activity"
             />
 
