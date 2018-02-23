@@ -22,10 +22,10 @@
         android:id="@+id/sel_crypto_coinmarketcap_link"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
         android:gravity="center"
-        android:layout_marginBottom="11dp"
         android:text="@string/coinmarketcap"
-        android:textColor="@color/navy_blue"
+        android:textColor="@android:color/holo_blue_bright"
         android:textSize="15sp" />
 
     <com.google.android.gms.ads.AdView
@@ -34,8 +34,9 @@
         android:layout_height="wrap_content"
         android:background="@color/delta_col"
         android:foregroundGravity="center"
+        android:layout_marginBottom="15dp"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id" />
+        ads:adUnitId="@string/banner_ad_unit_id2" />
 
     <ScrollView
         android:layout_width="match_parent"

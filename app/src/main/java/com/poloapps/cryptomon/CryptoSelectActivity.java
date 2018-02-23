@@ -36,13 +36,14 @@ public class CryptoSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crypto_select);
 
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
     }
     @Override
     public void onResume() {
         super.onResume();
-        AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         String crypto_id = getIntent().getStringExtra("crypto_id");
         String Select_url = Select_url1 + crypto_id + Select_url2;
