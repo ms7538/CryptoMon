@@ -117,4 +117,7 @@
     <string name="total_supply">Total Supply:</string>
     <string name="max_supply">Max. Supply:</string>
     <string name="spacer">-----------</string>
+    <string name="delta_1_hour">Delta 1 Hour:</string>
+    <string name="delta_24_hours">Delta 24 Hours:</string>
+    <string name="delta_7_days">Delta 7 Days:</string>
 </resources>

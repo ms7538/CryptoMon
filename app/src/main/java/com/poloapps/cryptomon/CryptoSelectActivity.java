@@ -64,18 +64,6 @@ public class CryptoSelectActivity extends AppCompatActivity {
         final TextView TotalSupply   = findViewById(R.id.select_total_supply);
         final TextView MaxSupply     = findViewById(R.id.select_max_supply);
 
-//        "24h_volume_usd": "971060000.0",
-//                "market_cap_usd": "10388872556.0",
-//                "percent_change_1h": "1.27",
-//                "percent_change_24h": "-14.39",
-//                "percent_change_7d": "-13.7",
-//                "last_updated": "1,519,352,341",
-//                "24h_volume_eur": "787558791.8",
-//                "market_cap_eur": "8425687309.0"
-
-
-
-
         final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
         CMC_link.setPaintFlags(CMC_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 

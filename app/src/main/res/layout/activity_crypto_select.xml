@@ -41,7 +41,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"
+        android:background="@color/delta_col"
         android:scrollbarThumbVertical="@color/green2">
 
         <LinearLayout
@@ -193,7 +193,93 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="28dp">
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_delta_1h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/l3col"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_delta_1h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_delta_1h"
+                    android:layout_alignBottom="@+id/select_delta_1h"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/delta_1_hour"
+                    android:textColor="@color/l3col"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_delta_24h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_delta_24h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_delta_24h"
+                    android:layout_alignBottom="@+id/select_delta_24h"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/delta_24_hours"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_delta_7d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/l3col"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_delta_7d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_delta_7d"
+                    android:layout_alignBottom="@+id/select_delta_7d"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/delta_7_days"
+                    android:textColor="@color/l3col"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/spacer"
+                android:textColor="@color/green2" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
 
                 <TextView
                     android:id="@+id/select_avail_supply"
