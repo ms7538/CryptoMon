@@ -42,7 +42,7 @@ import java.util.Objects;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-//v0.85  created
+//v0.86  created
 public class Top_100_Activity extends AppCompatActivity {
 
     String LC_url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR";
