@@ -21,6 +21,9 @@ import com.google.android.gms.ads.AdView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 import java.text.DecimalFormat;
@@ -54,6 +57,9 @@ public class CryptoSelectActivity extends AppCompatActivity {
 
         final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
         final DecimalFormat frmt2 = new DecimalFormat("#.########");
+        final DecimalFormat frmt3  = new DecimalFormat("#,###,###,###,###");
+
+        final TextView Time          = findViewById(R.id.select_update_time);
 
         final TextView Name          = findViewById(R.id.select_name);
         final TextView Rank          = findViewById(R.id.select_rank);
@@ -71,6 +77,11 @@ public class CryptoSelectActivity extends AppCompatActivity {
         final TextView Delta1d       = findViewById(R.id.select_delta_24h);
         final TextView Delta7d       = findViewById(R.id.select_delta_7d);
 
+        final TextView VolumeUSD     = findViewById(R.id.select_24h_vol_usd);
+        final TextView VolumeEUR     = findViewById(R.id.select_24h_vol_eur);
+
+        final TextView MarketCapUSD     = findViewById(R.id.select_market_cap_usd);
+        final TextView MarketCapEUR     = findViewById(R.id.select_market_cap_eur);
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading....");
@@ -173,6 +184,50 @@ public class CryptoSelectActivity extends AppCompatActivity {
                                 Max_Supply = frmt.format(Double.parseDouble(Max_Supply_val));
                             }
                             MaxSupply.setText(Max_Supply);
+
+
+                            String USD_Volume = "Not Available";
+                            String USD_Volume_val = object.getString("24h_volume_usd");
+                            if (!Objects.equals(USD_Volume_val, "null")) {
+                                USD_Volume = "$" + frmt3.format(Double.parseDouble(USD_Volume_val));
+                            }
+                            VolumeUSD.setText(USD_Volume);
+
+                            String EUR_Volume = "Not Available";
+                            String EUR_Volume_val = object.getString("24h_volume_eur");
+                            if (!Objects.equals(EUR_Volume_val, "null")) {
+                                EUR_Volume = "\u20AC" +
+                                             frmt3.format(Double.parseDouble(EUR_Volume_val));
+                            }
+                            VolumeEUR.setText(EUR_Volume);
+
+                            String USD_MarketCap = "Not Available";
+                            String USD_MarketCap_val = object.getString("market_cap_usd");
+                            if (!Objects.equals(USD_MarketCap_val, "null")) {
+                                USD_MarketCap = "$" +
+                                                frmt3.format(Double.parseDouble(USD_MarketCap_val));
+                            }
+                            MarketCapUSD.setText(USD_MarketCap);
+
+                            String EUR_MarketCap = "Not Available";
+                            String EUR_MarketCap_val = object.getString("market_cap_eur");
+                            if (!Objects.equals(EUR_MarketCap_val, "null")) {
+                                EUR_MarketCap = "\u20AC" +
+                                        frmt3.format(Double.parseDouble(EUR_MarketCap_val));
+                            }
+                            MarketCapEUR.setText(EUR_MarketCap);
+
+
+
+                            long last_update = Long.parseLong(
+                                                object.getString("last_updated")) *1000L;
+
+                            String lastUpdateString =
+                                    DateFormat.getDateTimeInstance().format( new Date(last_update));
+
+                            Time.setText(lastUpdateString);
+
+
 
                             dialog.dismiss();
 

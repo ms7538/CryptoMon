@@ -27,7 +27,7 @@
     <color name="fade3"         >#ecbe00</color>
     <color name="fade4"         >#e5dc00</color>
     <color name="fade5"         >#f0ff00</color>
-    <color name="delta_col"     >#231938</color>
+    <color name="delta_col"     >#220d20</color>
     <color name="light_blue"    >#edf9fb</color>
     <color name="price_bg_col"  >#E3DCD6</color>
 </resources>

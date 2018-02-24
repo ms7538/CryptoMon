@@ -121,4 +121,9 @@
     <string name="delta_24_hours">Delta 24 Hours:</string>
     <string name="delta_7_days">Delta 7 Days:</string>
     <string name="refresh">Refresh</string>
+    <string name="_24h_volume_usd">24h Volume USD:</string>
+    <string name="_24h_volume_eur">24h Volume EUR:</string>
+    <string name="market_cap_usd">Market Cap USD:</string>
+    <string name="market_cap_eur">Market Cap EUR:</string>
+    <string name="updated">Updated:</string>
 </resources>
