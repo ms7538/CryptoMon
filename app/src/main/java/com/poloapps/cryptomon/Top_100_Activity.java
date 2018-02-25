@@ -45,14 +45,16 @@ import com.google.android.gms.ads.AdView;
 //v0.86  created
 public class Top_100_Activity extends AppCompatActivity {
 
-    String LC_url = "https://api.coinmarketcap.com/v1/ticker/?convert=EUR";
-    ProgressDialog dialog;
     ArrayList<HashMap<String, String>> rankList;
+    ProgressDialog dialog;
 
-   @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        setContentView(R.layout.activity_top_100);
+
+       String LC_url = "https://api.coinmarketcap.com/v1/ticker/";
+
        AdView mAdView = findViewById(R.id.adView);
        AdRequest adRequest = new AdRequest.Builder().build();
        mAdView.loadAd(adRequest);
@@ -60,7 +62,10 @@ public class Top_100_Activity extends AppCompatActivity {
        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
 
        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+       final String  Curr   = mSettings.getString("Curr_code","eur");
        final Integer RED    = ContextCompat.getColor(getApplicationContext(), (R.color.red));
+
+       if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
 
        final DecimalFormat form  = new DecimalFormat("#,###,###,###.##");
        final DecimalFormat form2 = new DecimalFormat("#.######");
@@ -82,9 +87,9 @@ public class Top_100_Activity extends AppCompatActivity {
                            String volume_24h_key = "24h_volume_usd";
 
                            if(!Dollar){
-                               price_key      = "price_eur";
-                               curr_symbol    = "\u20AC";
-                               volume_24h_key = "24h_volume_eur";
+                               price_key      = "price_" + Curr;
+                               curr_symbol    = mSettings.getString("Curr_symb","€");
+                               volume_24h_key = "24h_volume_" + Curr;
                            }
                            rankList = new ArrayList<>();
                            ListView lv = findViewById(R.id.list);
@@ -97,9 +102,8 @@ public class Top_100_Activity extends AppCompatActivity {
 
                                String rate       = obj1.getString(price_key);
                                Double d_rate     = Double.parseDouble(rate);
-                               //
                                String volume_24h = curr_symbol + form3.format(Double.parseDouble
-                                       (obj1.getString(volume_24h_key)));
+                                                   (obj1.getString(volume_24h_key)));
 
                                if (d_rate < .01) rate  = curr_symbol + form2.format(d_rate);
                                else              rate  = curr_symbol + form.format(d_rate);
@@ -216,6 +220,7 @@ public class Top_100_Activity extends AppCompatActivity {
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Curr   = mSettings.getString("Curr_code","eur");
 
         switch (item.getItemId()) {
 
@@ -306,21 +311,43 @@ public class Top_100_Activity extends AppCompatActivity {
                 View mView2 = getLayoutInflater().inflate(R.layout.currency_diag, null);
                 builder.setView(mView2);
 
-                final AlertDialog dialog2 = builder.create();
-                final RadioButton Currency_Dollar = mView2.findViewById(R.id.radio_currency_dollar);
-                final RadioButton Currency_Euro = mView2.findViewById(R.id.radio_currency_euro);
-                if (Dollar) Currency_Dollar.setChecked(true);
-                else Currency_Euro.setChecked(true);
+                final AlertDialog dialog2  = builder.create();
+                final RadioButton RadioUSD = mView2.findViewById(R.id.radio_currency_usd);
+                final RadioButton RadioEUR = mView2.findViewById(R.id.radio_currency_eur);
+                final RadioButton RadioJPY = mView2.findViewById(R.id.radio_currency_jpy);
+                final RadioButton RadioGBP = mView2.findViewById(R.id.radio_currency_gbp);
+
+                if (Dollar) RadioUSD.setChecked(true);
+                else if (Objects.equals(Curr, "eur")) RadioEUR.setChecked(true);
+                else if (Objects.equals(Curr, "jpy")) RadioJPY.setChecked(true);
+                else if (Objects.equals(Curr, "gbp")) RadioGBP.setChecked(true);
 
                 Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
                 Unit_OK.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View arg0) {
+
                         Boolean Dollar_Sel = false;
-                        if (Currency_Dollar.isChecked()) Dollar_Sel = true;
+                        String nonUSD_code = "eur";
+                        String nonUSD_symb = "€";
+
+                        if (RadioUSD.isChecked()) Dollar_Sel = true;
+
+                        else if (RadioJPY.isChecked()) {
+                            nonUSD_code = "jpy";
+                            nonUSD_symb = "¥";
+                        }
+                        else if (RadioGBP.isChecked()) {
+                            nonUSD_code = "gbp";
+                            nonUSD_symb = "£";
+                        }
+
+                        editor.putString("Curr_code",nonUSD_code);
+                        editor.putString("Curr_symb",nonUSD_symb);
                         editor.putBoolean("Dollar", Dollar_Sel);
                         editor.apply();
+
                         dialog2.dismiss();
                         restart();
                     }});

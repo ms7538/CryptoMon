@@ -80,8 +80,8 @@ public class CryptoSelectActivity extends AppCompatActivity {
         final TextView VolumeUSD     = findViewById(R.id.select_24h_vol_usd);
         final TextView VolumeEUR     = findViewById(R.id.select_24h_vol_eur);
 
-        final TextView MarketCapUSD     = findViewById(R.id.select_market_cap_usd);
-        final TextView MarketCapEUR     = findViewById(R.id.select_market_cap_eur);
+        final TextView MarketCapUSD  = findViewById(R.id.select_market_cap_usd);
+        final TextView MarketCapEUR  = findViewById(R.id.select_market_cap_eur);
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading....");
@@ -125,7 +125,7 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             PriceBTC.setText(Price_BTC);
 
 
-                            String Delta_1h = "Not Available";
+                            String Delta_1h = getString(R.string.not_avail);
                             String Delta_1h_val = object.getString("percent_change_1h");
                             if (!Objects.equals(Delta_1h_val, "null")) {
                                 Delta_1h = Delta_1h_val + "%";
@@ -138,7 +138,7 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             }
                             Delta1h.setText(Delta_1h);
 
-                            String Delta_1d = "Not Available";
+                            String Delta_1d = getString(R.string.not_avail);
                             String Delta_1d_val = object.getString("percent_change_24h");
                             if (!Objects.equals(Delta_1d_val, "null")) {
                                 Delta_1d = Delta_1d_val + "%";
@@ -151,7 +151,7 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             }
                             Delta1d.setText(Delta_1d);
 
-                            String Delta_7d = "Not Available";
+                            String Delta_7d = getString(R.string.not_avail);
                             String Delta_7d_val = object.getString("percent_change_7d");
                             if (!Objects.equals(Delta_7d_val, "null")) {
                                 Delta_7d = Delta_7d_val + "%";
@@ -164,21 +164,21 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             }
                             Delta7d.setText(Delta_7d);
 
-                            String Av_Supply = "Not Available";
+                            String Av_Supply = getString(R.string.not_avail);
                             String Av_Supply_val = object.getString("available_supply");
                             if (!Objects.equals(Av_Supply_val, "null")) {
                                 Av_Supply = frmt.format(Double.parseDouble(Av_Supply_val));
                             }
                             AvailSupply.setText(Av_Supply);
 
-                            String T_Supply  = "Not Available";
+                            String T_Supply  = getString(R.string.not_avail);
                             String T_Supply_val = object.getString("total_supply");
                             if (!Objects.equals(T_Supply_val, "null")) {
                                 T_Supply = frmt.format(Double.parseDouble(T_Supply_val));
                             }
                             TotalSupply.setText(T_Supply);
 
-                            String Max_Supply  = "Not Available";
+                            String Max_Supply  = getString(R.string.not_avail);
                             String Max_Supply_val = object.getString("max_supply");
                             if (!Objects.equals(Max_Supply_val, "null")) {
                                 Max_Supply = frmt.format(Double.parseDouble(Max_Supply_val));
@@ -186,14 +186,14 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             MaxSupply.setText(Max_Supply);
 
 
-                            String USD_Volume = "Not Available";
+                            String USD_Volume = getString(R.string.not_avail);
                             String USD_Volume_val = object.getString("24h_volume_usd");
                             if (!Objects.equals(USD_Volume_val, "null")) {
                                 USD_Volume = "$" + frmt3.format(Double.parseDouble(USD_Volume_val));
                             }
                             VolumeUSD.setText(USD_Volume);
 
-                            String EUR_Volume = "Not Available";
+                            String EUR_Volume = getString(R.string.not_avail);
                             String EUR_Volume_val = object.getString("24h_volume_eur");
                             if (!Objects.equals(EUR_Volume_val, "null")) {
                                 EUR_Volume = "\u20AC" +
@@ -201,7 +201,7 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             }
                             VolumeEUR.setText(EUR_Volume);
 
-                            String USD_MarketCap = "Not Available";
+                            String USD_MarketCap = getString(R.string.not_avail);
                             String USD_MarketCap_val = object.getString("market_cap_usd");
                             if (!Objects.equals(USD_MarketCap_val, "null")) {
                                 USD_MarketCap = "$" +
@@ -209,7 +209,7 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             }
                             MarketCapUSD.setText(USD_MarketCap);
 
-                            String EUR_MarketCap = "Not Available";
+                            String EUR_MarketCap = getString(R.string.not_avail);
                             String EUR_MarketCap_val = object.getString("market_cap_eur");
                             if (!Objects.equals(EUR_MarketCap_val, "null")) {
                                 EUR_MarketCap = "\u20AC" +
@@ -226,7 +226,6 @@ public class CryptoSelectActivity extends AppCompatActivity {
                                     DateFormat.getDateTimeInstance().format( new Date(last_update));
 
                             Time.setText(lastUpdateString);
-
 
 
                             dialog.dismiss();

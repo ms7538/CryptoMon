@@ -19,14 +19,15 @@
     <string name="cryptos_display_link">https://coinmarketcap.com/currencies/</string>
     <string name="subreddit_link_text">https://www.reddit.com/r/</string>
     <string name="currency">Currency:</string>
-    <string name="dollars">($) Dollar</string>
-    <string name="euro">(\u20AC) Euro</string>
+    <string name="dollars">($) USD / United States Dollar</string>
+    <string name="euro">(€) EUR / Euro</string>
     <string name="ok">OK</string>
     <string name="currency_sel">Currencies</string>
     <string name="banner_ad_unit_id">ca-app-pub-6002737231550640/6485035382</string>
     <string name="banner_ad_unit_id2">ca-app-pub-6002737231550640/5401674534</string>
     <string name="subreddit_links">Subreddit Links</string>
     <string name="reddit_links">Reddit Links</string>
+    <string name="not_avail">Not Available</string>
     <string name="r_cryptocurrency">r/CryptoCurrency</string>
     <string name="r_bitcoin">r/Bitcoin</string>
     <string name="r_ethereum">r/ethereum</string>
@@ -126,4 +127,7 @@
     <string name="market_cap_usd">Market Cap USD:</string>
     <string name="market_cap_eur">Market Cap EUR:</string>
     <string name="updated">Updated:</string>
+    <string name="jpy">￥</string>
+    <string name="jpy_japanese_yen">(¥) JPY / Japanese Yen</string>
+    <string name="gbp_pound_sterling">(£) GBP / Pound Sterling</string>
 </resources>

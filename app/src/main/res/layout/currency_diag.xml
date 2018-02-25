@@ -18,19 +18,32 @@
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/radio_currency_dollar"
+            android:id="@+id/radio_currency_usd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/dollars" />
 
         <RadioButton
-            android:id="@+id/radio_currency_euro"
+            android:id="@+id/radio_currency_eur"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/euro" />
 
+        <RadioButton
+            android:id="@+id/radio_currency_jpy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/jpy_japanese_yen" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_gbp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/gbp_pound_sterling" />
     </RadioGroup>
 
     <Button
