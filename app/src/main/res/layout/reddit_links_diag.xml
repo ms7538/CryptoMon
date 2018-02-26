@@ -6,13 +6,6 @@
     android:background="@android:color/black"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/dismiss_btn_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/green2"
-        android:text="@string/back" />
-
     <TextView
         android:id="@+id/bg_dk_select_text"
         android:layout_width="match_parent"
@@ -25,7 +18,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="350dp"
         android:scrollbarThumbVertical="@color/green2"
         android:fadeScrollbars="false"
         android:orientation="vertical">
@@ -779,10 +772,13 @@
                 android:textColor="@color/green2"
                 android:textSize="15sp" />
 
-
         </LinearLayout>
-
     </ScrollView>
 
+    <Button
+        android:id="@+id/dismiss_btn_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back" />
 
 </LinearLayout>

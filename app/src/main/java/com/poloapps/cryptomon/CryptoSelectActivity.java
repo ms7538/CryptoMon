@@ -70,29 +70,28 @@ public class CryptoSelectActivity extends BaseActivity {
         final DecimalFormat frmt2 = new DecimalFormat("#.########");
         final DecimalFormat frmt3 = new DecimalFormat("#,###,###,###,###");
 
-        final TextView Time          = findViewById(R.id.select_update_time);
-        final TextView Name          = findViewById(R.id.select_name);
-        final TextView Rank          = findViewById(R.id.select_rank);
-        final TextView Symbol        = findViewById(R.id.select_symbol);
+        final TextView Time                = findViewById(R.id.select_update_time);
+        final TextView Name                = findViewById(R.id.select_name);
+        final TextView Rank                = findViewById(R.id.select_rank);
+        final TextView Symbol              = findViewById(R.id.select_symbol);
 
-        final TextView PriceUSD      = findViewById(R.id.select_price_usd);
-        final TextView PriceEUR      = findViewById(R.id.select_price_eur);
+        final TextView PriceUSD            = findViewById(R.id.select_price_usd);
+        final TextView PriceEUR            = findViewById(R.id.select_price_eur);
+        final TextView PriceBTC            = findViewById(R.id.select_price_btc);
 
-        final TextView PriceBTC      = findViewById(R.id.select_price_btc);
+        final TextView AvailSupply         = findViewById(R.id.select_avail_supply);
+        final TextView TotalSupply         = findViewById(R.id.select_total_supply);
+        final TextView MaxSupply           = findViewById(R.id.select_max_supply);
 
-        final TextView AvailSupply   = findViewById(R.id.select_avail_supply);
-        final TextView TotalSupply   = findViewById(R.id.select_total_supply);
-        final TextView MaxSupply     = findViewById(R.id.select_max_supply);
+        final TextView Delta1h             = findViewById(R.id.select_delta_1h);
+        final TextView Delta1d             = findViewById(R.id.select_delta_24h);
+        final TextView Delta7d             = findViewById(R.id.select_delta_7d);
 
-        final TextView Delta1h       = findViewById(R.id.select_delta_1h);
-        final TextView Delta1d       = findViewById(R.id.select_delta_24h);
-        final TextView Delta7d       = findViewById(R.id.select_delta_7d);
+        final TextView VolumeUSD           = findViewById(R.id.select_24h_vol_usd);
+        final TextView VolumeEUR           = findViewById(R.id.select_24h_vol_eur);
 
-        final TextView VolumeUSD     = findViewById(R.id.select_24h_vol_usd);
-        final TextView VolumeEUR     = findViewById(R.id.select_24h_vol_eur);
-
-        final TextView MarketCapUSD  = findViewById(R.id.select_market_cap_usd);
-        final TextView MarketCapEUR  = findViewById(R.id.select_market_cap_eur);
+        final TextView MarketCapUSD        = findViewById(R.id.select_market_cap_usd);
+        final TextView MarketCapEUR        = findViewById(R.id.select_market_cap_eur);
 
         final TextView price_NUSD_TV       = findViewById(R.id.textView_price_eur);
         final TextView volume_NUSD_TV      = findViewById(R.id.textView_24h_vol_eur);

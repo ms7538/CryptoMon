@@ -13,6 +13,13 @@
         android:textColor="@android:color/black"
         android:textSize="25sp" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="250sp"
+        android:scrollbarThumbVertical="@color/navy_blue"
+        android:fadeScrollbars="false"
+        android:orientation="vertical">
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -44,7 +51,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/gbp_pound_sterling" />
+
+
+
     </RadioGroup>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/Units_OK_btn"
