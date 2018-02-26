@@ -200,4 +200,34 @@ public class Top_100_Activity extends BaseActivity {
        rQueue.add(crypto100_request);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Curr   = mSettings.getString("Curr_code","eur");
+
+        String T100_currency = "usd";
+        if(!Dollar) T100_currency = Curr;
+        editor.putString("t100_curr",T100_currency);
+        editor.apply();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Curr   = mSettings.getString("Curr_code","eur");
+        final String  T100   = mSettings.getString("t100_curr","usd");
+
+        String currency_check = "usd";
+        if(!Dollar) currency_check = Curr;
+
+        if (!Objects.equals(T100, currency_check)) restart();
+
+    }
+
 }

@@ -60,7 +60,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:text="@string/x"
-            android:textColor="@color/white"
+            android:textColor="@color/bright_yellow"
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -75,8 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -113,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/x"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/bright_yellow"
                     android:textSize="16sp"
                     tools:ignore="RelativeOverlap" />
 
@@ -123,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:text="@string/symbol"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/bright_yellow"
                     android:textSize="14sp" />
             </RelativeLayout>
 
@@ -242,7 +240,7 @@
                     android:layout_alignBottom="@+id/select_delta_1h"
                     android:layout_alignParentStart="true"
                     android:text="@string/delta_1_hour"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/bright_yellow"
                     android:textSize="14sp" />
 
             </RelativeLayout>
@@ -295,7 +293,7 @@
                     android:layout_alignBottom="@+id/select_delta_7d"
                     android:layout_alignParentStart="true"
                     android:text="@string/delta_7_days"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/bright_yellow"
                     android:textSize="14sp" />
             </RelativeLayout>
 
@@ -316,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/x"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/bright_yellow"
                     android:textSize="16sp"
                     tools:ignore="RelativeOverlap" />
 
@@ -328,7 +326,7 @@
                     android:layout_alignBottom="@+id/select_avail_supply"
                     android:layout_alignParentStart="true"
                     android:text="@string/avail_supply"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/bright_yellow"
                     android:textSize="14sp" />
             </RelativeLayout>
 
@@ -368,7 +366,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="@string/x"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/bright_yellow"
                     android:textSize="16sp"
                     tools:ignore="RelativeOverlap" />
 
@@ -380,7 +378,7 @@
                     android:layout_alignBottom="@+id/select_max_supply"
                     android:layout_alignParentStart="true"
                     android:text="@string/max_supply"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/bright_yellow"
                     android:textSize="14sp" />
 
             </RelativeLayout>
