@@ -35,7 +35,7 @@ import java.util.Objects;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-//v0.86  created
+//v0.9  created
 public class Top_100_Activity extends BaseActivity {
 
     ArrayList<HashMap<String, String>> rankList;
