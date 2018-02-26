@@ -131,11 +131,31 @@ public abstract class BaseActivity extends AppCompatActivity {
                 final RadioButton RadioEUR = mView2.findViewById(R.id.radio_currency_eur);
                 final RadioButton RadioJPY = mView2.findViewById(R.id.radio_currency_jpy);
                 final RadioButton RadioGBP = mView2.findViewById(R.id.radio_currency_gbp);
+                final RadioButton RadioAUD = mView2.findViewById(R.id.radio_currency_aud);
+                final RadioButton RadioCAD = mView2.findViewById(R.id.radio_currency_cad);
+                final RadioButton RadioCHF = mView2.findViewById(R.id.radio_currency_chf);
+                final RadioButton RadioCNY = mView2.findViewById(R.id.radio_currency_cny);
+                final RadioButton RadioSEK = mView2.findViewById(R.id.radio_currency_sek);
+                final RadioButton RadioNZD = mView2.findViewById(R.id.radio_currency_nzd);
+                final RadioButton RadioKRW = mView2.findViewById(R.id.radio_currency_krw);
+                final RadioButton RadioTRY = mView2.findViewById(R.id.radio_currency_try);
+                final RadioButton RadioRUB = mView2.findViewById(R.id.radio_currency_rub);
+                final RadioButton RadioINR = mView2.findViewById(R.id.radio_currency_inr);
 
                 if (Dollar) RadioUSD.setChecked(true);
                 else if (Objects.equals(Curr, "eur")) RadioEUR.setChecked(true);
                 else if (Objects.equals(Curr, "jpy")) RadioJPY.setChecked(true);
                 else if (Objects.equals(Curr, "gbp")) RadioGBP.setChecked(true);
+                else if (Objects.equals(Curr, "aud")) RadioAUD.setChecked(true);
+                else if (Objects.equals(Curr, "cad")) RadioCAD.setChecked(true);
+                else if (Objects.equals(Curr, "chf")) RadioCHF.setChecked(true);
+                else if (Objects.equals(Curr, "cny")) RadioCNY.setChecked(true);
+                else if (Objects.equals(Curr, "sek")) RadioSEK.setChecked(true);
+                else if (Objects.equals(Curr, "nzd")) RadioNZD.setChecked(true);
+                else if (Objects.equals(Curr, "krw")) RadioKRW.setChecked(true);
+                else if (Objects.equals(Curr, "try")) RadioTRY.setChecked(true);
+                else if (Objects.equals(Curr, "rub")) RadioRUB.setChecked(true);
+                else if (Objects.equals(Curr, "inr")) RadioINR.setChecked(true);
 
                 Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
                 Unit_OK.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +176,46 @@ public abstract class BaseActivity extends AppCompatActivity {
                         else if (RadioGBP.isChecked()) {
                             nonUSD_code = "gbp";
                             nonUSD_symb = "£";
+                        }
+                        else if (RadioAUD.isChecked()) {
+                            nonUSD_code = "aud";
+                            nonUSD_symb = "A$";
+                        }
+                        else if (RadioCAD.isChecked()) {
+                            nonUSD_code = "cad";
+                            nonUSD_symb = "C$";
+                        }
+                        else if (RadioCHF.isChecked()) {
+                            nonUSD_code = "chf";
+                            nonUSD_symb = "Fr";
+                        }
+                        else if (RadioCNY.isChecked()) {
+                            nonUSD_code = "cny";
+                            nonUSD_symb = "元";
+                        }
+                        else if (RadioSEK.isChecked()) {
+                            nonUSD_code = "sek";
+                            nonUSD_symb = "kr";
+                        }
+                        else if (RadioNZD.isChecked()) {
+                            nonUSD_code = "nzd";
+                            nonUSD_symb = "NZ$";
+                        }
+                        else if (RadioKRW.isChecked()) {
+                            nonUSD_code = "krw";
+                            nonUSD_symb = "₩";
+                        }
+                        else if (RadioTRY.isChecked()) {
+                            nonUSD_code = "try";
+                            nonUSD_symb = "₺";
+                        }
+                        else if (RadioRUB.isChecked()) {
+                            nonUSD_code = "rub";
+                            nonUSD_symb = "\u20BD";
+                        }
+                        else if (RadioINR.isChecked()) {
+                            nonUSD_code = "inr";
+                            nonUSD_symb = "₹";
                         }
 
                         editor.putString("Curr_code",nonUSD_code);

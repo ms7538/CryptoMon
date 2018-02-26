@@ -134,6 +134,16 @@
     <string name="market_cap_">Market Cap </string>
     <string name="vol24h_">24h Volume </string>
     <string name="colon">:</string>
+    <string name="a_aud_australian_dollar">(A$) AUD / Australian Dollar</string>
+    <string name="c_cad_canadian_dollar">(C$) CAD / Canadian Dollar</string>
+    <string name="fr_chf_swiss_franc">(Fr) CHF / Swiss Franc</string>
+    <string name="cny_renminbi">(元) CNY / Renminbi</string>
+    <string name="kr_sek_swedish_krona">(kr) SEK / Swedish Krona</string>
+    <string name="nz_nzd_new_zealand_dollar">(NZ$) NZD / New Zealand Dollar</string>
+    <string name="krw_s_korean_won">(₩) KRW / S. Korean Won</string>
+    <string name="try_turkish_lira">(₺) TRY / Turkish Lira</string>
+    <string name="rub_russian_ruble">(₽) RUB / Russian Ruble</string>
+    <string name="indian_rupee">(₹) Indian Rupee</string>
 
 
 </resources>
