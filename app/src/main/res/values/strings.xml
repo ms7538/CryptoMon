@@ -112,7 +112,7 @@
     <string name="name2">NAME</string>
     <string name="symbol">Symbol:</string>
     <string name="price_usd">Price USD:</string>
-    <string name="price_eur">Price EUR:</string>
+    <string name="price_eur">Price TBD:</string>
     <string name="price_btc">Price BTC:</string>
     <string name="avail_supply">Avail. Supply:</string>
     <string name="total_supply">Total Supply:</string>
@@ -123,11 +123,17 @@
     <string name="delta_7_days">Delta 7 Days:</string>
     <string name="refresh">Refresh</string>
     <string name="_24h_volume_usd">24h Volume USD:</string>
-    <string name="_24h_volume_eur">24h Volume EUR:</string>
+    <string name="_24h_volume_eur">24h Volume TBD:</string>
     <string name="market_cap_usd">Market Cap USD:</string>
-    <string name="market_cap_eur">Market Cap EUR:</string>
+    <string name="market_cap_eur">Market Cap TBD:</string>
     <string name="updated">Updated:</string>
     <string name="jpy">￥</string>
     <string name="jpy_japanese_yen">(¥) JPY / Japanese Yen</string>
     <string name="gbp_pound_sterling">(£) GBP / Pound Sterling</string>
+    <string name="price_">Price </string>
+    <string name="market_cap_">Market Cap </string>
+    <string name="vol24h_">24h Volume </string>
+    <string name="colon">:</string>
+
+
 </resources>

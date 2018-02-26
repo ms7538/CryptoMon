@@ -2,6 +2,7 @@ package com.poloapps.cryptomon;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -29,8 +30,7 @@ import java.util.Objects;
 import java.text.DecimalFormat;
 
 public class CryptoSelectActivity extends AppCompatActivity {
-    String Select_url1 = "https://api.coinmarketcap.com/v1/ticker/";
-    String Select_url2 = "/?convert=EUR";
+
     ProgressDialog dialog;
 
 
@@ -48,25 +48,37 @@ public class CryptoSelectActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final String Curr          = mSettings.getString("Curr_code","eur");
+        String CAP_curr            = Curr.toUpperCase();
+        final String Curr_symbol   = mSettings.getString("Curr_symb","€");
+        String Select_url1         = "https://api.coinmarketcap.com/v1/ticker/";
+        String Select_url2         = "/?convert=" + Curr;
+
+        final String price_key_nonUSD      = "price_" + Curr;
+        final String volume_key_nonUSD     = "24h_volume_" + Curr;
+        final String market_cap_key_nonUSD = "market_cap_" + Curr;
+
         final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
         CMC_link.setPaintFlags(CMC_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        String crypto_id = getIntent().getStringExtra("crypto_id");
-        String Select_url = Select_url1 + crypto_id + Select_url2;
+        String crypto_id     = getIntent().getStringExtra("crypto_id");
+        String Select_url    = Select_url1 + crypto_id + Select_url2;
         final String CMC_url = getString(R.string.cryptos_display_link) + crypto_id + "/";
 
         final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
+        final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
         final DecimalFormat frmt2 = new DecimalFormat("#.########");
-        final DecimalFormat frmt3  = new DecimalFormat("#,###,###,###,###");
+        final DecimalFormat frmt3 = new DecimalFormat("#,###,###,###,###");
 
         final TextView Time          = findViewById(R.id.select_update_time);
-
         final TextView Name          = findViewById(R.id.select_name);
         final TextView Rank          = findViewById(R.id.select_rank);
         final TextView Symbol        = findViewById(R.id.select_symbol);
 
         final TextView PriceUSD      = findViewById(R.id.select_price_usd);
         final TextView PriceEUR      = findViewById(R.id.select_price_eur);
+
         final TextView PriceBTC      = findViewById(R.id.select_price_btc);
 
         final TextView AvailSupply   = findViewById(R.id.select_avail_supply);
@@ -82,6 +94,21 @@ public class CryptoSelectActivity extends AppCompatActivity {
 
         final TextView MarketCapUSD  = findViewById(R.id.select_market_cap_usd);
         final TextView MarketCapEUR  = findViewById(R.id.select_market_cap_eur);
+
+        final TextView price_NUSD_TV       = findViewById(R.id.textView_price_eur);
+        final TextView volume_NUSD_TV      = findViewById(R.id.textView_24h_vol_eur);
+        final TextView market_cap_NUSD_TV  = findViewById(R.id.textView_market_cap_eur);
+
+        String TV_price_text  = getString(R.string.price_) + " " +
+                                CAP_curr + getString(R.string.colon);
+        String TV_volume_text = getString(R.string.vol24h_) + " " + CAP_curr  +
+                                getString(R.string.colon);
+        String TV_cap_text    = getString(R.string.market_cap_) + " " + CAP_curr  +
+                                getString(R.string.colon);
+
+        price_NUSD_TV.setText(TV_price_text);
+        volume_NUSD_TV.setText(TV_volume_text);
+        market_cap_NUSD_TV.setText(TV_cap_text);
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading....");
@@ -109,15 +136,18 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             DecimalFormat BTC_frmt = frmt;
 
                             double usdP = Double.parseDouble(object.getString("price_usd"));
-                            double eurP = Double.parseDouble(object.getString("price_eur"));
+                            double eurP = Double.parseDouble(object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
-                            if(usdP < 0.01) USD_frmt = frmt2;
-                            if(eurP < 0.01) EUR_frmt = frmt2;
-                            if(btcP < 0.01) BTC_frmt = frmt2;
+                            if      (usdP < 0.01) USD_frmt = frmt2;
+                            else if (usdP > 99)   USD_frmt = frmt0;
+                            if      (eurP < 0.01) EUR_frmt = frmt2;
+                            else if (eurP > 99)   EUR_frmt = frmt0;
+                            if      (btcP < 0.01) BTC_frmt = frmt2;
 
+                            
                             String Price_USD = "$"      + USD_frmt.format(usdP);
-                            String Price_EUR = "\u20AC" + EUR_frmt.format(eurP);
+                            String Price_EUR = Curr_symbol + EUR_frmt.format(eurP);
                             String Price_BTC = "\u0E3F" + BTC_frmt.format(btcP);
 
                             PriceUSD.setText(Price_USD);
@@ -194,9 +224,9 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             VolumeUSD.setText(USD_Volume);
 
                             String EUR_Volume = getString(R.string.not_avail);
-                            String EUR_Volume_val = object.getString("24h_volume_eur");
+                            String EUR_Volume_val = object.getString(volume_key_nonUSD);
                             if (!Objects.equals(EUR_Volume_val, "null")) {
-                                EUR_Volume = "\u20AC" +
+                                EUR_Volume = Curr_symbol +
                                              frmt3.format(Double.parseDouble(EUR_Volume_val));
                             }
                             VolumeEUR.setText(EUR_Volume);
@@ -210,9 +240,9 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             MarketCapUSD.setText(USD_MarketCap);
 
                             String EUR_MarketCap = getString(R.string.not_avail);
-                            String EUR_MarketCap_val = object.getString("market_cap_eur");
+                            String EUR_MarketCap_val = object.getString(market_cap_key_nonUSD);
                             if (!Objects.equals(EUR_MarketCap_val, "null")) {
-                                EUR_MarketCap = "\u20AC" +
+                                EUR_MarketCap = Curr_symbol +
                                         frmt3.format(Double.parseDouble(EUR_MarketCap_val));
                             }
                             MarketCapEUR.setText(EUR_MarketCap);
