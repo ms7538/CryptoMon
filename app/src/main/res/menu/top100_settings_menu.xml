@@ -12,9 +12,9 @@
 
     <item
         android:id="@+id/action_currency_sel"
-        android:orderInCategory="100"
+        android:icon="@drawable/ic_attach_money_black_24dp"
         android:title="@string/currency_sel"
-        app:showAsAction="collapseActionView" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_subreddits"

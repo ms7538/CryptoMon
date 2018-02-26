@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ import java.util.Objects;
 
 import java.text.DecimalFormat;
 
-public class CryptoSelectActivity extends AppCompatActivity {
+public class CryptoSelectActivity extends BaseActivity {
 
     ProgressDialog dialog;
 
@@ -145,7 +144,7 @@ public class CryptoSelectActivity extends AppCompatActivity {
                             else if (eurP > 99)   EUR_frmt = frmt0;
                             if      (btcP < 0.01) BTC_frmt = frmt2;
 
-                            
+
                             String Price_USD = "$"      + USD_frmt.format(usdP);
                             String Price_EUR = Curr_symbol + EUR_frmt.format(eurP);
                             String Price_BTC = "\u0E3F" + BTC_frmt.format(btcP);
