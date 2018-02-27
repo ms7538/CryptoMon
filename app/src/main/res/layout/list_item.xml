@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_column="2"
             android:text="@string/x"
-            android:textColor="@android:color/white"
+            android:textColor="@color/bright_yellow"
             android:textSize="18sp" />
 
     </TableRow>
