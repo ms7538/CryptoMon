@@ -142,10 +142,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 final RadioButton RadioTRY = mView2.findViewById(R.id.radio_currency_try);
                 final RadioButton RadioRUB = mView2.findViewById(R.id.radio_currency_rub);
                 final RadioButton RadioINR = mView2.findViewById(R.id.radio_currency_inr);
-
-
-
-
+                
                 if (Dollar) {
                     RadioUSD.getParent().requestChildFocus(RadioUSD, RadioUSD);
                     RadioUSD.setChecked(true);
