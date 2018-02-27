@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Objects;
@@ -142,23 +143,65 @@ public abstract class BaseActivity extends AppCompatActivity {
                 final RadioButton RadioRUB = mView2.findViewById(R.id.radio_currency_rub);
                 final RadioButton RadioINR = mView2.findViewById(R.id.radio_currency_inr);
 
-//                ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
-//                sv.scrollTo(0, 100);
 
-                if (Dollar) RadioUSD.setChecked(true);
-                else if (Objects.equals(Curr, "eur")) RadioEUR.setChecked(true);
-                else if (Objects.equals(Curr, "jpy")) RadioJPY.setChecked(true);
-                else if (Objects.equals(Curr, "gbp")) RadioGBP.setChecked(true);
-                else if (Objects.equals(Curr, "aud")) RadioAUD.setChecked(true);
-                else if (Objects.equals(Curr, "cad")) RadioCAD.setChecked(true);
-                else if (Objects.equals(Curr, "chf")) RadioCHF.setChecked(true);
-                else if (Objects.equals(Curr, "cny")) RadioCNY.setChecked(true);
-                else if (Objects.equals(Curr, "sek")) RadioSEK.setChecked(true);
-                else if (Objects.equals(Curr, "nzd")) RadioNZD.setChecked(true);
-                else if (Objects.equals(Curr, "krw")) RadioKRW.setChecked(true);
-                else if (Objects.equals(Curr, "try")) RadioTRY.setChecked(true);
-                else if (Objects.equals(Curr, "rub")) RadioRUB.setChecked(true);
-                else if (Objects.equals(Curr, "inr")) RadioINR.setChecked(true);
+
+
+                if (Dollar) {
+                    RadioUSD.getParent().requestChildFocus(RadioUSD, RadioUSD);
+                    RadioUSD.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "eur")) {
+                    RadioEUR.getParent().requestChildFocus(RadioEUR, RadioEUR);
+                    RadioEUR.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "jpy")) {
+                    RadioJPY.getParent().requestChildFocus(RadioJPY, RadioJPY);
+                    RadioJPY.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "gbp")) {
+                    RadioGBP.getParent().requestChildFocus(RadioGBP, RadioGBP);
+                    RadioGBP.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "aud")) {
+                    RadioAUD.getParent().requestChildFocus(RadioAUD, RadioAUD);
+                    RadioAUD.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "cad")) {
+                    RadioCAD.getParent().requestChildFocus(RadioCAD, RadioCAD);
+                    RadioCAD.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "chf")) {
+                    RadioCHF.getParent().requestChildFocus(RadioCHF, RadioCHF);
+                    RadioCHF.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "cny")) {
+                    RadioCNY.getParent().requestChildFocus(RadioCNY, RadioCNY);
+                    RadioCNY.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "sek")) {
+                    RadioSEK.getParent().requestChildFocus(RadioSEK, RadioSEK);
+                    RadioSEK.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "nzd")) {
+                    RadioNZD.getParent().requestChildFocus(RadioNZD, RadioNZD);
+                    RadioNZD.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "krw")) {
+                    RadioKRW.getParent().requestChildFocus(RadioKRW, RadioKRW);
+                    RadioKRW.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "try")) {
+                    RadioTRY.getParent().requestChildFocus(RadioTRY, RadioTRY);
+                    RadioTRY.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "rub")) {
+                    RadioRUB.getParent().requestChildFocus(RadioRUB, RadioRUB);
+                    RadioRUB.setChecked(true);
+                }
+                else if (Objects.equals(Curr, "inr")) {
+                    RadioINR.getParent().requestChildFocus(RadioINR, RadioINR);
+                    RadioINR.setChecked(true);
+                }
 
                 Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
                 Unit_OK.setOnClickListener(new View.OnClickListener() {

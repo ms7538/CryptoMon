@@ -16,6 +16,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="250sp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/scrollview_currency_diag"
         android:scrollbarThumbVertical="@color/navy_blue"
         android:fadeScrollbars="false"
         android:orientation="vertical">
