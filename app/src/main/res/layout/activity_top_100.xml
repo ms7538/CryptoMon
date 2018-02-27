@@ -16,6 +16,35 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/black"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@+id/textView_requested"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/requested"
+            android:textColor="@color/green2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/t100_request_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/x"
+            android:textColor="@color/bright_yellow"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"

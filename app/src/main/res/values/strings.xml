@@ -144,6 +144,7 @@
     <string name="try_turkish_lira">(₺) TRY / Turkish Lira</string>
     <string name="rub_russian_ruble">(₽) RUB / Russian Ruble</string>
     <string name="indian_rupee">(₹) Indian Rupee</string>
+    <string name="requested">Requested:</string>
 
 
 </resources>

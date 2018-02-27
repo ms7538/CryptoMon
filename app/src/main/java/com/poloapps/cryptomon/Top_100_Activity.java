@@ -25,8 +25,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import java.util.Map;
@@ -46,6 +48,10 @@ public class Top_100_Activity extends BaseActivity {
        super.onCreate(savedInstanceState);
        setContentView(R.layout.activity_top_100);
 
+       final TextView Time2 = findViewById(R.id.t100_request_time);
+        String reqCurrentTime =
+                DateFormat.getDateTimeInstance().format( new Date());
+       Time2.setText(reqCurrentTime);
        String LC_url = "https://api.coinmarketcap.com/v1/ticker/";
 
        AdView mAdView = findViewById(R.id.adView);
