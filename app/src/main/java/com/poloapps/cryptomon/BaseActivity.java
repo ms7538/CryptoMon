@@ -142,6 +142,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 final RadioButton RadioRUB = mView2.findViewById(R.id.radio_currency_rub);
                 final RadioButton RadioINR = mView2.findViewById(R.id.radio_currency_inr);
 
+//                ScrollView sv = (ScrollView) findViewById(R.id.scrollView);
+//                sv.scrollTo(0, 100);
+
                 if (Dollar) RadioUSD.setChecked(true);
                 else if (Objects.equals(Curr, "eur")) RadioEUR.setChecked(true);
                 else if (Objects.equals(Curr, "jpy")) RadioJPY.setChecked(true);
