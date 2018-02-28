@@ -1,11 +1,16 @@
 package com.poloapps.cryptomon;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -278,9 +283,17 @@ public class CryptoSelectActivity extends BaseActivity {
         CMC_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse(CMC_url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                LayoutInflater li = LayoutInflater.from(CryptoSelectActivity.this);
+                @SuppressLint("InflateParams")
+                View promptsView = li.inflate(R.layout.cmc_link_menu, null);
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(
+                        CryptoSelectActivity.this);
+                builder2.setView(promptsView);
+                builder2.show();
+
+                //                Uri uri = Uri.parse(CMC_url);
+                //                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                //                startActivity(intent);
             }
         });
     }

@@ -145,6 +145,9 @@
     <string name="rub_russian_ruble">(₽) RUB / Russian Ruble</string>
     <string name="indian_rupee">(₹) Indian Rupee</string>
     <string name="requested">Requested:</string>
+    <string name="navigate_to">Navigate To:</string>
+    <string name="https_coinmarketcap_com_currencies">https://coinmarketcap.com/currencies/</string>
+    <string name="id"><![CDATA[<id>]]></string>
 
 
 </resources>
