@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context="com.poloapps.cryptomon.Top_100_Activity">
 
     <com.google.android.gms.ads.AdView
@@ -20,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/black"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/textView_requested"
