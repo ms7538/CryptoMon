@@ -3,7 +3,6 @@ package com.poloapps.cryptomon;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.app.VoiceInteractor;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +66,7 @@ public class CryptoSelectActivity extends BaseActivity {
         final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
         CMC_link.setPaintFlags(CMC_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        String crypto_id     = getIntent().getStringExtra("crypto_id");
+        final String crypto_id     = getIntent().getStringExtra("crypto_id");
         String Select_url    = Select_url1 + crypto_id + Select_url2;
         final String CMC_url = getString(R.string.cryptos_display_link) + crypto_id + "/";
 
@@ -283,17 +283,36 @@ public class CryptoSelectActivity extends BaseActivity {
         CMC_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 LayoutInflater li = LayoutInflater.from(CryptoSelectActivity.this);
                 @SuppressLint("InflateParams")
-                View promptsView = li.inflate(R.layout.cmc_link_menu, null);
-                AlertDialog.Builder builder2 = new AlertDialog.Builder(
+                final View promptsView = li.inflate(R.layout.cmc_link_menu, null);
+                final AlertDialog.Builder builder2 = new AlertDialog.Builder(
                         CryptoSelectActivity.this);
                 builder2.setView(promptsView);
-                builder2.show();
+                final AlertDialog dialog2  = builder2.create();
+                dialog2.show();
 
-                //                Uri uri = Uri.parse(CMC_url);
-                //                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                //                startActivity(intent);
+                TextView Link = promptsView.findViewById(R.id.cmc_link_id);
+                Link.setText(crypto_id);
+                Button OK = promptsView.findViewById(R.id.cmc_OK_btn);
+                Button NO = promptsView.findViewById(R.id.cmc_NO_btn);
+
+                OK.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse(CMC_url);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        dialog2.dismiss();
+                        startActivity(intent);
+                    }
+                });
+                NO.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog2.dismiss();
+                    }
+                });
             }
         });
     }
