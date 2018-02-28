@@ -209,10 +209,10 @@ public class Top_100_Activity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
-        final String  Curr   = mSettings.getString("Curr_code","eur");
+        SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        SharedPreferences.Editor editor = mSettings.edit();
+        Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        String  Curr   = mSettings.getString("Curr_code","eur");
 
         String T100_currency = "usd";
         if(!Dollar) T100_currency = Curr;
@@ -224,12 +224,12 @@ public class Top_100_Activity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
-        final String  Curr   = mSettings.getString("Curr_code","eur");
-        final String  T100   = mSettings.getString("t100_curr","usd");
+        SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        String  Curr   = mSettings.getString("Curr_code","eur");
+        String  T100   = mSettings.getString("t100_curr","usd");
         Long resumeTime  = System.currentTimeMillis() / 1000L;
-        if (resumeTime - createdTime > 300) restart();
+        if (resumeTime - createdTime > 299) restart();
         String currency_check = "usd";
         if(!Dollar) currency_check = Curr;
         if (!Objects.equals(T100, currency_check)) restart();
