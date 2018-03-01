@@ -152,16 +152,6 @@
     </TableLayout>
 
     <TextView
-        android:id="@+id/about_disclaimer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/disclaimer"
-        android:textColor="@color/bright_blue"
-        android:textSize="16sp" />
-
-    <TextView
         android:id="@+id/about_link"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

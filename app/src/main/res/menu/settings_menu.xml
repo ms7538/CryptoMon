@@ -29,5 +29,11 @@
         android:title="@string/about"
         app:showAsAction="collapseActionView" />
 
+    <item
+        android:id="@+id/action_disclaimer"
+        android:orderInCategory="102"
+        android:title="@string/disclaimer"
+        app:showAsAction="collapseActionView" />
+
 
 </menu>

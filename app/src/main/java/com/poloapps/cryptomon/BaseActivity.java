@@ -306,7 +306,38 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                 return true;
 
+            case R.id.action_disclaimer:
 
+                builder = new AlertDialog.Builder(BaseActivity.this);
+
+                @SuppressLint("InflateParams")
+                View mView4 = getLayoutInflater().inflate(R.layout.disclaimer_diag, null);
+                builder.setView(mView4);
+                final AlertDialog dialog4  = builder.create();
+                dialog4.show();
+                Button Dismiss = mView4.findViewById(R.id.disc_NO_btn);
+                TextView Disc_CMC_tv = mView4.findViewById(R.id.disc_coinmarketcap_link);
+                Disc_CMC_tv.setPaintFlags(Disc_CMC_tv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+                Disc_CMC_tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse(
+                                "https://coinmarketcap.com/");
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        dialog4.dismiss();
+                        startActivity(intent);
+                    }
+                });
+
+                Dismiss.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog4.dismiss();
+                }});
+
+
+                return true;
 
 
             default:

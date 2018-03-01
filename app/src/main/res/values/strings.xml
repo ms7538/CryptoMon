@@ -164,6 +164,17 @@
     <string name="msimunac">Marko Simunac</string>
     <string name="disclaimer">Disclaimer</string>
     <string name="api_coinmarketcap_com">api.coinmarketcap.com</string>
-
-
+    <string name="disclaimer_">Disclaimer:</string>
+    <string name="no_advice">No Investment Advice:\nThe information provided on this application
+        does not constitute investment advice, financial advice, trading advice, or any other sort
+        of advice and you should not treat any of the  content as such. Neither PoloApps nor
+        CoinMarketCap recommend that any cryptocurrency should be bought, sold, or held by you.
+        Do conduct your own due diligence and consult your financial Adviser before making any
+        investment decisions.</string>
+    <string name="data_obtained">Accuracy of Data Provided:\nAll data provided within this
+        application was obtained via public APIs provided by Coinmarketcap.com. According to
+        disclaimers on Coinmarketcap.com, the information is provided as is, and you understand that
+        you are using any and all information available here at your own risk. Neither PoloApps, nor
+        CoinMarketCap hold any responsibility for any missing or wrong information.</string>
+    <string name="https_coinmarketcap_com">https://coinmarketcap.com/</string>
 </resources>
