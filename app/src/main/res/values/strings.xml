@@ -148,6 +148,22 @@
     <string name="navigate_to">Navigate To:</string>
     <string name="https_coinmarketcap_com_currencies">https://coinmarketcap.com/currencies/</string>
     <string name="id"><![CDATA[<id>]]></string>
+    <string name="about">About</string>
+    <string name="version">Version:</string>
+    <string name="about_">About:</string>
+    <string name="_1_0">1.0</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="release_date">Release Date:</string>
+    <string name="february_28_2018">February 28, 2018</string>
+    <string name="crypto_currencies">Crypto Currencies:</string>
+    <string name="onehundred">100</string>
+    <string name="monetary_currencies">Monetary Currencies:</string>
+    <string name="four_teen">14</string>
+    <string name="api">API:</string>
+    <string name="developer">Developer:</string>
+    <string name="msimunac">Marko Simunac</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="api_coinmarketcap_com">api.coinmarketcap.com</string>
 
 
 </resources>

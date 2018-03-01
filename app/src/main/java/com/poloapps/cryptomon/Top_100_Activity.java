@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.view.View;
@@ -145,7 +146,8 @@ public class Top_100_Activity extends BaseActivity {
                             TextView delta_1d = view.findViewById(R.id.d1);
                             TextView delta_7d = view.findViewById(R.id.delta7_d);
                             final TextView link_id = view.findViewById(R.id.id_link);
-
+                            link_id.setPaintFlags(link_id.getPaintFlags()
+                                    | Paint.UNDERLINE_TEXT_FLAG);
                             Map<String, String> currentRow = rankList.get(position);
 
                             double delta1h = 0;

@@ -3,6 +3,7 @@ package com.poloapps.cryptomon;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Objects;
@@ -272,6 +272,43 @@ public abstract class BaseActivity extends AppCompatActivity {
                 dialog2.show();
                 return true;
 
+
+            case R.id.action_about:
+
+                builder = new AlertDialog.Builder(BaseActivity.this);
+
+                @SuppressLint("InflateParams")
+                View mView3 = getLayoutInflater().inflate(R.layout.about_diag, null);
+                builder.setView(mView3);
+                final AlertDialog dialog3  = builder.create();
+                dialog3.show();
+                Button NO = mView3.findViewById(R.id.about_NO_btn);
+
+                TextView Privacy_Policy_tv = mView3.findViewById(R.id.about_link);
+                Privacy_Policy_tv.setPaintFlags(Privacy_Policy_tv.getPaintFlags() |
+                                                                         Paint.UNDERLINE_TEXT_FLAG);
+                Privacy_Policy_tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse(
+                                "http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt");
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }
+                });
+
+                NO.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog3.dismiss();
+                    }
+                });
+
+                return true;
+
+
+
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -284,5 +321,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         finish();
         startActivity(intent);
     }
-
+//http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt
 }

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/l5col"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about_"
+        android:textColor="@color/bright_yellow"
+        android:textSize="20sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:background="@color/fade5">
+
+            <TextView
+                android:layout_width="120sp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/version"
+                android:textSize="12sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:text="@string/_1_0"
+                android:textColor="@android:color/black" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@color/fade4">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/release_date"
+                android:textSize="12sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:text="@string/february_28_2018"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@color/fade3">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/crypto_currencies"
+                android:textSize="12sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:text="@string/onehundred"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@color/fade2">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/monetary_currencies"
+                android:textSize="12sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:text="@string/four_teen"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@color/fade1">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/api"
+                android:textSize="12sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:text="@string/api_coinmarketcap_com"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@color/fade6">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/developer"
+                android:textSize="12sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:text="@string/msimunac"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/about_disclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/disclaimer"
+        android:textColor="@color/bright_blue"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/about_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/privacy_policy"
+        android:textColor="@color/bright_blue"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/about_NO_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/back" />
+</LinearLayout>
