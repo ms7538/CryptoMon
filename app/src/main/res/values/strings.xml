@@ -143,7 +143,7 @@
     <string name="krw_s_korean_won">(₩) KRW / S. Korean Won</string>
     <string name="try_turkish_lira">(₺) TRY / Turkish Lira</string>
     <string name="rub_russian_ruble">(₽) RUB / Russian Ruble</string>
-    <string name="indian_rupee">(₹) Indian Rupee</string>
+    <string name="indian_rupee">(₹) INR / Indian Rupee</string>
     <string name="requested">Requested:</string>
     <string name="navigate_to">Navigate To:</string>
     <string name="https_coinmarketcap_com_currencies">https://coinmarketcap.com/currencies/</string>
