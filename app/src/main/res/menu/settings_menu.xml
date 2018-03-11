@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_refresh_black_24dp"
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/action_currency_sel"
+        android:icon="@drawable/ic_attach_money_black_24dp"
+        android:title="@string/currency_sel"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_subreddits"
+        android:orderInCategory="101"
+        android:title="@string/reddit_links"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="102"
+        android:title="@string/about"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_disclaimer"
+        android:orderInCategory="102"
+        android:title="@string/disclaimer"
+        app:showAsAction="collapseActionView" />
+
+
+</menu>

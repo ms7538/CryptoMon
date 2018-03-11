@@ -1,0 +1,784 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/bg_dk_select_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/subreddit_links"
+        android:textColor="@color/white"
+        android:layout_marginBottom="15dp"
+        android:textSize="30sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:scrollbarThumbVertical="@color/green2"
+        android:fadeScrollbars="false"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/r_crypto_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_cryptocurrency"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_cryptomarkets_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_cryptomarkets"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bitplaceex_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bitplaceexchange"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_cryptocurrencies_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_cryptocurrencies"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bitcoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bitcoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_ethereum_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_ethereum"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_ripple_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_ripple"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bitcoincash_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bitcash"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_litecoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_litecoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_cardano_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_cardano"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_stellar_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_stellar"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_neo_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_neo"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_eos_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_eos"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_iota_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_iota"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_dashpay_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_dashpay"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_nem_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_nem"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_monero_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_monero"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_lisk_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_lisk"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_ethclassic_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_ethereumclassic"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_tron_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_tronix"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_vechain_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_vechain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_qtum_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_qtum"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bitcoin_gold_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bitcoingoldhq"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_tether_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_tether"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_helloicon_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_helloicon"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_omise_go_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_omisego"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_zcash_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_zcash"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_verge_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_verge"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_nano_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_nanocurrency"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_binance_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_binanceexchange"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_steem_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_steem"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_populous_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_populous"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bytecoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bytecoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_rchain_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_rchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_statusim_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_statusim"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_dogecoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_dogecoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_waves_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_wavesplatform"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bitshares_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bitshares"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_maker_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_makerdao"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_digix_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_digix"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_walton_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_waltonchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_zerox_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_zerox"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_augur_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_augur"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aeternity_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aeternity"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_zclassic_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_zclassic"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_decred_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_decred"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_veritaseum_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_veritaseum"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_hshare_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_hshare"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_electroneum_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_electroneum"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_komodo_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_komodoplatform"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_kucoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_kucoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_ardor_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_ardor"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_arkeco_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_arkecosystem"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_arkcoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_arkcoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_neotrader_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_neotrader"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_dragonchain_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_dragonchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_digibyte_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_digibyte"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_loopring_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_loopring"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_zilliqa_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_zilliqa"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_basicatttoken_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_batproject"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_byteball_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_byteball"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aelf_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aelf"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aelfofficial_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aelfofficial"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aelftrader_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aelfTrader"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_polymath_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_polymathnetwork"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bytomblock_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bytomblockchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_bytomchain_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_bytomchain"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/r_monacoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_monacoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_qash_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_qash"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_redcoin_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_reddcoin"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aionnetwork_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aionnetwork"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_aiontrader_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_aiontrader"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/r_golemproject_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_golemproject"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/r_golemtrader_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:text="@string/r_golemtrader"
+                android:textColor="@color/green2"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/dismiss_btn_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/back" />
+
+</LinearLayout>

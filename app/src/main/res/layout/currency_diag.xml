@@ -13,25 +13,121 @@
         android:textColor="@android:color/black"
         android:textSize="25sp" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="250sp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/scrollview_currency_diag"
+        android:scrollbarThumbVertical="@color/navy_blue"
+        android:fadeScrollbars="false"
+        android:orientation="vertical">
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/radio_currency_dollar"
+            android:id="@+id/radio_currency_usd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/dollars" />
 
         <RadioButton
-            android:id="@+id/radio_currency_euro"
+            android:id="@+id/radio_currency_eur"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/euro" />
 
+        <RadioButton
+            android:id="@+id/radio_currency_jpy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/jpy_japanese_yen" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_gbp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/gbp_pound_sterling" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_aud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/a_aud_australian_dollar" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_cad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/c_cad_canadian_dollar" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_chf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/fr_chf_swiss_franc" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_cny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/cny_renminbi" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_sek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/kr_sek_swedish_krona" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_nzd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/nz_nzd_new_zealand_dollar" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_krw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/krw_s_korean_won" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_try"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/try_turkish_lira" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_rub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/rub_russian_ruble" />
+
+        <RadioButton
+            android:id="@+id/radio_currency_inr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/indian_rupee" />
+
     </RadioGroup>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/Units_OK_btn"

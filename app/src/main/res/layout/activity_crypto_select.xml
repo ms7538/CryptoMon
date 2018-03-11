@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    tools:context="com.poloapps.cryptomon.CryptoSelectActivity">
+
+    <TextView
+        android:id="@+id/select_name"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5sp"
+        android:text="@string/name2"
+        android:textColor="@color/orange"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/sel_crypto_coinmarketcap_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:gravity="center"
+        android:text="@string/coinmarketcap"
+        android:textColor="@android:color/holo_blue_bright"
+        android:textSize="15sp" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/delta_col"
+        android:foregroundGravity="center"
+        android:layout_marginBottom="5dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id2" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/textView_Updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/updated"
+            android:textColor="@color/green2"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/select_update_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/x"
+            android:textColor="@color/bright_yellow"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/delta_col"
+        android:scrollbarThumbVertical="@color/green2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/textView_Rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rank"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/select_rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_symbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_Symbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/symbol"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/spacer"
+                android:textColor="@color/green2" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_price_usd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_price_usd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_price_usd"
+                    android:layout_alignBottom="@+id/select_price_usd"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/price_usd"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_price_eur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/l3col"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_price_eur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_price_eur"
+                    android:layout_alignBottom="@+id/select_price_eur"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/price_eur"
+                    android:textColor="@color/l3col"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_price_btc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_price_btc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_price_btc"
+                    android:layout_alignBottom="@+id/select_price_btc"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/price_btc"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/spacer"
+                android:textColor="@color/green2" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_delta_1h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_delta_1h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_delta_1h"
+                    android:layout_alignBottom="@+id/select_delta_1h"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/delta_1_hour"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_delta_24h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_delta_24h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_delta_24h"
+                    android:layout_alignBottom="@+id/select_delta_24h"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/delta_24_hours"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_delta_7d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_delta_7d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_delta_7d"
+                    android:layout_alignBottom="@+id/select_delta_7d"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/delta_7_days"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/spacer"
+                android:textColor="@color/green2" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_avail_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_avail_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_avail_supply"
+                    android:layout_alignBottom="@+id/select_avail_supply"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/avail_supply"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_total_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_total_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_total_supply"
+                    android:layout_alignBottom="@+id/select_total_supply"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/total_supply"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_max_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_max_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_max_supply"
+                    android:layout_alignBottom="@+id/select_max_supply"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/max_supply"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/spacer"
+                android:textColor="@color/green2" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_24h_vol_usd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_24h_vol_usd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_24h_vol_usd"
+                    android:layout_alignBottom="@+id/select_24h_vol_usd"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/_24h_volume_usd"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_24h_vol_eur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/l3col"
+                    android:textSize="14sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_24h_vol_eur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_24h_vol_eur"
+                    android:layout_alignBottom="@+id/select_24h_vol_eur"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/_24h_volume_eur"
+                    android:textColor="@color/l3col"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/spacer"
+                android:textColor="@color/green2" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_market_cap_usd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="14sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_market_cap_usd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_market_cap_usd"
+                    android:layout_alignBottom="@+id/select_market_cap_usd"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/market_cap_usd"
+                    android:textColor="@color/bright_yellow"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:id="@+id/select_market_cap_eur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/x"
+                    android:textColor="@color/l3col"
+                    android:textSize="14sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <TextView
+                    android:id="@+id/textView_market_cap_eur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/select_market_cap_eur"
+                    android:layout_alignBottom="@+id/select_market_cap_eur"
+                    android:layout_alignParentStart="true"
+                    android:text="@string/market_cap_eur"
+                    android:textColor="@color/l3col"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

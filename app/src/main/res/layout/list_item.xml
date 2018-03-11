@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:visibility="visible"
-    tools:context=".Top_100">
+    tools:context=".Top_100_Activity">
 
     <TableRow
         android:layout_width="match_parent"
@@ -28,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_column="2"
             android:text="@string/x"
-            android:textColor="@android:color/white"
+            android:textColor="@color/bright_yellow"
             android:textSize="18sp" />
 
     </TableRow>
@@ -52,7 +50,7 @@
             android:layout_column="2"
             android:text="@string/x"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
     </TableRow>
 
@@ -131,19 +129,21 @@
             android:layout_column="2"
             android:text="@string/x"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
     </TableRow>
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/white"
         >
 
         <TextView
             android:layout_height="wrap_content"
             android:layout_column="1"
-            android:text="@string/link"
+            android:text="@string/expand"
             android:textColor="@android:color/black"
             android:textSize="13sp" />
 
