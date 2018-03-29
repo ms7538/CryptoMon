@@ -38,7 +38,7 @@ import java.util.Objects;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-//v1.01  created
+//v1.01    created
 public class Top_100_Activity extends BaseActivity {
     long createdTime = System.currentTimeMillis() / 1000L;
     ArrayList<HashMap<String, String>> rankList;
