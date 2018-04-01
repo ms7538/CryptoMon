@@ -151,6 +151,7 @@ public class Top_100_Activity extends BaseActivity {
                                     | Paint.UNDERLINE_TEXT_FLAG);
 
                             final TextView alertID = view.findViewById(R.id.alert_indication);
+
                             alertID.setPaintFlags(alertID.getPaintFlags()
                                     | Paint.UNDERLINE_TEXT_FLAG);
 
