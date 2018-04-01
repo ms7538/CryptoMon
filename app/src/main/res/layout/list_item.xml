@@ -132,6 +132,34 @@
             android:textSize="15sp" />
 
     </TableRow>
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/black"
+        >
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:text="@string/alerts"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/alert_indication"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_column="2"
+            android:layout_height="wrap_content"
+            android:text="@string/off" />
+
+
+    </TableRow>
+
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"

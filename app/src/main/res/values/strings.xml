@@ -177,4 +177,6 @@
         you are using any and all information available here at your own risk. Neither PoloApps, nor
         CoinMarketCap hold any responsibility for any missing or wrong information.</string>
     <string name="https_coinmarketcap_com">https://coinmarketcap.com/</string>
+    <string name="alerts">Alerts \u00A0 \u00A0 \u00A0 --></string>
+    <string name="off">off</string>
 </resources>

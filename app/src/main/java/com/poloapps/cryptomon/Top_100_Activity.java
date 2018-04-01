@@ -148,6 +148,11 @@ public class Top_100_Activity extends BaseActivity {
                             final TextView link_id = view.findViewById(R.id.id_link);
                             link_id.setPaintFlags(link_id.getPaintFlags()
                                     | Paint.UNDERLINE_TEXT_FLAG);
+
+                            final TextView alertID = view.findViewById(R.id.alert_indication);
+                            alertID.setPaintFlags(alertID.getPaintFlags()
+                                    | Paint.UNDERLINE_TEXT_FLAG);
+
                             Map<String, String> currentRow = rankList.get(position);
 
                             double delta1h = 0;
