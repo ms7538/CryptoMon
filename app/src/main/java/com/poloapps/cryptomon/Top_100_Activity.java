@@ -150,10 +150,6 @@ public class Top_100_Activity extends BaseActivity {
                             link_id.setPaintFlags(link_id.getPaintFlags()
                                     | Paint.UNDERLINE_TEXT_FLAG);
 
-                            final TextView alertID = view.findViewById(R.id.alert_indication);
-
-                            alertID.setPaintFlags(alertID.getPaintFlags()
-                                    | Paint.UNDERLINE_TEXT_FLAG);
 
                             Map<String, String> currentRow = rankList.get(position);
 
@@ -188,14 +184,7 @@ public class Top_100_Activity extends BaseActivity {
                                            Top_100_Activity.this.startActivity(intent);
                                        }
                                    });
-                            alertID.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Toast.makeText(getApplicationContext(),link_id.getText(),
-                                            Toast.LENGTH_SHORT).show();
 
-                                }
-                            });
                             dialog.dismiss();
                             return view;
                         }
