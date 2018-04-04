@@ -325,6 +325,14 @@ public class CryptoSelectActivity extends BaseActivity {
                 builder3.setView(alertsMenu);
                 final AlertDialog dialog3  = builder3.create();
                 dialog3.show();
+                Button NO = alertsMenu.findViewById(R.id.alerts_NO_btn);
+                NO.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog3.dismiss();
+                    }
+                });
+
             }
         });
     }
