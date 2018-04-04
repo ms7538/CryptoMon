@@ -36,7 +36,6 @@ public class CryptoSelectActivity extends BaseActivity {
 
     ProgressDialog dialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +50,7 @@ public class CryptoSelectActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
 
+        final LayoutInflater li = LayoutInflater.from(CryptoSelectActivity.this);
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();
@@ -285,19 +285,18 @@ public class CryptoSelectActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                LayoutInflater li = LayoutInflater.from(CryptoSelectActivity.this);
                 @SuppressLint("InflateParams")
-                final View promptsView = li.inflate(R.layout.cmc_link_menu, null);
+                final View CMC_linkMenu = li.inflate(R.layout.cmc_link_menu, null);
                 final AlertDialog.Builder builder2 = new AlertDialog.Builder(
                         CryptoSelectActivity.this);
-                builder2.setView(promptsView);
+                builder2.setView(CMC_linkMenu);
                 final AlertDialog dialog2  = builder2.create();
                 dialog2.show();
 
-                TextView Link = promptsView.findViewById(R.id.cmc_link_id);
+                TextView Link = CMC_linkMenu.findViewById(R.id.cmc_link_id);
                 Link.setText(crypto_id);
-                Button OK = promptsView.findViewById(R.id.cmc_OK_btn);
-                Button NO = promptsView.findViewById(R.id.cmc_NO_btn);
+                Button OK = CMC_linkMenu.findViewById(R.id.cmc_OK_btn);
+                Button NO = CMC_linkMenu.findViewById(R.id.cmc_NO_btn);
 
                 OK.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -319,8 +318,13 @@ public class CryptoSelectActivity extends BaseActivity {
         alertsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Alerts!",
-                        Toast.LENGTH_SHORT).show();
+                @SuppressLint("InflateParams")
+                final View alertsMenu = li.inflate(R.layout.alerts_select_menu, null);
+                final AlertDialog.Builder builder3 = new AlertDialog.Builder(
+                        CryptoSelectActivity.this);
+                builder3.setView(alertsMenu);
+                final AlertDialog dialog3  = builder3.create();
+                dialog3.show();
             }
         });
     }
