@@ -101,6 +101,8 @@ public class CryptoSelectActivity extends BaseActivity {
         final TextView volume_NUSD_TV      = findViewById(R.id.textView_24h_vol_eur);
         final TextView market_cap_NUSD_TV  = findViewById(R.id.textView_market_cap_eur);
 
+        final Button alertsBtn            = findViewById(R.id.sel_alerts_link);
+
         String TV_price_text  = getString(R.string.price_) + " " +
                                 CAP_curr + getString(R.string.colon);
         String TV_volume_text = getString(R.string.vol24h_) + " " + CAP_curr  +
@@ -312,6 +314,13 @@ public class CryptoSelectActivity extends BaseActivity {
                         dialog2.dismiss();
                     }
                 });
+            }
+        });
+        alertsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Alerts!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
