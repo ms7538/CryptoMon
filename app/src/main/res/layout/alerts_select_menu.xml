@@ -34,7 +34,7 @@
             android:textSize="18sp" />
 
         <TextView
-
+            android:labelFor="@id/price_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -46,13 +46,15 @@
 
         <EditText
             android:id="@+id/price_input"
-            android:layout_width="106dp"
+            android:layout_width="161dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:ems="10"
+            android:gravity="center"
             android:inputType="numberDecimal"
-            android:textColor="@color/l3col" />
+            android:textColor="@color/l3col"
+            android:textColorHint="@android:color/holo_red_light" />
 
     </RelativeLayout>
 

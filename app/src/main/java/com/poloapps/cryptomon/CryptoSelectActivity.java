@@ -333,7 +333,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 EditText priceInput = alertsMenu.findViewById(R.id.price_input);
                 String initPrice = mSettings.getString("price_initial","");
 
-                priceInput.setText(initPrice);
+                priceInput.setHint(initPrice);
 
                 final AlertDialog dialog3  = builder3.create();
                 dialog3.show();
