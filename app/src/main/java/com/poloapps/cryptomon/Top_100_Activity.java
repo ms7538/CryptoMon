@@ -110,6 +110,7 @@ public class Top_100_Activity extends BaseActivity {
 
                         String name       = obj1.getString("name");
                         String symbol     = obj1.getString("symbol");
+
                         name              = name + " / " + symbol;
                         String rank       = obj1.getString("rank");
                         String delta_1h   = obj1.getString("percent_change_1h");
@@ -127,6 +128,7 @@ public class Top_100_Activity extends BaseActivity {
                         item.put("24h_vol", volume_24h);
                         item.put("id_link", link_id);
                         rankList.add(item);
+
                     }
 
                     String[] from = {"rank","name","rate","d1h",
@@ -145,11 +147,11 @@ public class Top_100_Activity extends BaseActivity {
                             TextView delta_1h = view.findViewById(R.id.h1);
                             TextView delta_1d = view.findViewById(R.id.d1);
                             TextView delta_7d = view.findViewById(R.id.delta7_d);
+                            final TextView nameSymb = view.findViewById(R.id.list_name);
 
                             final TextView link_id = view.findViewById(R.id.id_link);
                             link_id.setPaintFlags(link_id.getPaintFlags()
                                     | Paint.UNDERLINE_TEXT_FLAG);
-
 
                             Map<String, String> currentRow = rankList.get(position);
 
@@ -180,7 +182,8 @@ public class Top_100_Activity extends BaseActivity {
                                            Intent intent = new Intent(
                                                    Top_100_Activity.this,
                                                    CryptoSelectActivity.class);
-                                           intent.putExtra("crypto_id", link_id.getText());
+                                           intent.putExtra("crypto_id",  link_id.getText());
+                                           intent.putExtra("crypto_name",nameSymb.getText());
                                            Top_100_Activity.this.startActivity(intent);
                                        }
                                    });

@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,8 @@ import java.util.Objects;
 
 import java.text.DecimalFormat;
 
+import static java.lang.Double.doubleToRawLongBits;
+
 public class CryptoSelectActivity extends BaseActivity {
 
     ProgressDialog dialog;
@@ -50,8 +53,10 @@ public class CryptoSelectActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
 
-        final LayoutInflater li = LayoutInflater.from(CryptoSelectActivity.this);
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+
+        final LayoutInflater li    = LayoutInflater.from(CryptoSelectActivity.this);
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();
         final String Curr_symbol   = mSettings.getString("Curr_symb","€");
@@ -65,9 +70,9 @@ public class CryptoSelectActivity extends BaseActivity {
         final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
         CMC_link.setPaintFlags(CMC_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        final String crypto_id     = getIntent().getStringExtra("crypto_id");
-        String Select_url    = Select_url1 + crypto_id + Select_url2;
-        final String CMC_url = getString(R.string.cryptos_display_link) + crypto_id + "/";
+        final String crypto_id    = getIntent().getStringExtra("crypto_id");
+        String Select_url         = Select_url1 + crypto_id + Select_url2;
+        final String CMC_url      = getString(R.string.cryptos_display_link) + crypto_id + "/";
 
         final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
         final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
@@ -101,7 +106,7 @@ public class CryptoSelectActivity extends BaseActivity {
         final TextView volume_NUSD_TV      = findViewById(R.id.textView_24h_vol_eur);
         final TextView market_cap_NUSD_TV  = findViewById(R.id.textView_market_cap_eur);
 
-        final Button alertsBtn            = findViewById(R.id.sel_alerts_link);
+        final Button alertsBtn             = findViewById(R.id.sel_alerts_link);
 
         String TV_price_text  = getString(R.string.price_) + " " +
                                 CAP_curr + getString(R.string.colon);
@@ -143,6 +148,9 @@ public class CryptoSelectActivity extends BaseActivity {
                             double eurP = Double.parseDouble(object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
+                            editor.putString("price_initial",Double.toString(usdP));
+                            editor.apply();
+
                             if      (usdP < 0.01) USD_frmt = frmt2;
                             else if (usdP > 99)   USD_frmt = frmt0;
                             if      (eurP < 0.01) EUR_frmt = frmt2;
@@ -150,9 +158,9 @@ public class CryptoSelectActivity extends BaseActivity {
                             if      (btcP < 0.01) BTC_frmt = frmt2;
 
 
-                            String Price_USD = "$"      + USD_frmt.format(usdP);
+                            String Price_USD = "$"         + USD_frmt.format(usdP);
                             String Price_EUR = Curr_symbol + EUR_frmt.format(eurP);
-                            String Price_BTC = "\u0E3F" + BTC_frmt.format(btcP);
+                            String Price_BTC = "\u0E3F"    + BTC_frmt.format(btcP);
 
                             PriceUSD.setText(Price_USD);
                             PriceEUR.setText(Price_EUR);
@@ -251,8 +259,6 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             MarketCapEUR.setText(EUR_MarketCap);
 
-
-
                             long last_update = Long.parseLong(
                                                 object.getString("last_updated")) *1000L;
 
@@ -260,8 +266,6 @@ public class CryptoSelectActivity extends BaseActivity {
                                     DateFormat.getDateTimeInstance().format( new Date(last_update));
 
                             Time.setText(lastUpdateString);
-
-
                             dialog.dismiss();
 
                         } catch (JSONException e) {
@@ -323,10 +327,19 @@ public class CryptoSelectActivity extends BaseActivity {
                 final AlertDialog.Builder builder3 = new AlertDialog.Builder(
                         CryptoSelectActivity.this);
                 builder3.setView(alertsMenu);
+                String  Symbol     = getIntent().getStringExtra("crypto_name");
+                TextView alertName = alertsMenu.findViewById(R.id.alerts_crypto_name);
+                alertName.setText(Symbol);
+                EditText priceInput = alertsMenu.findViewById(R.id.price_input);
+                String initPrice = mSettings.getString("price_initial","");
+
+                priceInput.setText(initPrice);
+
                 final AlertDialog dialog3  = builder3.create();
                 dialog3.show();
-                Button NO = alertsMenu.findViewById(R.id.alerts_NO_btn);
-                NO.setOnClickListener(new View.OnClickListener() {
+
+                Button Dismiss = alertsMenu.findViewById(R.id.alerts_NO_btn);
+                Dismiss.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog3.dismiss();

@@ -4,28 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@android:color/black">
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/alerts_"
-        android:layout_marginBottom="15sp"
-        android:textColor="@color/l2col"
+        android:layout_marginBottom="1dp"
+        android:textColor="@color/fade5"
         android:textSize="30sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="119dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/l5col">
+
+        <TextView
+            android:id="@+id/alerts_crypto_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/x"
+            android:textColor="@color/l4col"
+            android:textSize="18sp" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:text="@string/price"
+            android:textColor="@color/l3col"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/price_input"
+            android:layout_width="106dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textColor="@color/l3col" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/l5col"
-        android:layout_marginTop="15dp">
+        android:background="@color/l5col">
 
         <Button
             android:id="@+id/alerts_OK_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/ok" />
+            android:text="@string/set" />
 
         <Button
             android:id="@+id/alerts_NO_btn"
