@@ -183,4 +183,5 @@
     <string name="last_update">Last Update:</string>
     <string name="alerts_">Alerts</string>
     <string name="set">SET</string>
+    <string name="off_">OFF</string>
 </resources>

@@ -34,12 +34,11 @@
             android:textSize="18sp" />
 
         <TextView
-            android:labelFor="@id/price_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:labelFor="@id/price_input"
             android:text="@string/price"
             android:textColor="@color/l3col"
             android:textSize="18sp" />
@@ -48,13 +47,22 @@
             android:id="@+id/price_input"
             android:layout_width="161dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:ems="10"
             android:gravity="center"
             android:inputType="numberDecimal"
             android:textColor="@color/l3col"
             android:textColorHint="@android:color/holo_red_light" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:labelFor="@id/price_input"
+            android:text="@string/off_"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="30sp" />
 
     </RelativeLayout>
 
