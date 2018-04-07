@@ -52,10 +52,9 @@ public class CryptoSelectActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
-
+        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         final LayoutInflater li    = LayoutInflater.from(CryptoSelectActivity.this);
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();
@@ -148,7 +147,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             double eurP = Double.parseDouble(object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
-                            editor.putString("price_initial",Double.toString(usdP));
+                            editor.putString("price_initial", frmt.format((usdP)));
                             editor.apply();
 
                             if      (usdP < 0.01) USD_frmt = frmt2;
@@ -329,12 +328,18 @@ public class CryptoSelectActivity extends BaseActivity {
                 builder3.setView(alertsMenu);
                 String  Symbol     = getIntent().getStringExtra("crypto_name");
                 TextView alertName = alertsMenu.findViewById(R.id.alerts_crypto_name);
+                TextView alertsSym = alertsMenu.findViewById(R.id.alerts_price_currency);
                 alertName.setText(Symbol);
                 EditText priceInput = alertsMenu.findViewById(R.id.price_input);
                 String initPrice = mSettings.getString("price_initial","");
 
                 priceInput.setHint(initPrice);
 
+                String symbolCurrent = "$";
+                if(!Dollar){
+                    symbolCurrent = mSettings.getString("Curr_symb","€");
+                    alertsSym.setText(symbolCurrent);
+                }
                 final AlertDialog dialog3  = builder3.create();
                 dialog3.show();
 

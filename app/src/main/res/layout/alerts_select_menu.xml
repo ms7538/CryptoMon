@@ -45,24 +45,28 @@
 
         <EditText
             android:id="@+id/price_input"
-            android:layout_width="161dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:ems="10"
             android:gravity="center"
             android:inputType="numberDecimal"
             android:textColor="@color/l3col"
-            android:textColorHint="@android:color/holo_red_light" />
+            android:textColorHint="@color/et_hint" />
+
+
 
         <TextView
+            android:id="@+id/alerts_price_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:labelFor="@id/price_input"
-            android:text="@string/off_"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="30sp" />
+            android:layout_toStartOf="@+id/price_input"
+            android:text="@string/dollar_sign"
+            android:textColor="@color/l3col"
+            android:textSize="16sp" />
+
 
     </RelativeLayout>
 
@@ -76,6 +80,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/set" />
+
+        <Button
+            android:id="@+id/alerts_Clear_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/clear" />
 
         <Button
             android:id="@+id/alerts_NO_btn"
