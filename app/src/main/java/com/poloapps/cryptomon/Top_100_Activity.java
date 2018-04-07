@@ -1,11 +1,13 @@
 package com.poloapps.cryptomon;
 
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.view.View;
@@ -38,17 +40,23 @@ import java.util.Objects;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-//v1.01    created
+//v1.1    created
 public class Top_100_Activity extends BaseActivity {
     long createdTime = System.currentTimeMillis() / 1000L;
     ArrayList<HashMap<String, String>> rankList;
     ProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_100);
         final TextView Time2 = findViewById(R.id.t100_request_time);
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        assert bar != null;
+        bar.setDisplayShowTitleEnabled(false);
+        bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
+                                                                              R.color.dark_gray)));
 
         String reqCurrentTime =
                 DateFormat.getDateTimeInstance().format(new Date());
