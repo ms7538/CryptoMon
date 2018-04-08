@@ -50,7 +50,6 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:ems="10"
-            android:gravity="center"
             android:inputType="numberDecimal"
             android:textColor="@color/l3col"
             android:textColorHint="@color/et_hint" />
@@ -65,7 +64,40 @@
             android:layout_toStartOf="@+id/price_input"
             android:text="@string/dollar_sign"
             android:textColor="@color/l3col"
+            android:textSize="16sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/price_input"
+            android:labelFor="@id/volume_input"
+            android:text="@string/_24_hour_volume"
+            android:textColor="@color/l3col"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/alerts_volume_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/price_input"
+            android:layout_toStartOf="@+id/price_input"
+            android:text="@string/dollar_sign"
+            android:textColor="@color/l3col"
+            android:textSize="16sp"
+            tools:ignore="RelativeOverlap" />
+
+        <EditText
+            android:id="@+id/volume_input"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:textColor="@color/l3col"
+            android:textColorHint="@color/et_hint" />
 
 
     </RelativeLayout>

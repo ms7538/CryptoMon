@@ -59,10 +59,11 @@ public class CryptoSelectActivity extends BaseActivity {
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();
         final String Curr_symbol   = mSettings.getString("Curr_symb","€");
+
         String Select_url1         = "https://api.coinmarketcap.com/v1/ticker/";
         String Select_url2         = "/?convert=" + Curr;
 
-        final String price_key_nonUSD      = "price_" + Curr;
+        final String price_key_nonUSD      = "price_"      + Curr;
         final String volume_key_nonUSD     = "24h_volume_" + Curr;
         final String market_cap_key_nonUSD = "market_cap_" + Curr;
 
@@ -147,7 +148,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             double eurP = Double.parseDouble(object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
-                            editor.putString("price_initial", frmt.format((usdP)));
+                            double currPrice = usdP;
+                            if(!Dollar){
+                               currPrice = eurP;
+                            }
+
+                            editor.putString("price_initial", frmt.format((currPrice)));
                             editor.apply();
 
                             if      (usdP < 0.01) USD_frmt = frmt2;
