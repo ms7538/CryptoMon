@@ -145,12 +145,13 @@ public class CryptoSelectActivity extends BaseActivity {
                             DecimalFormat BTC_frmt = frmt;
 
                             double usdP = Double.parseDouble(object.getString("price_usd"));
-                            double eurP = Double.parseDouble(object.getString(price_key_nonUSD));
+                            double not_usdP = Double.parseDouble(
+                                                                object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
                             double currPrice = usdP;
                             if(!Dollar){
-                               currPrice = eurP;
+                               currPrice = not_usdP;
                             }
 
                             editor.putString("price_initial", frmt.format((currPrice)));
@@ -158,13 +159,13 @@ public class CryptoSelectActivity extends BaseActivity {
 
                             if      (usdP < 0.01) USD_frmt = frmt2;
                             else if (usdP > 99)   USD_frmt = frmt0;
-                            if      (eurP < 0.01) EUR_frmt = frmt2;
-                            else if (eurP > 99)   EUR_frmt = frmt0;
+                            if      (not_usdP < 0.01) EUR_frmt = frmt2;
+                            else if (not_usdP > 99)   EUR_frmt = frmt0;
                             if      (btcP < 0.01) BTC_frmt = frmt2;
 
 
                             String Price_USD = "$"         + USD_frmt.format(usdP);
-                            String Price_EUR = Curr_symbol + EUR_frmt.format(eurP);
+                            String Price_EUR = Curr_symbol + EUR_frmt.format(not_usdP);
                             String Price_BTC = "\u0E3F"    + BTC_frmt.format(btcP);
 
                             PriceUSD.setText(Price_USD);
