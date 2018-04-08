@@ -1,106 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/black">
+    android:background="@android:color/black"
+    android:orientation="vertical">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
         android:gravity="center"
         android:text="@string/alerts_"
-        android:layout_marginBottom="1dp"
         android:textColor="@color/fade5"
         android:textSize="30sp" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/alerts_crypto_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/x"
+        android:textColor="@color/l4col"
+        android:textSize="18sp" />
+
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="119dp"
+        android:layout_height="150dp"
         android:layout_marginTop="5dp"
         android:background="@color/l5col">
 
-        <TextView
-            android:id="@+id/alerts_crypto_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/x"
-            android:textColor="@color/l4col"
-            android:textSize="18sp" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:labelFor="@id/price_input"
-            android:text="@string/price"
-            android:textColor="@color/l3col"
-            android:textSize="18sp" />
+            <TextView
+                android:layout_width="90dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:labelFor="@id/price_input"
+                android:text="@string/price"
+                android:textColor="@color/l3col"
+                android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/price_input"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textColor="@color/l3col"
-            android:textColorHint="@color/et_hint" />
+            <CheckBox
+                android:id="@+id/price_checkbox"
+                android:layout_width="100dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@color/fade3"
+                android:text="" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:orientation="horizontal">
 
 
+                <TextView
+                    android:id="@+id/alerts_price_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dollar_sign"
+                    android:textColor="@color/l3col"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
 
-        <TextView
-            android:id="@+id/alerts_price_currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/price_input"
-            android:text="@string/dollar_sign"
-            android:textColor="@color/l3col"
-            android:textSize="16sp"
-            tools:ignore="RelativeOverlap" />
+                <EditText
+                    android:id="@+id/price_input"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/fade3"
+                    android:textColorHint="@color/et_hint" />
+            </LinearLayout>
+        </TableRow>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/price_input"
-            android:labelFor="@id/volume_input"
-            android:text="@string/_24_hour_volume"
-            android:textColor="@color/l3col"
-            android:textSize="16sp" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_marginTop="10dp"
+                android:text="@string/_24_hour_volume"
+                android:textColor="@color/l3col"
+                android:textSize="16sp" />
+            <CheckBox
+                android:id="@+id/vol_checkbox"
+                android:layout_column="2"
+                android:layout_width="100dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:background="@color/fade3"
+                android:text="" />
 
-        <TextView
-            android:id="@+id/alerts_volume_currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/price_input"
-            android:layout_toStartOf="@+id/price_input"
-            android:text="@string/dollar_sign"
-            android:textColor="@color/l3col"
-            android:textSize="16sp"
-            tools:ignore="RelativeOverlap" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/alerts_volume_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dollar_sign"
+                    android:textColor="@color/l3col"
+                    android:textSize="16sp"
+                    tools:ignore="RelativeOverlap" />
 
-        <EditText
-            android:id="@+id/volume_input"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textColor="@color/l3col"
-            android:textColorHint="@color/et_hint" />
-
-
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/volume_input"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/l3col"
+                    android:textColorHint="@color/et_hint" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
