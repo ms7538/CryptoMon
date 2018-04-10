@@ -33,11 +33,10 @@ import java.util.Objects;
 
 import java.text.DecimalFormat;
 
-import static java.lang.Double.doubleToRawLongBits;
-
 public class CryptoSelectActivity extends BaseActivity {
 
     ProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +135,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             String Sel_Rank  = object.getString("rank");
                             String Sel_Symb  = object.getString("symbol");
 
+
                             Name.setText(Sel_Name);
                             Rank.setText(Sel_Rank);
                             Symbol.setText(Sel_Symb);
@@ -153,15 +153,15 @@ public class CryptoSelectActivity extends BaseActivity {
                             if(!Dollar){
                                currPrice = not_usdP;
                             }
-
+                            editor.putString("selectedCode",Sel_Symb);
                             editor.putString("price_initial", frmt.format((currPrice)));
                             editor.apply();
 
-                            if      (usdP < 0.01) USD_frmt = frmt2;
-                            else if (usdP > 99)   USD_frmt = frmt0;
+                            if      (usdP     < 0.01) USD_frmt = frmt2;
+                            else if (usdP     > 99)   USD_frmt = frmt0;
                             if      (not_usdP < 0.01) EUR_frmt = frmt2;
                             else if (not_usdP > 99)   EUR_frmt = frmt0;
-                            if      (btcP < 0.01) BTC_frmt = frmt2;
+                            if      (btcP     < 0.01) BTC_frmt = frmt2;
 
 
                             String Price_USD = "$"         + USD_frmt.format(usdP);
@@ -338,8 +338,8 @@ public class CryptoSelectActivity extends BaseActivity {
                 TextView alertsSym = alertsMenu.findViewById(R.id.alerts_price_currency);
                 alertName.setText(Symbol);
                 EditText priceInput = alertsMenu.findViewById(R.id.price_input);
-                String initPrice = mSettings.getString("price_initial","");
 
+                String initPrice = mSettings.getString("price_initial","");
                 priceInput.setHint(initPrice);
 
                 String symbolCurrent = "$";
