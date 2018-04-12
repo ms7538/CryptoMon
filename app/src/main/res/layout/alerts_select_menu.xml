@@ -37,9 +37,9 @@
 
             <TextView
                 android:layout_width="90dp"
-                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
+                android:layout_marginTop="10dp"
                 android:labelFor="@id/price_input"
                 android:text="@string/price"
                 android:textColor="@color/l3col"
@@ -48,8 +48,8 @@
             <CheckBox
                 android:id="@+id/price_checkbox"
                 android:layout_width="100dp"
-                android:layout_gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@color/fade3"
                 android:text="" />
 
@@ -83,6 +83,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,12 +92,13 @@
                 android:text="@string/_24_hour_volume"
                 android:textColor="@color/l3col"
                 android:textSize="16sp" />
+
             <CheckBox
                 android:id="@+id/vol_checkbox"
-                android:layout_column="2"
                 android:layout_width="100dp"
-                android:layout_gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:layout_gravity="center"
                 android:background="@color/fade3"
                 android:text="" />
 
@@ -105,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_column="3"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/alerts_volume_currency"
                     android:layout_width="wrap_content"
@@ -128,19 +131,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="105dp"
         android:background="@color/l5col">
 
         <Button
             android:id="@+id/alerts_OK_btn"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/set" />
 
         <Button
             android:id="@+id/alerts_Clear_btn"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:text="@string/clear" />
@@ -148,12 +151,22 @@
         <Button
             android:id="@+id/alerts_NO_btn"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:text="@string/back"
             tools:ignore="RelativeOverlap" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="TextView"
+            android:textColor="@color/l3col" />
+
     </RelativeLayout>
+
+
 
 </LinearLayout>

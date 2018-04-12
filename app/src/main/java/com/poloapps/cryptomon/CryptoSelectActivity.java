@@ -36,13 +36,14 @@ import java.text.DecimalFormat;
 public class CryptoSelectActivity extends BaseActivity {
 
     ProgressDialog dialog;
+    MyDBHandler dbHandler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crypto_select);
-
+        dbHandler = new MyDBHandler(this, null, null, 1);
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -333,9 +334,10 @@ public class CryptoSelectActivity extends BaseActivity {
                 final AlertDialog.Builder builder3 = new AlertDialog.Builder(
                         CryptoSelectActivity.this);
                 builder3.setView(alertsMenu);
-                String  Symbol     = getIntent().getStringExtra("crypto_name");
+                final String  Symbol     = getIntent().getStringExtra("crypto_name");
                 TextView alertName = alertsMenu.findViewById(R.id.alerts_crypto_name);
                 TextView alertsSym = alertsMenu.findViewById(R.id.alerts_price_currency);
+                final TextView textView  = alertsMenu.findViewById(R.id.textView);
                 alertName.setText(Symbol);
                 EditText priceInput = alertsMenu.findViewById(R.id.price_input);
 
@@ -350,6 +352,27 @@ public class CryptoSelectActivity extends BaseActivity {
                 final AlertDialog dialog3  = builder3.create();
                 dialog3.show();
 
+                Button SetBtn = alertsMenu.findViewById(R.id.alerts_OK_btn);
+                SetBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dbHandler.addCrypto(Symbol);
+                        String dbString = dbHandler.databaseToString();
+                        textView.setText(dbString);
+                    }
+                });
+
+                Button ClearBtn = alertsMenu.findViewById(R.id.alerts_Clear_btn);
+                ClearBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dbHandler.deleteCrypto(Symbol);
+                        String dbString = dbHandler.databaseToString();
+                        textView.setText(dbString);
+                    }
+                });
+
+
                 Button Dismiss = alertsMenu.findViewById(R.id.alerts_NO_btn);
                 Dismiss.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -361,6 +384,7 @@ public class CryptoSelectActivity extends BaseActivity {
             }
         });
     }
+
 }
 
 
