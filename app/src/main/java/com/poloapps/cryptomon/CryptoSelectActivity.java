@@ -43,7 +43,7 @@ public class CryptoSelectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crypto_select);
-        dbHandler = new MyDBHandler(this, null, null, 1);
+        dbHandler = new MyDBHandler(this, null);
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -312,7 +312,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 OK.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Uri uri = Uri.parse(CMC_url);
+                        Uri uri       = Uri.parse(CMC_url);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         dialog2.dismiss();
                         startActivity(intent);
@@ -335,11 +335,11 @@ public class CryptoSelectActivity extends BaseActivity {
                         CryptoSelectActivity.this);
                 builder3.setView(alertsMenu);
                 final String  Symbol     = getIntent().getStringExtra("crypto_name");
-                TextView alertName = alertsMenu.findViewById(R.id.alerts_crypto_name);
-                TextView alertsSym = alertsMenu.findViewById(R.id.alerts_price_currency);
+                TextView alertName       = alertsMenu.findViewById(R.id.alerts_crypto_name);
+                TextView alertsSym       = alertsMenu.findViewById(R.id.alerts_price_currency);
                 final TextView textView  = alertsMenu.findViewById(R.id.textView);
                 alertName.setText(Symbol);
-                EditText priceInput = alertsMenu.findViewById(R.id.price_input);
+                EditText priceInput      = alertsMenu.findViewById(R.id.price_input);
 
                 String initPrice = mSettings.getString("price_initial","");
                 priceInput.setHint(initPrice);
@@ -356,7 +356,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 SetBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dbHandler.addCrypto(Symbol);
+                        dbHandler.addAlert(Symbol,1, .000009);
                         String dbString = dbHandler.databaseToString();
                         textView.setText(dbString);
                     }
@@ -366,12 +366,11 @@ public class CryptoSelectActivity extends BaseActivity {
                 ClearBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dbHandler.deleteCrypto(Symbol);
+                        dbHandler.deleteAlert(Symbol);
                         String dbString = dbHandler.databaseToString();
                         textView.setText(dbString);
                     }
                 });
-
 
                 Button Dismiss = alertsMenu.findViewById(R.id.alerts_NO_btn);
                 Dismiss.setOnClickListener(new View.OnClickListener() {
