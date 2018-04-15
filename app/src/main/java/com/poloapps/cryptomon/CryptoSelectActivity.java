@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -154,7 +155,8 @@ public class CryptoSelectActivity extends BaseActivity {
                             if(!Dollar){
                                currPrice = not_usdP;
                             }
-                            editor.putString("selectedCode",Sel_Symb);
+                            editor.putString("selectedCode",  Sel_Symb);
+                            editor.putFloat ("price_init_f",  (float) currPrice);
                             editor.putString("price_initial", frmt.format((currPrice)));
                             editor.apply();
 
@@ -334,14 +336,16 @@ public class CryptoSelectActivity extends BaseActivity {
                 final AlertDialog.Builder builder3 = new AlertDialog.Builder(
                         CryptoSelectActivity.this);
                 builder3.setView(alertsMenu);
-                final String  Symbol     = getIntent().getStringExtra("crypto_name");
-                TextView alertName       = alertsMenu.findViewById(R.id.alerts_crypto_name);
-                TextView alertsSym       = alertsMenu.findViewById(R.id.alerts_price_currency);
-                final TextView textView  = alertsMenu.findViewById(R.id.textView);
-                alertName.setText(Symbol);
-                final EditText priceInput      = alertsMenu.findViewById(R.id.price_input);
+                final String  Symbol      = getIntent().getStringExtra("crypto_name");
+                TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
+                TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
+                final TextView textView   = alertsMenu.findViewById(R.id.textView);
+                final CheckBox checkPrice = alertsMenu.findViewById(R.id.price_checkbox);
+                final EditText priceInput = alertsMenu.findViewById(R.id.price_input);
 
-                String initPrice = mSettings.getString("price_initial","");
+                alertName.setText(Symbol);
+                String initPrice          = mSettings.getString("price_initial","0");
+                final double currentPrice = mSettings.getFloat("price_init_f",0);
                 priceInput.setHint(initPrice);
 
                 String symbolCurrent = "$";
@@ -349,15 +353,21 @@ public class CryptoSelectActivity extends BaseActivity {
                     symbolCurrent = mSettings.getString("Curr_symb","€");
                     alertsSym.setText(symbolCurrent);
                 }
-                final AlertDialog dialog3  = builder3.create();
+                final AlertDialog dialog3 = builder3.create();
                 dialog3.show();
 
                 Button SetBtn = alertsMenu.findViewById(R.id.alerts_OK_btn);
                 SetBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        double inPrice =   Double.parseDouble(priceInput.getText().toString());
-                        dbHandler.addAlert(Symbol,1, inPrice);
+                        if(!priceInput.getText().toString().equals("") && checkPrice.isChecked()) {
+                            double thPrice = Double.parseDouble(priceInput.getText().toString());
+
+                            int tc = 0;
+                            if      (thPrice > currentPrice) tc =  1;
+                            else if (thPrice < currentPrice) tc = -1;
+                            dbHandler.addPriceAlert(Symbol, tc, thPrice);
+                        }
                         String dbString = dbHandler.databaseToString();
                         textView.setText(dbString);
                     }

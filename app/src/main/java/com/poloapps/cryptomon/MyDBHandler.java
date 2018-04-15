@@ -36,7 +36,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addAlert(String cryptoSymb, int threshold_check, double price_value) {
+    public void addPriceAlert(String cryptoSymb, int threshold_check, double price_value) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
         values.put(COLUMN_THRESH_IND, threshold_check);
