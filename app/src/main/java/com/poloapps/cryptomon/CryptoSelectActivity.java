@@ -339,7 +339,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 TextView alertsSym       = alertsMenu.findViewById(R.id.alerts_price_currency);
                 final TextView textView  = alertsMenu.findViewById(R.id.textView);
                 alertName.setText(Symbol);
-                EditText priceInput      = alertsMenu.findViewById(R.id.price_input);
+                final EditText priceInput      = alertsMenu.findViewById(R.id.price_input);
 
                 String initPrice = mSettings.getString("price_initial","");
                 priceInput.setHint(initPrice);
@@ -356,7 +356,8 @@ public class CryptoSelectActivity extends BaseActivity {
                 SetBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dbHandler.addAlert(Symbol,1, .000009);
+                        double inPrice =   Double.parseDouble(priceInput.getText().toString());
+                        dbHandler.addAlert(Symbol,1, inPrice);
                         String dbString = dbHandler.databaseToString();
                         textView.setText(dbString);
                     }
