@@ -346,7 +346,11 @@ public class CryptoSelectActivity extends BaseActivity {
                 alertName.setText(Symbol);
                 String initPrice          = mSettings.getString("price_initial","0");
                 final double currentPrice = mSettings.getFloat("price_init_f",0);
-                priceInput.setHint(initPrice);
+
+                final String priceTH      = dbHandler.getPrice_Threshold(Symbol);
+
+                if (!priceTH.equals("")) priceInput.setText(priceTH);
+                else                     priceInput.setHint(initPrice);
 
                 String symbolCurrent = "$";
                 if(!Dollar){

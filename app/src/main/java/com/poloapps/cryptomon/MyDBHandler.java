@@ -73,5 +73,22 @@ public class MyDBHandler extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
+    public String getPrice_Threshold(String in){
 
+        StringBuilder dbString = new StringBuilder();
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ALERTS + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+                dbString.append(c.getString(c.getColumnIndex("price_value")));
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+
+        return dbString.toString();
+    }
 }
