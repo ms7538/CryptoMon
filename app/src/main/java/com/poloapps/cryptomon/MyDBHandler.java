@@ -9,10 +9,10 @@ import android.content.ContentValues;
 
 public class MyDBHandler extends SQLiteOpenHelper {
 
-    private static final int    DATABASE_VERSION  = 4;
+    private static final int    DATABASE_VERSION  = 6;
     private static final String DATABASE_NAME     = "cryptomon.db";
 
-    private static final String TABLE_CM_ALERTS   = "alerts";
+    private static final String TABLE_CM_ALERTS   = "alerts3";
     private static final String COLUMN_ID         = "_id";
     private static final String COLUMN_CRYPTOSYMB = "cryptosymb";
     private static final String COLUMN_THRESH_IND = "price_indicator";

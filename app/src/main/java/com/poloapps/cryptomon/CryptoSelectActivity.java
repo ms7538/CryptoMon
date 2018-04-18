@@ -38,6 +38,10 @@ public class CryptoSelectActivity extends BaseActivity {
 
     ProgressDialog dialog;
     MyDBHandler dbHandler;
+    final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
+    final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
+    final DecimalFormat frmt2 = new DecimalFormat("#.########");
+    final DecimalFormat frmt3 = new DecimalFormat("#,###,###,###,###");
 
 
     @Override
@@ -75,10 +79,7 @@ public class CryptoSelectActivity extends BaseActivity {
         String Select_url         = Select_url1 + crypto_id + Select_url2;
         final String CMC_url      = getString(R.string.cryptos_display_link) + crypto_id + "/";
 
-        final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
-        final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
-        final DecimalFormat frmt2 = new DecimalFormat("#.########");
-        final DecimalFormat frmt3 = new DecimalFormat("#,###,###,###,###");
+
 
         final TextView Time                = findViewById(R.id.select_update_time);
         final TextView Name                = findViewById(R.id.select_name);
@@ -348,9 +349,12 @@ public class CryptoSelectActivity extends BaseActivity {
                 final double currentPrice = mSettings.getFloat("price_init_f",0);
 
                 final String priceTH      = dbHandler.getPrice_Threshold(Symbol);
-
-                if (!priceTH.equals("")) priceInput.setText(priceTH);
-                else                     priceInput.setHint(initPrice);
+                
+                if (!priceTH.equals("")){
+                    double formatPTH          = Double.parseDouble(priceTH);
+                    String fmtTH = frmt.format(formatPTH);
+                    priceInput.setText(fmtTH);
+                }else priceInput.setHint(initPrice);
 
                 String symbolCurrent = "$";
                 if(!Dollar){
