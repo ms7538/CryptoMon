@@ -91,4 +91,21 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         return dbString.toString();
     }
+    public Boolean Exists(String in){
+
+        Boolean exists         = false;
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ALERTS + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+               exists = true;
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return exists;
+    }
 }

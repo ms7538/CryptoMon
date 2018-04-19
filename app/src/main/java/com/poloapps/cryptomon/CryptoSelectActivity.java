@@ -349,7 +349,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 final double currentPrice = mSettings.getFloat("price_init_f",0);
 
                 final String priceTH      = dbHandler.getPrice_Threshold(Symbol);
-                
+
                 if (!priceTH.equals("")){
                     double formatPTH          = Double.parseDouble(priceTH);
                     String fmtTH = frmt.format(formatPTH);
@@ -369,8 +369,10 @@ public class CryptoSelectActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         if(!priceInput.getText().toString().equals("") && checkPrice.isChecked()) {
-                            double thPrice = Double.parseDouble(priceInput.getText().toString());
-
+                            if (dbHandler.Exists(Symbol))dbHandler.deleteAlert(Symbol);
+                            String fmtRemoved = priceInput.getText().toString().replace(",",
+                                                                                    "");
+                            double thPrice = Double.parseDouble(fmtRemoved);
                             int tc = 0;
                             if      (thPrice > currentPrice) tc =  1;
                             else if (thPrice < currentPrice) tc = -1;
