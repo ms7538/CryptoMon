@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="number"
-                    android:textColor="@color/l3col"
+                    android:textColor="@color/fade3"
                     android:textColorHint="@color/et_hint"
                     tools:ignore="LabelFor" />
             </LinearLayout>
