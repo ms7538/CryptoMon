@@ -122,9 +122,10 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:textColor="@color/l3col"
-                    android:textColorHint="@color/et_hint" />
+                    android:textColorHint="@color/et_hint"
+                    tools:ignore="LabelFor" />
             </LinearLayout>
         </TableRow>
     </TableLayout>
@@ -133,6 +134,16 @@
         android:layout_width="match_parent"
         android:layout_height="105dp"
         android:background="@color/l5col">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textView"
+            android:layout_marginEnd="37dp"
+            android:text="TextView"
+            android:textColor="@color/l3col" />
 
         <Button
             android:id="@+id/alerts_OK_btn"

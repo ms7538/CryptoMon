@@ -36,24 +36,28 @@ import java.text.DecimalFormat;
 
 public class CryptoSelectActivity extends BaseActivity {
 
-    ProgressDialog dialog;
-    MyDBHandler dbHandler;
+    ProgressDialog  dialog;
+    dbPriceHandler  dbPHandler;
+    dbVolumeHandler dbVHandler;
+
     final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
     final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
     final DecimalFormat frmt2 = new DecimalFormat("#.########");
     final DecimalFormat frmt3 = new DecimalFormat("#,###,###,###,###");
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crypto_select);
-        dbHandler = new MyDBHandler(this, null);
+
+        dbPHandler = new dbPriceHandler(this, null);
+        dbVHandler = new dbVolumeHandler(this, null);
+
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -78,8 +82,6 @@ public class CryptoSelectActivity extends BaseActivity {
         final String crypto_id    = getIntent().getStringExtra("crypto_id");
         String Select_url         = Select_url1 + crypto_id + Select_url2;
         final String CMC_url      = getString(R.string.cryptos_display_link) + crypto_id + "/";
-
-
 
         final TextView Time                = findViewById(R.id.select_update_time);
         final TextView Name                = findViewById(R.id.select_name);
@@ -138,7 +140,6 @@ public class CryptoSelectActivity extends BaseActivity {
                             String Sel_Rank  = object.getString("rank");
                             String Sel_Symb  = object.getString("symbol");
 
-
                             Name.setText(Sel_Name);
                             Rank.setText(Sel_Rank);
                             Symbol.setText(Sel_Symb);
@@ -156,17 +157,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             if(!Dollar){
                                currPrice = not_usdP;
                             }
-                            editor.putString("selectedCode",  Sel_Symb);
-                            editor.putFloat ("price_init_f",  (float) currPrice);
-                            editor.putString("price_initial", frmt.format((currPrice)));
-                            editor.apply();
 
                             if      (usdP     < 0.01) USD_frmt = frmt2;
                             else if (usdP     > 99)   USD_frmt = frmt0;
                             if      (not_usdP < 0.01) EUR_frmt = frmt2;
                             else if (not_usdP > 99)   EUR_frmt = frmt0;
                             if      (btcP     < 0.01) BTC_frmt = frmt2;
-
 
                             String Price_USD = "$"         + USD_frmt.format(usdP);
                             String Price_EUR = Curr_symbol + EUR_frmt.format(not_usdP);
@@ -176,8 +172,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             PriceEUR.setText(Price_EUR);
                             PriceBTC.setText(Price_BTC);
 
-
-                            String Delta_1h = getString(R.string.not_avail);
+                            String Delta_1h     = getString(R.string.not_avail);
                             String Delta_1h_val = object.getString("percent_change_1h");
                             if (!Objects.equals(Delta_1h_val, "null")) {
                                 Delta_1h = Delta_1h_val + "%";
@@ -190,7 +185,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             Delta1h.setText(Delta_1h);
 
-                            String Delta_1d = getString(R.string.not_avail);
+                            String Delta_1d     = getString(R.string.not_avail);
                             String Delta_1d_val = object.getString("percent_change_24h");
                             if (!Objects.equals(Delta_1d_val, "null")) {
                                 Delta_1d = Delta_1d_val + "%";
@@ -203,7 +198,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             Delta1d.setText(Delta_1d);
 
-                            String Delta_7d = getString(R.string.not_avail);
+                            String Delta_7d     = getString(R.string.not_avail);
                             String Delta_7d_val = object.getString("percent_change_7d");
                             if (!Objects.equals(Delta_7d_val, "null")) {
                                 Delta_7d = Delta_7d_val + "%";
@@ -216,36 +211,43 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             Delta7d.setText(Delta_7d);
 
-                            String Av_Supply = getString(R.string.not_avail);
+                            String Av_Supply     = getString(R.string.not_avail);
                             String Av_Supply_val = object.getString("available_supply");
                             if (!Objects.equals(Av_Supply_val, "null")) {
                                 Av_Supply = frmt.format(Double.parseDouble(Av_Supply_val));
                             }
                             AvailSupply.setText(Av_Supply);
 
-                            String T_Supply  = getString(R.string.not_avail);
+                            String T_Supply     = getString(R.string.not_avail);
                             String T_Supply_val = object.getString("total_supply");
                             if (!Objects.equals(T_Supply_val, "null")) {
                                 T_Supply = frmt.format(Double.parseDouble(T_Supply_val));
                             }
                             TotalSupply.setText(T_Supply);
 
-                            String Max_Supply  = getString(R.string.not_avail);
+                            String Max_Supply     = getString(R.string.not_avail);
                             String Max_Supply_val = object.getString("max_supply");
                             if (!Objects.equals(Max_Supply_val, "null")) {
                                 Max_Supply = frmt.format(Double.parseDouble(Max_Supply_val));
                             }
                             MaxSupply.setText(Max_Supply);
 
-
-                            String USD_Volume = getString(R.string.not_avail);
+                            String USD_Volume     = getString(R.string.not_avail);
                             String USD_Volume_val = object.getString("24h_volume_usd");
                             if (!Objects.equals(USD_Volume_val, "null")) {
                                 USD_Volume = "$" + frmt3.format(Double.parseDouble(USD_Volume_val));
                             }
                             VolumeUSD.setText(USD_Volume);
 
-                            String EUR_Volume = getString(R.string.not_avail);
+                            editor.putFloat ("price_init_f",  (float) currPrice);
+                            editor.putString("price_initial", frmt.format((currPrice)));
+
+                            editor.putFloat("vol_init_i", Float.parseFloat(USD_Volume_val));
+                            editor.putString("vol_initial", frmt3.format(
+                                                                 Float.parseFloat(USD_Volume_val)));
+                            editor.apply();
+
+                            String EUR_Volume     = getString(R.string.not_avail);
                             String EUR_Volume_val = object.getString(volume_key_nonUSD);
                             if (!Objects.equals(EUR_Volume_val, "null")) {
                                 EUR_Volume = Curr_symbol +
@@ -253,7 +255,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             VolumeEUR.setText(EUR_Volume);
 
-                            String USD_MarketCap = getString(R.string.not_avail);
+                            String USD_MarketCap     = getString(R.string.not_avail);
                             String USD_MarketCap_val = object.getString("market_cap_usd");
                             if (!Objects.equals(USD_MarketCap_val, "null")) {
                                 USD_MarketCap = "$" +
@@ -261,7 +263,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             MarketCapUSD.setText(USD_MarketCap);
 
-                            String EUR_MarketCap = getString(R.string.not_avail);
+                            String EUR_MarketCap     = getString(R.string.not_avail);
                             String EUR_MarketCap_val = object.getString(market_cap_key_nonUSD);
                             if (!Objects.equals(EUR_MarketCap_val, "null")) {
                                 EUR_MarketCap = Curr_symbol +
@@ -281,18 +283,16 @@ public class CryptoSelectActivity extends BaseActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(getApplicationContext(), "Some error occurred!!",
                         Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
-
         });
+
         RequestQueue rQueue = Volley.newRequestQueue(CryptoSelectActivity.this);
         rQueue.add(cryptoSel_request);
         CMC_link.setOnClickListener(new View.OnClickListener() {
@@ -335,7 +335,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 @SuppressLint("InflateParams")
                 final View alertsMenu = li.inflate(R.layout.alerts_select_menu, null);
                 final AlertDialog.Builder builder3 = new AlertDialog.Builder(
-                        CryptoSelectActivity.this);
+                                                                 CryptoSelectActivity.this);
                 builder3.setView(alertsMenu);
                 final String  Symbol      = getIntent().getStringExtra("crypto_name");
                 TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
@@ -344,17 +344,32 @@ public class CryptoSelectActivity extends BaseActivity {
                 final CheckBox checkPrice = alertsMenu.findViewById(R.id.price_checkbox);
                 final EditText priceInput = alertsMenu.findViewById(R.id.price_input);
 
+                final TextView textView2  = alertsMenu.findViewById(R.id.textView2);
+                final CheckBox checkVol   = alertsMenu.findViewById(R.id.vol_checkbox);
+                final EditText volInput   = alertsMenu.findViewById(R.id.volume_input);
+
                 alertName.setText(Symbol);
+
                 String initPrice          = mSettings.getString("price_initial","0");
                 final double currentPrice = mSettings.getFloat("price_init_f",0);
 
-                final String priceTH      = dbHandler.getPrice_Threshold(Symbol);
+                String initVolume         = mSettings.getString("vol_initial","0");
+                final double currentVol   = mSettings.getFloat("vol_init_i",0);
+
+                final String priceTH      = dbPHandler.getPrice_Threshold(Symbol);
+                final String volTH        = dbVHandler.getVol_Threshold(Symbol);
 
                 if (!priceTH.equals("")){
-                    double formatPTH          = Double.parseDouble(priceTH);
-                    String fmtTH = frmt.format(formatPTH);
+                    double formatPTH = Double.parseDouble(priceTH);
+                    String fmtTH     = frmt.format(formatPTH);
                     priceInput.setText(fmtTH);
                 }else priceInput.setHint(initPrice);
+
+                if (!volTH.equals("")){
+                    double formatVTH = Double.valueOf(volTH).longValue();
+                    String fmtVTH    = frmt3.format(formatVTH);
+                    volInput.setText(fmtVTH);
+                }else volInput.setHint(initVolume);
 
                 String symbolCurrent = "$";
                 if(!Dollar){
@@ -369,17 +384,30 @@ public class CryptoSelectActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         if(!priceInput.getText().toString().equals("") && checkPrice.isChecked()) {
-                            if (dbHandler.Exists(Symbol))dbHandler.deleteAlert(Symbol);
+                            if (dbPHandler.Exists(Symbol)) dbPHandler.deleteAlert(Symbol);
                             String fmtRemoved = priceInput.getText().toString().replace(",",
                                                                                     "");
                             double thPrice = Double.parseDouble(fmtRemoved);
                             int tc = 0;
                             if      (thPrice > currentPrice) tc =  1;
                             else if (thPrice < currentPrice) tc = -1;
-                            dbHandler.addPriceAlert(Symbol, tc, thPrice);
+                            dbPHandler.addPriceAlert(Symbol, tc, thPrice);
                         }
-                        String dbString = dbHandler.databaseToString();
+                        String dbString = dbPHandler.databaseToString();
                         textView.setText(dbString);
+
+                        if(!volInput.getText().toString().equals("") && checkVol.isChecked()) {
+                            if (dbVHandler.Exists(Symbol)) dbVHandler.deleteAlert(Symbol);
+                            String fmtRemoved = volInput.getText().toString().replace(",",
+                                    "");
+                            int thVol = Integer.parseInt(fmtRemoved);
+                            int tc = 0;
+                            if      (thVol > currentVol) tc =  1;
+                            else if (thVol < currentVol) tc = -1;
+                            dbVHandler.addVolAlert(Symbol, tc, thVol);
+                        }
+                        String dbVString = dbVHandler.databaseToString();
+                        textView2.setText(dbVString);
                     }
                 });
 
@@ -387,9 +415,12 @@ public class CryptoSelectActivity extends BaseActivity {
                 ClearBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dbHandler.deleteAlert(Symbol);
-                        String dbString = dbHandler.databaseToString();
+                        dbPHandler.deleteAlert(Symbol);
+                        dbVHandler.deleteAlert(Symbol);
+                        String dbString = dbPHandler.databaseToString();
                         textView.setText(dbString);
+                        String dbVString = dbVHandler.databaseToString();
+                        textView2.setText(dbVString);
                     }
                 });
 
