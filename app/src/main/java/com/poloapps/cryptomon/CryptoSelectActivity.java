@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +38,8 @@ public class CryptoSelectActivity extends BaseActivity {
     ProgressDialog  dialog;
     dbPriceHandler  dbPHandler;
     dbVolumeHandler dbVHandler;
+    Boolean alertPrice = false;
+    Boolean alertVol   = false;
 
     final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
     final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
@@ -340,20 +341,17 @@ public class CryptoSelectActivity extends BaseActivity {
                 final String  Symbol      = getIntent().getStringExtra("crypto_name");
                 TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
                 TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
-                final TextView textView   = alertsMenu.findViewById(R.id.textView);
-                final CheckBox checkPrice = alertsMenu.findViewById(R.id.price_checkbox);
                 final EditText priceInput = alertsMenu.findViewById(R.id.price_input);
-
-                final TextView textView2  = alertsMenu.findViewById(R.id.textView2);
-                final CheckBox checkVol   = alertsMenu.findViewById(R.id.vol_checkbox);
                 final EditText volInput   = alertsMenu.findViewById(R.id.volume_input);
+                final Button setPriceBtn  = alertsMenu.findViewById(R.id.price_setBtn);
+                final Button setVolBtn    = alertsMenu.findViewById(R.id.vol_setBtn);
 
                 alertName.setText(Symbol);
 
-                String initPrice          = mSettings.getString("price_initial","0");
+                final String initPrice    = mSettings.getString("price_initial","0");
                 final double currentPrice = mSettings.getFloat("price_init_f",0);
 
-                String initVolume         = mSettings.getString("vol_initial","0");
+                final String initVolume   = mSettings.getString("vol_initial","0");
                 final double currentVol   = mSettings.getFloat("vol_init_i",0);
 
                 final String priceTH      = dbPHandler.getPrice_Threshold(Symbol);
@@ -363,66 +361,107 @@ public class CryptoSelectActivity extends BaseActivity {
                     double formatPTH = Double.parseDouble(priceTH);
                     String fmtTH     = frmt.format(formatPTH);
                     priceInput.setText(fmtTH);
-                }else priceInput.setHint(initPrice);
-
+                    alertPrice       = true;
+                }else {
+                    priceInput.setHint(initPrice);
+                    alertPrice       = false;
+                }
                 if (!volTH.equals("")){
                     double formatVTH = Double.valueOf(volTH).longValue();
                     String fmtVTH    = frmt3.format(formatVTH);
                     volInput.setText(fmtVTH);
-                }else volInput.setHint(initVolume);
-
+                    alertVol         = true;
+                }else {
+                    volInput.setHint(initVolume);
+                    alertVol         = false;
+                }
                 String symbolCurrent = "$";
                 if(!Dollar){
                     symbolCurrent = mSettings.getString("Curr_symb","€");
                     alertsSym.setText(symbolCurrent);
                 }
+
+                setPriceBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!alertPrice) {
+                            if(!priceInput.getText().toString().equals("")) {
+                                alertPrice = true;
+                                //if (dbPHandler.Exists(Symbol)) dbPHandler.deleteAlert(Symbol);
+                                String fmtRemoved = priceInput.getText().toString().replace(
+                                                                        ",", "");
+                                double thPrice = Double.parseDouble(fmtRemoved);
+                                int tc = 0;
+                                if (thPrice > currentPrice)      tc = 1;
+                                else if (thPrice < currentPrice) tc = -1;
+
+                                dbPHandler.addPriceAlert(Symbol, tc, thPrice);
+
+                                setPriceBtn.setVisibility(View.GONE);
+                                setPriceBtn.setText(R.string.clear);
+                                setPriceBtn.setVisibility(View.VISIBLE);
+                                priceInput.setText(frmt.format(Double.parseDouble(
+                                                               priceInput.getText().toString())));
+                            }else
+                                Toast.makeText(getApplicationContext(),
+                                        "PRICE THRESHOLD MUST BE SET",
+                                                                         Toast.LENGTH_SHORT).show();
+                        }else {
+                            setPriceBtn.setVisibility(View.GONE);
+                            setPriceBtn.setText(R.string.set);
+                            setPriceBtn.setVisibility(View.VISIBLE);
+                            priceInput.setText("");
+                            priceInput.setHint(initPrice);
+                            alertPrice = false;
+                            dbPHandler.deleteAlert(Symbol);
+                        }
+
+                    }
+                });
+                setVolBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!alertVol) {
+                            if (!volInput.getText().toString().equals("")) {
+
+                                alertVol = true;
+                                //if (dbVHandler.Exists(Symbol)) dbVHandler.deleteAlert(Symbol);
+                                String fmtRemoved = volInput.getText().toString().replace(
+                                                                        ",", "");
+                                int thVol = Integer.parseInt(fmtRemoved);
+                                int tc = 0;
+                                if (thVol > currentVol) tc = 1;
+                                else if (thVol < currentVol) tc = -1;
+                                dbVHandler.addVolAlert(Symbol, tc, thVol);
+                                setVolBtn.setVisibility(View.GONE);
+                                setVolBtn.setText(R.string.clear);
+                                setVolBtn.setVisibility(View.VISIBLE);
+                                volInput.setText(frmt3.format(Integer.parseInt(
+                                                                  volInput.getText().toString())));
+                            } else
+                                Toast.makeText(getApplicationContext(),
+                                        "VOLUME THRESHOLD MUST BE SET",
+                                                                         Toast.LENGTH_SHORT).show();
+                        }else {
+                            setVolBtn.setVisibility(View.GONE);
+                            setVolBtn.setText(R.string.set);
+                            setVolBtn.setVisibility(View.VISIBLE);
+                            volInput.setText("");
+                            volInput.setHint(initVolume);
+                            alertVol = false;
+                            dbVHandler.deleteAlert(Symbol);
+                        }
+
+                    }
+                });
+
                 final AlertDialog dialog3 = builder3.create();
                 dialog3.show();
 
-                Button SetBtn = alertsMenu.findViewById(R.id.alerts_OK_btn);
-                SetBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(!priceInput.getText().toString().equals("") && checkPrice.isChecked()) {
-                            if (dbPHandler.Exists(Symbol)) dbPHandler.deleteAlert(Symbol);
-                            String fmtRemoved = priceInput.getText().toString().replace(",",
-                                                                                    "");
-                            double thPrice = Double.parseDouble(fmtRemoved);
-                            int tc = 0;
-                            if      (thPrice > currentPrice) tc =  1;
-                            else if (thPrice < currentPrice) tc = -1;
-                            dbPHandler.addPriceAlert(Symbol, tc, thPrice);
-                        }
-                        String dbString = dbPHandler.databaseToString();
-                        textView.setText(dbString);
-
-                        if(!volInput.getText().toString().equals("") && checkVol.isChecked()) {
-                            if (dbVHandler.Exists(Symbol)) dbVHandler.deleteAlert(Symbol);
-                            String fmtRemoved = volInput.getText().toString().replace(",",
-                                    "");
-                            int thVol = Integer.parseInt(fmtRemoved);
-                            int tc = 0;
-                            if      (thVol > currentVol) tc =  1;
-                            else if (thVol < currentVol) tc = -1;
-                            dbVHandler.addVolAlert(Symbol, tc, thVol);
-                        }
-                        String dbVString = dbVHandler.databaseToString();
-                        textView2.setText(dbVString);
-                    }
-                });
-
-                Button ClearBtn = alertsMenu.findViewById(R.id.alerts_Clear_btn);
-                ClearBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dbPHandler.deleteAlert(Symbol);
-                        dbVHandler.deleteAlert(Symbol);
-                        String dbString = dbPHandler.databaseToString();
-                        textView.setText(dbString);
-                        String dbVString = dbVHandler.databaseToString();
-                        textView2.setText(dbVString);
-                    }
-                });
+                if( alertPrice ) setPriceBtn.setText(R.string.clear);
+                else             setPriceBtn.setText(R.string.set);
+                if ( alertVol )  setVolBtn.setText(R.string.clear);
+                else             setVolBtn.setText(R.string.set);
 
                 Button Dismiss = alertsMenu.findViewById(R.id.alerts_NO_btn);
                 Dismiss.setOnClickListener(new View.OnClickListener() {
