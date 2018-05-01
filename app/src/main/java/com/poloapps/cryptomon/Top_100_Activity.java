@@ -220,7 +220,6 @@ public class Top_100_Activity extends BaseActivity {
         RequestQueue rQueue = Volley.newRequestQueue(Top_100_Activity.this);
         rQueue.add(crypto100_request);
         createdTime = System.currentTimeMillis() / 1000L;
-
     }
 
     @Override
@@ -236,7 +235,6 @@ public class Top_100_Activity extends BaseActivity {
         editor.putString("t100_curr",T100_currency);
         editor.apply();
     }
-
 
     @Override
     protected void onResume() {

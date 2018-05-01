@@ -5,8 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +52,11 @@ public class CryptoSelectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crypto_select);
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        assert bar != null;
+        bar.setDisplayShowTitleEnabled(false);
+        bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
+                R.color.dark_gray)));
 
         dbPHandler = new dbPriceHandler(this, null);
         dbVHandler = new dbVolumeHandler(this, null);
@@ -65,6 +72,7 @@ public class CryptoSelectActivity extends BaseActivity {
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+
         final LayoutInflater li    = LayoutInflater.from(CryptoSelectActivity.this);
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();

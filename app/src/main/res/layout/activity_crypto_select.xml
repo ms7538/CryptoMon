@@ -30,7 +30,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="@string/alerts_"
+            android:text="@string/set_alert"
             android:textSize="15sp" />
     </RelativeLayout>
 

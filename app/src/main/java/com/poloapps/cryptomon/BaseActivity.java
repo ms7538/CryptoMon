@@ -38,7 +38,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
 
+
         switch (item.getItemId()) {
+
+            case R.id.action_t100:
+                Intent intent2 = new Intent(
+                        BaseActivity.this,
+                        Top_100_Activity.class);
+                BaseActivity.this.startActivity(intent2);
+                return true;
+
+            case R.id.action_alerts:
+                Intent intent = new Intent(
+                        BaseActivity.this,
+                        All_AlertsActivity.class);
+                BaseActivity.this.startActivity(intent);
+                return true;
 
             case R.id.action_refresh:
                 restart();

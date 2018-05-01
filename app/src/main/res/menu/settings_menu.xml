@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
+<menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >
+    <item
+        android:id="@+id/action_t100"
+        android:icon="@drawable/ic_action_t100"
+        android:title="@string/top_100_crypto"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_alerts"
+        android:icon="@drawable/ic_action_alert_red"
+        android:title="@string/alerts_"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
     <item
         android:id="@+id/action_refresh"
         android:icon="@drawable/ic_refresh_black_24dp"
         android:title="@string/refresh"
-        app:showAsAction="ifRoom"
-        />
+        app:showAsAction="always"       />
 
     <item
         android:id="@+id/action_currency_sel"
         android:icon="@drawable/ic_attach_money_black_24dp"
         android:title="@string/currency_sel"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_subreddits"
