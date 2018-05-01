@@ -25,16 +25,14 @@ public class All_AlertsActivity extends BaseActivity {
         dbVHandler = new dbVolumeHandler(this, null);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
 
-
         final TextView tv1 = findViewById(R.id.tv1);
         final TextView tv2 = findViewById(R.id.tv2);
 
-        tv1.setText(dbPHandler.databaseToString());
-        tv2.setText(dbVHandler.databaseToString());
+        tv1.setText(dbPHandler.dbToString());
+        tv2.setText(dbVHandler.dbToString());
     }
 }

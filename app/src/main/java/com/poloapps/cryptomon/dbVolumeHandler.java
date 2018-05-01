@@ -75,6 +75,25 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
+    public String dbToString(){
+        StringBuilder dbString = new StringBuilder();
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ALERTS2 + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")) != null){
+                dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
+                dbString.append(" Volume -> ");
+                dbString.append(c.getString(c.getColumnIndex("vol_value")));
+                dbString.append("\n");
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return dbString.toString();
+    }
     public String getVol_Threshold(String in){
 
         StringBuilder dbString = new StringBuilder();
