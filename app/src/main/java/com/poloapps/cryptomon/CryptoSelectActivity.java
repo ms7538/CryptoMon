@@ -346,7 +346,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 final AlertDialog.Builder builder3 = new AlertDialog.Builder(
                                                                  CryptoSelectActivity.this);
                 builder3.setView(alertsMenu);
-                final String  Symbol      = getIntent().getStringExtra("crypto_name");
+                final String  Symbol      = getIntent().getStringExtra("crypto_id");
                 TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
                 TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
                 final EditText priceInput = alertsMenu.findViewById(R.id.price_input);
