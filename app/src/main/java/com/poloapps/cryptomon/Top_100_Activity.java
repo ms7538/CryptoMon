@@ -38,7 +38,7 @@ import java.util.Objects;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-//v0.9  created
+//v1.01    created
 public class Top_100_Activity extends BaseActivity {
     long createdTime = System.currentTimeMillis() / 1000L;
     ArrayList<HashMap<String, String>> rankList;
@@ -145,9 +145,12 @@ public class Top_100_Activity extends BaseActivity {
                             TextView delta_1h = view.findViewById(R.id.h1);
                             TextView delta_1d = view.findViewById(R.id.d1);
                             TextView delta_7d = view.findViewById(R.id.delta7_d);
+
                             final TextView link_id = view.findViewById(R.id.id_link);
                             link_id.setPaintFlags(link_id.getPaintFlags()
                                     | Paint.UNDERLINE_TEXT_FLAG);
+
+
                             Map<String, String> currentRow = rankList.get(position);
 
                             double delta1h = 0;
@@ -181,6 +184,7 @@ public class Top_100_Activity extends BaseActivity {
                                            Top_100_Activity.this.startActivity(intent);
                                        }
                                    });
+
                             dialog.dismiss();
                             return view;
                         }

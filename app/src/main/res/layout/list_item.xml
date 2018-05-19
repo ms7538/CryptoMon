@@ -132,13 +132,13 @@
             android:textSize="15sp" />
 
     </TableRow>
+
+
     <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <TextView
             android:layout_height="wrap_content"
@@ -147,14 +147,22 @@
             android:textColor="@android:color/black"
             android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/id_link"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:text="@string/x"
-            android:textColor="@color/navy_blue"
-            android:textSize="12sp" />
+            android:layout_column="2">
+
+            <Button
+                android:id="@+id/id_link"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+
+                android:background="@android:drawable/btn_default_small"
+                android:text="@string/x"
+                android:textColor="@color/navy_blue"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
 
     </TableRow>
 
