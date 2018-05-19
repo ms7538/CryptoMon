@@ -52,27 +52,6 @@ public class dbPriceHandler extends SQLiteOpenHelper {
                 + cryptoSymb + "\";");
     }
 
-    public String databaseToString(){
-        StringBuilder dbString = new StringBuilder();
-        SQLiteDatabase db      = getWritableDatabase();
-        String query           = "SELECT * FROM " + TABLE_CM_ALERTS + " WHERE 1";
-        Cursor c               = db.rawQuery(query, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("cryptosymb")) != null){
-                dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
-                dbString.append(" |c:  ");
-                dbString.append(c.getString(c.getColumnIndex("price_indicator")));
-                dbString.append(" |v:  ");
-                dbString.append(c.getString(c.getColumnIndex("price_value")));
-                dbString.append("\n");
-            }
-            c.moveToNext();
-        }
-        c.close();
-        db.close();
-        return dbString.toString();
-    }
     public String dbToString(){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -110,21 +89,5 @@ public class dbPriceHandler extends SQLiteOpenHelper {
 
         return dbString.toString();
     }
-    public Boolean Exists(String in){
 
-        Boolean exists         = false;
-        SQLiteDatabase db      = getWritableDatabase();
-        String query           = "SELECT * FROM " + TABLE_CM_ALERTS + " WHERE 1";
-        Cursor c               = db.rawQuery(query, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
-               exists = true;
-            }
-            c.moveToNext();
-        }
-        c.close();
-        db.close();
-        return exists;
-    }
 }

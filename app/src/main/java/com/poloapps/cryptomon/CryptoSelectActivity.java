@@ -436,7 +436,7 @@ public class CryptoSelectActivity extends BaseActivity {
                                 //if (dbVHandler.Exists(Symbol)) dbVHandler.deleteAlert(Symbol);
                                 String fmtRemoved = volInput.getText().toString().replace(
                                                                         ",", "");
-                                int thVol = Integer.parseInt(fmtRemoved);
+                                double thVol = Double.parseDouble(fmtRemoved);
                                 int tc = 0;
                                 if (thVol > currentVol) tc = 1;
                                 else if (thVol < currentVol) tc = -1;
@@ -444,7 +444,7 @@ public class CryptoSelectActivity extends BaseActivity {
                                 setVolBtn.setVisibility(View.GONE);
                                 setVolBtn.setText(R.string.clear);
                                 setVolBtn.setVisibility(View.VISIBLE);
-                                volInput.setText(frmt3.format(Integer.parseInt(
+                                volInput.setText(frmt3.format(Double.parseDouble(
                                                                   volInput.getText().toString())));
                             } else
                                 Toast.makeText(getApplicationContext(),

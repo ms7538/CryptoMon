@@ -5,11 +5,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class All_AlertsActivity extends BaseActivity {
 
     dbPriceHandler  dbPHandler;
     dbVolumeHandler dbVHandler;
+    dbCurrentValsHandler dbCVHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class All_AlertsActivity extends BaseActivity {
 
         dbPHandler = new dbPriceHandler(this, null);
         dbVHandler = new dbVolumeHandler(this, null);
+        dbCVHandler = new dbCurrentValsHandler(this, null);
     }
 
     @Override
@@ -31,8 +34,15 @@ public class All_AlertsActivity extends BaseActivity {
 
         final TextView tv1 = findViewById(R.id.tv1);
         final TextView tv2 = findViewById(R.id.tv2);
+        final TextView tv3 = findViewById(R.id.tv3);
 
         tv1.setText(dbPHandler.dbToString());
-        tv2.setText(dbVHandler.dbToString());
+        tv2.setText(dbVHandler.databaseToString());
+
+        String cv = dbCVHandler.currentPrice("bitcoin");
+        Toast.makeText(getApplicationContext(), cv,
+                Toast.LENGTH_SHORT).show();
+
+        //tv3.setText(cv);
     }
 }
