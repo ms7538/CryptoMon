@@ -32,4 +32,5 @@
     <color name="light_blue"    >#edf9fb</color>
     <color name="price_bg_col"  >#E3DCD6</color>
     <color name="bright_blue"   >#14d2fb</color>
+    <color name="et_hint"       >#cdc1c5</color>
 </resources>

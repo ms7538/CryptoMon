@@ -21,6 +21,8 @@
     <string name="currency">Currency:</string>
     <string name="dollars">($) USD / United States Dollar</string>
     <string name="euro">(€) EUR / Euro</string>
+    <string name="dollar_symb">$</string>
+    <string name="euro_symb">€</string>
     <string name="ok">OK</string>
     <string name="currency_sel">Currencies</string>
     <string name="banner_ad_unit_id">ca-app-pub-6002737231550640/6485035382</string>
@@ -130,6 +132,8 @@
     <string name="jpy">￥</string>
     <string name="jpy_japanese_yen">(¥) JPY / Japanese Yen</string>
     <string name="gbp_pound_sterling">(£) GBP / Pound Sterling</string>
+    <string name="jpy_symb">¥</string>
+    <string name="gbp_symb">(£) GBP / Pound Sterling</string>
     <string name="price_">Price </string>
     <string name="market_cap_">Market Cap </string>
     <string name="vol24h_">24h Volume </string>
@@ -144,6 +148,16 @@
     <string name="try_turkish_lira">(₺) TRY / Turkish Lira</string>
     <string name="rub_russian_ruble">(₽) RUB / Russian Ruble</string>
     <string name="indian_rupee">(₹) INR / Indian Rupee</string>
+    <string name="aud_symb">A$</string>
+    <string name="cad_symb">C$</string>
+    <string name="chf_symb">Fr</string>
+    <string name="cny_symb">元</string>
+    <string name="sek_symb">kr</string>
+    <string name="nzd_symb">NZ$</string>
+    <string name="krw_symb">₩</string>
+    <string name="try_symb">₺</string>
+    <string name="rub_symb">₽</string>
+    <string name="inr_symb">₹</string>
     <string name="requested">Requested:</string>
     <string name="navigate_to">Navigate To:</string>
     <string name="https_coinmarketcap_com_currencies">https://coinmarketcap.com/currencies/</string>
@@ -181,4 +195,11 @@
     <string name="alerts"><![CDATA[Alerts \u00A0 \u00A0 \u00A0 —>]]></string>
     <string name="off">off</string>
     <string name="last_update">Last Update:</string>
+    <string name="alerts_">Alerts</string>
+    <string name="set">SET</string>
+    <string name="off_">OFF</string>
+    <string name="dollar_sign">$</string>
+    <string name="clear">clear</string>
+    <string name="_24h_vol">24h Vol:</string>
+    <string name="set_alert">SET ALERTS</string>
 </resources>

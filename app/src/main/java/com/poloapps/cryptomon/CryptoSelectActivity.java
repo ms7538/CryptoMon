@@ -1,17 +1,19 @@
 package com.poloapps.cryptomon;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,45 +37,60 @@ import java.text.DecimalFormat;
 
 public class CryptoSelectActivity extends BaseActivity {
 
-    ProgressDialog dialog;
+    ProgressDialog  dialog;
+    dbPriceHandler  dbPHandler;
+    dbVolumeHandler dbVHandler;
+    Boolean alertPrice = false;
+    Boolean alertVol   = false;
 
+    final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
+    final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
+    final DecimalFormat frmt2 = new DecimalFormat("#.########");
+    final DecimalFormat frmt3 = new DecimalFormat("#,###,###,###,###");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crypto_select);
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        assert bar != null;
+        bar.setDisplayShowTitleEnabled(false);
+        bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
+                R.color.dark_gray)));
+
+        dbPHandler = new dbPriceHandler(this, null);
+        dbVHandler = new dbVolumeHandler(this, null);
 
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
     }
+
     @Override
     public void onResume() {
         super.onResume();
-
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+
+        final LayoutInflater li    = LayoutInflater.from(CryptoSelectActivity.this);
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();
         final String Curr_symbol   = mSettings.getString("Curr_symb","€");
+
         String Select_url1         = "https://api.coinmarketcap.com/v1/ticker/";
         String Select_url2         = "/?convert=" + Curr;
 
-        final String price_key_nonUSD      = "price_" + Curr;
+        final String price_key_nonUSD      = "price_"      + Curr;
         final String volume_key_nonUSD     = "24h_volume_" + Curr;
         final String market_cap_key_nonUSD = "market_cap_" + Curr;
 
         final TextView CMC_link = findViewById(R.id.sel_crypto_coinmarketcap_link);
         CMC_link.setPaintFlags(CMC_link.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        final String crypto_id     = getIntent().getStringExtra("crypto_id");
-        String Select_url    = Select_url1 + crypto_id + Select_url2;
-        final String CMC_url = getString(R.string.cryptos_display_link) + crypto_id + "/";
-
-        final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
-        final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
-        final DecimalFormat frmt2 = new DecimalFormat("#.########");
-        final DecimalFormat frmt3 = new DecimalFormat("#,###,###,###,###");
+        final String crypto_id    = getIntent().getStringExtra("crypto_id");
+        String Select_url         = Select_url1 + crypto_id + Select_url2;
+        final String CMC_url      = getString(R.string.cryptos_display_link) + crypto_id + "/";
 
         final TextView Time                = findViewById(R.id.select_update_time);
         final TextView Name                = findViewById(R.id.select_name);
@@ -101,6 +118,8 @@ public class CryptoSelectActivity extends BaseActivity {
         final TextView price_NUSD_TV       = findViewById(R.id.textView_price_eur);
         final TextView volume_NUSD_TV      = findViewById(R.id.textView_24h_vol_eur);
         final TextView market_cap_NUSD_TV  = findViewById(R.id.textView_market_cap_eur);
+
+        final Button alertsBtn             = findViewById(R.id.sel_alerts_link);
 
         String TV_price_text  = getString(R.string.price_) + " " +
                                 CAP_curr + getString(R.string.colon);
@@ -139,26 +158,30 @@ public class CryptoSelectActivity extends BaseActivity {
                             DecimalFormat BTC_frmt = frmt;
 
                             double usdP = Double.parseDouble(object.getString("price_usd"));
-                            double eurP = Double.parseDouble(object.getString(price_key_nonUSD));
+                            double not_usdP = Double.parseDouble(
+                                                                object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
-                            if      (usdP < 0.01) USD_frmt = frmt2;
-                            else if (usdP > 99)   USD_frmt = frmt0;
-                            if      (eurP < 0.01) EUR_frmt = frmt2;
-                            else if (eurP > 99)   EUR_frmt = frmt0;
-                            if      (btcP < 0.01) BTC_frmt = frmt2;
+                            double currPrice = usdP;
+                            if(!Dollar){
+                               currPrice = not_usdP;
+                            }
 
+                            if      (usdP     < 0.01) USD_frmt = frmt2;
+                            else if (usdP     > 99)   USD_frmt = frmt0;
+                            if      (not_usdP < 0.01) EUR_frmt = frmt2;
+                            else if (not_usdP > 99)   EUR_frmt = frmt0;
+                            if      (btcP     < 0.01) BTC_frmt = frmt2;
 
-                            String Price_USD = "$"      + USD_frmt.format(usdP);
-                            String Price_EUR = Curr_symbol + EUR_frmt.format(eurP);
-                            String Price_BTC = "\u0E3F" + BTC_frmt.format(btcP);
+                            String Price_USD = "$"         + USD_frmt.format(usdP);
+                            String Price_EUR = Curr_symbol + EUR_frmt.format(not_usdP);
+                            String Price_BTC = "\u0E3F"    + BTC_frmt.format(btcP);
 
                             PriceUSD.setText(Price_USD);
                             PriceEUR.setText(Price_EUR);
                             PriceBTC.setText(Price_BTC);
 
-
-                            String Delta_1h = getString(R.string.not_avail);
+                            String Delta_1h     = getString(R.string.not_avail);
                             String Delta_1h_val = object.getString("percent_change_1h");
                             if (!Objects.equals(Delta_1h_val, "null")) {
                                 Delta_1h = Delta_1h_val + "%";
@@ -171,7 +194,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             Delta1h.setText(Delta_1h);
 
-                            String Delta_1d = getString(R.string.not_avail);
+                            String Delta_1d     = getString(R.string.not_avail);
                             String Delta_1d_val = object.getString("percent_change_24h");
                             if (!Objects.equals(Delta_1d_val, "null")) {
                                 Delta_1d = Delta_1d_val + "%";
@@ -184,7 +207,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             Delta1d.setText(Delta_1d);
 
-                            String Delta_7d = getString(R.string.not_avail);
+                            String Delta_7d     = getString(R.string.not_avail);
                             String Delta_7d_val = object.getString("percent_change_7d");
                             if (!Objects.equals(Delta_7d_val, "null")) {
                                 Delta_7d = Delta_7d_val + "%";
@@ -197,36 +220,43 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             Delta7d.setText(Delta_7d);
 
-                            String Av_Supply = getString(R.string.not_avail);
+                            String Av_Supply     = getString(R.string.not_avail);
                             String Av_Supply_val = object.getString("available_supply");
                             if (!Objects.equals(Av_Supply_val, "null")) {
                                 Av_Supply = frmt.format(Double.parseDouble(Av_Supply_val));
                             }
                             AvailSupply.setText(Av_Supply);
 
-                            String T_Supply  = getString(R.string.not_avail);
+                            String T_Supply     = getString(R.string.not_avail);
                             String T_Supply_val = object.getString("total_supply");
                             if (!Objects.equals(T_Supply_val, "null")) {
                                 T_Supply = frmt.format(Double.parseDouble(T_Supply_val));
                             }
                             TotalSupply.setText(T_Supply);
 
-                            String Max_Supply  = getString(R.string.not_avail);
+                            String Max_Supply     = getString(R.string.not_avail);
                             String Max_Supply_val = object.getString("max_supply");
                             if (!Objects.equals(Max_Supply_val, "null")) {
                                 Max_Supply = frmt.format(Double.parseDouble(Max_Supply_val));
                             }
                             MaxSupply.setText(Max_Supply);
 
-
-                            String USD_Volume = getString(R.string.not_avail);
+                            String USD_Volume     = getString(R.string.not_avail);
                             String USD_Volume_val = object.getString("24h_volume_usd");
                             if (!Objects.equals(USD_Volume_val, "null")) {
                                 USD_Volume = "$" + frmt3.format(Double.parseDouble(USD_Volume_val));
                             }
                             VolumeUSD.setText(USD_Volume);
 
-                            String EUR_Volume = getString(R.string.not_avail);
+                            editor.putFloat ("price_init_f",  (float) currPrice);
+                            editor.putString("price_initial", frmt.format((currPrice)));
+
+                            editor.putFloat("vol_init_i", Float.parseFloat(USD_Volume_val));
+                            editor.putString("vol_initial", frmt3.format(
+                                                                 Float.parseFloat(USD_Volume_val)));
+                            editor.apply();
+
+                            String EUR_Volume     = getString(R.string.not_avail);
                             String EUR_Volume_val = object.getString(volume_key_nonUSD);
                             if (!Objects.equals(EUR_Volume_val, "null")) {
                                 EUR_Volume = Curr_symbol +
@@ -234,7 +264,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             VolumeEUR.setText(EUR_Volume);
 
-                            String USD_MarketCap = getString(R.string.not_avail);
+                            String USD_MarketCap     = getString(R.string.not_avail);
                             String USD_MarketCap_val = object.getString("market_cap_usd");
                             if (!Objects.equals(USD_MarketCap_val, "null")) {
                                 USD_MarketCap = "$" +
@@ -242,15 +272,13 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             MarketCapUSD.setText(USD_MarketCap);
 
-                            String EUR_MarketCap = getString(R.string.not_avail);
+                            String EUR_MarketCap     = getString(R.string.not_avail);
                             String EUR_MarketCap_val = object.getString(market_cap_key_nonUSD);
                             if (!Objects.equals(EUR_MarketCap_val, "null")) {
                                 EUR_MarketCap = Curr_symbol +
                                         frmt3.format(Double.parseDouble(EUR_MarketCap_val));
                             }
                             MarketCapEUR.setText(EUR_MarketCap);
-
-
 
                             long last_update = Long.parseLong(
                                                 object.getString("last_updated")) *1000L;
@@ -259,49 +287,44 @@ public class CryptoSelectActivity extends BaseActivity {
                                     DateFormat.getDateTimeInstance().format( new Date(last_update));
 
                             Time.setText(lastUpdateString);
-
-
                             dialog.dismiss();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(getApplicationContext(), "Some error occurred!!",
                         Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
-
         });
+
         RequestQueue rQueue = Volley.newRequestQueue(CryptoSelectActivity.this);
         rQueue.add(cryptoSel_request);
         CMC_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                LayoutInflater li = LayoutInflater.from(CryptoSelectActivity.this);
                 @SuppressLint("InflateParams")
-                final View promptsView = li.inflate(R.layout.cmc_link_menu, null);
+                final View CMC_linkMenu = li.inflate(R.layout.cmc_link_menu, null);
                 final AlertDialog.Builder builder2 = new AlertDialog.Builder(
                         CryptoSelectActivity.this);
-                builder2.setView(promptsView);
+                builder2.setView(CMC_linkMenu);
                 final AlertDialog dialog2  = builder2.create();
                 dialog2.show();
 
-                TextView Link = promptsView.findViewById(R.id.cmc_link_id);
+                TextView Link = CMC_linkMenu.findViewById(R.id.cmc_link_id);
                 Link.setText(crypto_id);
-                Button OK = promptsView.findViewById(R.id.cmc_OK_btn);
-                Button NO = promptsView.findViewById(R.id.cmc_NO_btn);
+                Button OK = CMC_linkMenu.findViewById(R.id.cmc_OK_btn);
+                Button NO = CMC_linkMenu.findViewById(R.id.cmc_NO_btn);
 
                 OK.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Uri uri = Uri.parse(CMC_url);
+                        Uri uri       = Uri.parse(CMC_url);
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         dialog2.dismiss();
                         startActivity(intent);
@@ -315,7 +338,151 @@ public class CryptoSelectActivity extends BaseActivity {
                 });
             }
         });
+        alertsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                @SuppressLint("InflateParams")
+                final View alertsMenu = li.inflate(R.layout.alerts_select_menu, null);
+                final AlertDialog.Builder builder3 = new AlertDialog.Builder(
+                                                                 CryptoSelectActivity.this);
+                builder3.setView(alertsMenu);
+                final String  Symbol      = getIntent().getStringExtra("crypto_id");
+                TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
+                TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
+                final EditText priceInput = alertsMenu.findViewById(R.id.price_input);
+                final EditText volInput   = alertsMenu.findViewById(R.id.volume_input);
+                final Button setPriceBtn  = alertsMenu.findViewById(R.id.price_setBtn);
+                final Button setVolBtn    = alertsMenu.findViewById(R.id.vol_setBtn);
+
+                alertName.setText(Symbol);
+
+                final String initPrice    = mSettings.getString("price_initial","0");
+                final double currentPrice = mSettings.getFloat("price_init_f",0);
+
+                final String initVolume   = mSettings.getString("vol_initial","0");
+                final double currentVol   = mSettings.getFloat("vol_init_i",0);
+
+                final String priceTH      = dbPHandler.getPrice_Threshold(Symbol);
+                final String volTH        = dbVHandler.getVol_Threshold(Symbol);
+
+                if (!priceTH.equals("")){
+                    double formatPTH = Double.parseDouble(priceTH);
+                    String fmtTH     = frmt.format(formatPTH);
+                    priceInput.setText(fmtTH);
+                    alertPrice       = true;
+                }else {
+                    priceInput.setHint(initPrice);
+                    alertPrice       = false;
+                }
+                if (!volTH.equals("")){
+                    double formatVTH = Double.valueOf(volTH).longValue();
+                    String fmtVTH    = frmt3.format(formatVTH);
+                    volInput.setText(fmtVTH);
+                    alertVol         = true;
+                }else {
+                    volInput.setHint(initVolume);
+                    alertVol         = false;
+                }
+                String symbolCurrent = "$";
+                if(!Dollar){
+                    symbolCurrent = mSettings.getString("Curr_symb","€");
+                    alertsSym.setText(symbolCurrent);
+                }
+
+                setPriceBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!alertPrice) {
+                            if(!priceInput.getText().toString().equals("")) {
+                                alertPrice = true;
+                                //if (dbPHandler.Exists(Symbol)) dbPHandler.deleteAlert(Symbol);
+                                String fmtRemoved = priceInput.getText().toString().replace(
+                                                                        ",", "");
+                                double thPrice = Double.parseDouble(fmtRemoved);
+                                int tc = 0;
+                                if (thPrice > currentPrice)      tc = 1;
+                                else if (thPrice < currentPrice) tc = -1;
+
+                                dbPHandler.addPriceAlert(Symbol, tc, thPrice);
+
+                                setPriceBtn.setVisibility(View.GONE);
+                                setPriceBtn.setText(R.string.clear);
+                                setPriceBtn.setVisibility(View.VISIBLE);
+                                priceInput.setText(frmt.format(Double.parseDouble(
+                                                               priceInput.getText().toString())));
+                            }else
+                                Toast.makeText(getApplicationContext(),
+                                        "PRICE THRESHOLD MUST BE SET",
+                                                                         Toast.LENGTH_SHORT).show();
+                        }else {
+                            setPriceBtn.setVisibility(View.GONE);
+                            setPriceBtn.setText(R.string.set);
+                            setPriceBtn.setVisibility(View.VISIBLE);
+                            priceInput.setText("");
+                            priceInput.setHint(initPrice);
+                            alertPrice = false;
+                            dbPHandler.deleteAlert(Symbol);
+                        }
+
+                    }
+                });
+                setVolBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!alertVol) {
+                            if (!volInput.getText().toString().equals("")) {
+
+                                alertVol = true;
+                                //if (dbVHandler.Exists(Symbol)) dbVHandler.deleteAlert(Symbol);
+                                String fmtRemoved = volInput.getText().toString().replace(
+                                                                        ",", "");
+                                double thVol = Double.parseDouble(fmtRemoved);
+                                int tc = 0;
+                                if (thVol > currentVol) tc = 1;
+                                else if (thVol < currentVol) tc = -1;
+                                dbVHandler.addVolAlert(Symbol, tc, thVol);
+                                setVolBtn.setVisibility(View.GONE);
+                                setVolBtn.setText(R.string.clear);
+                                setVolBtn.setVisibility(View.VISIBLE);
+                                volInput.setText(frmt3.format(Double.parseDouble(
+                                                                  volInput.getText().toString())));
+                            } else
+                                Toast.makeText(getApplicationContext(),
+                                        "VOLUME THRESHOLD MUST BE SET",
+                                                                         Toast.LENGTH_SHORT).show();
+                        }else {
+                            setVolBtn.setVisibility(View.GONE);
+                            setVolBtn.setText(R.string.set);
+                            setVolBtn.setVisibility(View.VISIBLE);
+                            volInput.setText("");
+                            volInput.setHint(initVolume);
+                            alertVol = false;
+                            dbVHandler.deleteAlert(Symbol);
+                        }
+
+                    }
+                });
+
+                final AlertDialog dialog3 = builder3.create();
+                dialog3.show();
+
+                if( alertPrice ) setPriceBtn.setText(R.string.clear);
+                else             setPriceBtn.setText(R.string.set);
+                if ( alertVol )  setVolBtn.setText(R.string.clear);
+                else             setVolBtn.setText(R.string.set);
+
+                Button Dismiss = alertsMenu.findViewById(R.id.alerts_NO_btn);
+                Dismiss.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog3.dismiss();
+                    }
+                });
+
+            }
+        });
     }
+
 }
 
 
