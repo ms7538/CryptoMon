@@ -362,8 +362,8 @@ public class CryptoSelectActivity extends BaseActivity {
                 final String initVolume   = mSettings.getString("vol_initial","0");
                 final double currentVol   = mSettings.getFloat("vol_init_i",0);
 
-                final String priceTH      = dbPHandler.getPrice_Threshold(Symbol);
-                final String volTH        = dbVHandler.getVol_Threshold(Symbol);
+                final String priceTH      = dbPHandler.getPrice_Val(Symbol);
+                final String volTH        = dbVHandler.getVol_Val(Symbol);
 
                 if (!priceTH.equals("")){
                     double formatPTH = Double.parseDouble(priceTH);

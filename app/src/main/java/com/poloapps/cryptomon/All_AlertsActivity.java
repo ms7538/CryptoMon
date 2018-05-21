@@ -40,8 +40,7 @@ public class All_AlertsActivity extends BaseActivity {
         tv2.setText(dbVHandler.databaseToString());
 
         String cv = dbCVHandler.currentPrice("bitcoin");
-        Toast.makeText(getApplicationContext(), cv,
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), cv, Toast.LENGTH_SHORT).show();
 
         //tv3.setText(cv);
     }
