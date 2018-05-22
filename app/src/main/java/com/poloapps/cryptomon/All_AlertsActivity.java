@@ -35,12 +35,13 @@ public class All_AlertsActivity extends BaseActivity {
         final TextView tv1 = findViewById(R.id.tv1);
         final TextView tv2 = findViewById(R.id.tv2);
         final TextView tv3 = findViewById(R.id.tv3);
-
-        tv1.setText(dbPHandler.dbToString());
+        String priceAlerts = dbPHandler.dbToString();
+        tv1.setText(priceAlerts);
         tv2.setText(dbVHandler.databaseToString());
 
-        String cv = dbCVHandler.currentPrice("bitcoin");
-        Toast.makeText(getApplicationContext(), cv, Toast.LENGTH_SHORT).show();
+
+       // String cv = dbCVHandler.currentPrice("bitcoin");
+        Toast.makeText(getApplicationContext(), priceAlerts, Toast.LENGTH_SHORT).show();
 
         //tv3.setText(cv);
     }

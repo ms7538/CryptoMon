@@ -61,8 +61,10 @@ public class dbPriceHandler extends SQLiteOpenHelper {
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("cryptosymb")) != null){
                 dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
-                dbString.append(" Price -> ");
+                dbString.append(":");
                 dbString.append(c.getString(c.getColumnIndex("price_value")));
+                dbString.append(":");
+                dbString.append(c.getString(c.getColumnIndex("price_indicator")));
                 dbString.append("\n");
             }
             c.moveToNext();
@@ -71,6 +73,7 @@ public class dbPriceHandler extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
+
     public String getPrice_Val(String in){
 
         StringBuilder dbString = new StringBuilder();
@@ -89,23 +92,4 @@ public class dbPriceHandler extends SQLiteOpenHelper {
 
         return dbString.toString();
     }
-    public String getThresh_Check(String in){
-
-        StringBuilder dbString = new StringBuilder();
-        SQLiteDatabase db      = getWritableDatabase();
-        String query           = "SELECT * FROM " + TABLE_CM_ALERTS + " WHERE 1";
-        Cursor c               = db.rawQuery(query, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
-                dbString.append(c.getString(c.getColumnIndex("price_indicator")));
-            }
-            c.moveToNext();
-        }
-        c.close();
-        db.close();
-
-        return dbString.toString();
-    }
-
 }
