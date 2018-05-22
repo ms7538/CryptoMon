@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class All_AlertsActivity extends BaseActivity {
-
     dbPriceHandler  dbPHandler;
     dbVolumeHandler dbVHandler;
     dbCurrentValsHandler dbCVHandler;
@@ -39,9 +38,13 @@ public class All_AlertsActivity extends BaseActivity {
         tv1.setText(priceAlerts);
         tv2.setText(dbVHandler.databaseToString());
 
-
+        // Integer numPriceAlerts = countLines(priceAlerts);
        // String cv = dbCVHandler.currentPrice("bitcoin");
-        Toast.makeText(getApplicationContext(), priceAlerts, Toast.LENGTH_SHORT).show();
+        String[] splitPAlerts = priceAlerts.split("[:\n]");
+
+        int len1 = splitPAlerts.length;
+        Toast.makeText(getApplicationContext(), splitPAlerts[0],
+                Toast.LENGTH_SHORT).show();
 
         //tv3.setText(cv);
     }
