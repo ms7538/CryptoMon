@@ -2,7 +2,7 @@ package com.poloapps.cryptomon;
 
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +43,15 @@ public class All_AlertsActivity extends BaseActivity {
         String[] splitPAlerts = priceAlerts.split("[:\n]");
 
         int len1 = splitPAlerts.length;
-        Toast.makeText(getApplicationContext(), splitPAlerts[0],
+        StringBuilder PAlertArray = new StringBuilder();
+        int i = 0;
+        while (i<len1){
+           // i == 0 & i%3 == 0 means id of crypto   i%2 == 0 means price ind
+            PAlertArray.append(splitPAlerts[i]);
+            PAlertArray.append("\n");
+        }
+
+        Toast.makeText(getApplicationContext(), PAlertArray,
                 Toast.LENGTH_SHORT).show();
 
         //tv3.setText(cv);
