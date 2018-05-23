@@ -61,10 +61,6 @@ public class dbPriceHandler extends SQLiteOpenHelper {
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("cryptosymb")) != null){
                 dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
-                dbString.append(":");
-                dbString.append(c.getString(c.getColumnIndex("price_value")));
-                dbString.append(":");
-                dbString.append(c.getString(c.getColumnIndex("price_indicator")));
                 dbString.append("\n");
             }
             c.moveToNext();

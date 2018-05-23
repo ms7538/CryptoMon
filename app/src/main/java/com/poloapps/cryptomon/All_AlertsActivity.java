@@ -48,10 +48,16 @@ public class All_AlertsActivity extends BaseActivity {
         int i = 0;
         for (i = 0;i<len1;i++){
      //for reach line: query dbP for check, Thresh Val; query dbCV for current price.
+            PAlertArray.setLength(0);
             PAlertArray.append(splitPAlerts[i]);
-            PAlertArray.append("\n");
-            tv3.append(splitPAlerts[i]);
-            tv3.append("\n");
+            PAlertArray.append(":");
+            PAlertArray.append(dbPHandler.getPrice_Val(splitPAlerts[i]));
+            PAlertArray.append(":");
+            PAlertArray.append(dbPHandler.getThresh_Check(splitPAlerts[i]));
+            PAlertArray.append("-c->");
+            PAlertArray.append(dbCVHandler.currentPrice(splitPAlerts[i]));
+            //PAlertArray.append("\n");
+            tv3.append(PAlertArray);
         }
 
         if(splitPAlerts[0].equals("")) len1 = 0;
