@@ -62,10 +62,6 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("cryptosymb")) != null){
                 dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
-                dbString.append(" |c:  ");
-                dbString.append(c.getString(c.getColumnIndex("vol_indicator")));
-                dbString.append(" |v:  ");
-                dbString.append(c.getString(c.getColumnIndex("vol_value")));
                 dbString.append("\n");
             }
             c.moveToNext();
