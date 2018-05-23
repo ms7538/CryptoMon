@@ -40,18 +40,18 @@ public class All_AlertsActivity extends BaseActivity {
 
         // Integer numPriceAlerts = countLines(priceAlerts);
        // String cv = dbCVHandler.currentPrice("bitcoin");
-        String[] splitPAlerts = priceAlerts.split("[:\n]");
+        String[] splitPAlerts = priceAlerts.split("[\n]");
 
         int len1 = splitPAlerts.length;
         StringBuilder PAlertArray = new StringBuilder();
         int i = 0;
         while (i<len1){
-           // i == 0 & i%3 == 0 means id of crypto   i%2 == 0 means price ind
+     //for reach line: query dbP for check, Thresh Val; query dbCV for current price.
             PAlertArray.append(splitPAlerts[i]);
             PAlertArray.append("\n");
         }
 
-        Toast.makeText(getApplicationContext(), PAlertArray,
+        Toast.makeText(getApplicationContext(), Integer.toString(len1),
                 Toast.LENGTH_SHORT).show();
 
         //tv3.setText(cv);
