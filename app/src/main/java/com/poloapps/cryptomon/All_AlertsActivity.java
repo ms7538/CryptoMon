@@ -39,10 +39,7 @@ public class All_AlertsActivity extends BaseActivity {
         //tv1.setText(priceAlerts);
         //tv2.setText(dbVHandler.databaseToString());
 
-        // Integer numPriceAlerts = countLines(priceAlerts);
-       // String cv = dbCVHandler.currentPrice("bitcoin");
         String[] splitPAlerts = priceAlerts.split("[\n]");
-
         int len1 = splitPAlerts.length;
 
         int i = 0;
@@ -56,7 +53,6 @@ public class All_AlertsActivity extends BaseActivity {
             PAlertArray.append(dbPHandler.getThresh_Check(splitPAlerts[i]));
             PAlertArray.append("-c->");
             PAlertArray.append(dbCVHandler.currentPrice(splitPAlerts[i]));
-            //PAlertArray.append("\n");
             tv3.append(PAlertArray);
         }
 
