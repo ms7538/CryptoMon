@@ -45,6 +45,8 @@ public class All_AlertsActivity extends BaseActivity {
         int i = 0;
         for (i = 0;i<len1;i++){
      //for reach line: query dbP for check, Thresh Val; query dbCV for current price.
+            // if th > curr then check = 1 | if th < curr then check = -1
+            // alarm if th < curr && check = 1 | th > curr && check = -1
             PAlertArray.setLength(0);
             PAlertArray.append(splitPAlerts[i]);
             PAlertArray.append(":");
