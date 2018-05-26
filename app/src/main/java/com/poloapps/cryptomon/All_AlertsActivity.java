@@ -55,6 +55,16 @@ public class All_AlertsActivity extends BaseActivity {
             PAlertArray.append(dbPHandler.getThresh_Check(splitPAlerts[i]));
             PAlertArray.append("-c->");
             PAlertArray.append(dbCVHandler.currentPrice(splitPAlerts[i]));
+            PAlertArray.append("Alert:");
+
+            double price = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
+            double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
+            int check = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
+
+            if((thPrice < price && check == 1) || (thPrice > price && check == -1)){
+                PAlertArray.append("true");
+            }else     PAlertArray.append("false");
+
             tv3.append(PAlertArray);
         }
 
