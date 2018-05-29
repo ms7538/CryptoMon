@@ -7,20 +7,20 @@ import android.content.Context;
 import android.content.ContentValues;
 
 
-public class dbAlertsAchieved extends SQLiteOpenHelper {
+public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
 
     private static final int    DATABASE_VERSION     = 8;
     private static final String DATABASE_NAME        = "cryptomon4.db";
 
     private static final String TABLE_CM_ACH_ALERTS  = "achieved_alerts";
-    private static final String COLUMN_ID         = "_id";
-    private static final String COLUMN_CRYPTOSYMB = "cryptosymb";
-    private static final String COLUMN_THRESH_IND = "price_indicator";
-    private static final String COLUMN_THRESH_VAL = "price_value";
+    private static final String COLUMN_ID            = "_id";
+    private static final String COLUMN_CRYPTOSYMB    = "cryptosymb";
+    private static final String COLUMN_THRESH_BRK    = "price_breaker";
+    private static final String COLUMN_THRESH_VAL    = "price_value";
 
 
 
-    dbAlertsAchieved(Context context, SQLiteDatabase.CursorFactory factory) {
+    dbPriceAlertsAchieved(Context context, SQLiteDatabase.CursorFactory factory) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
@@ -28,7 +28,7 @@ public class dbAlertsAchieved extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query = " CREATE TABLE " + TABLE_CM_ACH_ALERTS + " ( " + COLUMN_ID +
                 " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_CRYPTOSYMB + " TEXT, " +
-                COLUMN_THRESH_IND + " INTEGER, " + COLUMN_THRESH_VAL + " BLOB " + " ); ";
+                COLUMN_THRESH_BRK + " BLOB, " + COLUMN_THRESH_VAL + " BLOB " + " ); ";
         db.execSQL(query);
     }
 
@@ -38,17 +38,17 @@ public class dbAlertsAchieved extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addAchAlert(String cryptoSymb, int threshold_check, double price_value) {
+    public void addPriceAchAlert(String cryptoSymb, double breaker, double price_value) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
-        values.put(COLUMN_THRESH_IND, threshold_check);
+        values.put(COLUMN_THRESH_BRK, breaker);
         values.put(COLUMN_THRESH_VAL, price_value);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_CM_ACH_ALERTS, null, values);
         db.close();
     }
 
-    public void deleteAlert(String cryptoSymb) {
+    public void removePAAlert(String cryptoSymb) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CM_ACH_ALERTS + " WHERE " + COLUMN_CRYPTOSYMB + "=\""
                 + cryptoSymb + "\";");
@@ -62,6 +62,7 @@ public class dbAlertsAchieved extends SQLiteOpenHelper {
         c.moveToFirst();
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("cryptosymb")) != null){
+                dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
                 dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
                 dbString.append("\n");
             }
