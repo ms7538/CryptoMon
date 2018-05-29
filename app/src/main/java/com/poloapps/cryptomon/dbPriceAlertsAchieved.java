@@ -9,14 +9,14 @@ import android.content.ContentValues;
 
 public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
 
-    private static final int    DATABASE_VERSION     = 8;
+    private static final int    DATABASE_VERSION     = 1;
     private static final String DATABASE_NAME        = "cryptomon4.db";
 
-    private static final String TABLE_CM_ACH_ALERTS  = "achieved_alerts";
+    private static final String TABLE_CM_ACH_ALERTS  = "achieved_price_alerts";
     private static final String COLUMN_ID            = "_id";
     private static final String COLUMN_CRYPTOSYMB    = "cryptosymb";
-    private static final String COLUMN_THRESH_BRK    = "price_breaker";
-    private static final String COLUMN_THRESH_VAL    = "price_value";
+    private static final String COLUMN_THRESH_BRK    = "thresh_breaker";
+    private static final String COLUMN_THRESH_VAL    = "thresh_value";
 
 
 
@@ -38,11 +38,11 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addPriceAchAlert(String cryptoSymb, double breaker, double price_value) {
+    public void addPriceAchAlert(String cryptoSymb, double breaker, double threshold) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
         values.put(COLUMN_THRESH_BRK, breaker);
-        values.put(COLUMN_THRESH_VAL, price_value);
+        values.put(COLUMN_THRESH_VAL, threshold);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_CM_ACH_ALERTS, null, values);
         db.close();
@@ -63,7 +63,10 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("cryptosymb")) != null){
                 dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
-                dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
+                dbString.append(" passed ");
+                dbString.append(c.getString(c.getColumnIndex("thresh_value")));
+                dbString.append(" at ");
+                dbString.append(c.getString(c.getColumnIndex("thresh_breaker")));
                 dbString.append("\n");
             }
             c.moveToNext();
