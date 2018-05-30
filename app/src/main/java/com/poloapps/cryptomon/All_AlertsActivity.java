@@ -37,29 +37,10 @@ public class All_AlertsActivity extends BaseActivity {
         super.onResume();
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
-        final TextView tv1   = findViewById(R.id.tv1);
-        final TextView tv2   = findViewById(R.id.tv2);
-        final TextView tv3   = findViewById(R.id.tv3);
-
-
-
-        String priceAchAlrts    = dbPAchHandler.dbToString();
-        String[] splitPAchAlrts = priceAchAlrts.split("[\n]");
-        int len2                = splitPAchAlrts.length;
-
-        if(splitPAchAlrts[0].equals("")) len2 = 0;
-        PAchAlertArray.setLength(0);
-
-        for (int j = 0;j < len2;j++){
-            PAchAlertArray.append(splitPAchAlrts[j]);
-            PAchAlertArray.append(" passed set threshold of ");
-            PAchAlertArray.append(dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]));
-            PAchAlertArray.append(" at ");
-            PAchAlertArray.append(dbPAchHandler.getThresh_Val(splitPAchAlrts[j]));
-            tv2.append(PAchAlertArray);
-            PAchAlertArray.append("\n");
-        }
-        String priceAlerts   = dbPHandler.dbToString();
+        final TextView tv1    = findViewById(R.id.tv1);
+        final TextView tv2    = findViewById(R.id.tv2);
+        final TextView tv3    = findViewById(R.id.tv3);
+        String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1 = splitPAlerts.length;
         if(splitPAlerts[0].equals("")) len1 = 0;
@@ -70,28 +51,44 @@ public class All_AlertsActivity extends BaseActivity {
             // alarm if th < curr && check = 1 | th > curr && check = -1
             PAlertArray.setLength(0);
 
-            PAlertArray.append(splitPAlerts[i]);
-            PAlertArray.append(":");
-            PAlertArray.append(dbPHandler.getPrice_Val(splitPAlerts[i]));
-            PAlertArray.append(":");
-            PAlertArray.append(dbPHandler.getThresh_Check(splitPAlerts[i]));
-            PAlertArray.append("-c->");
-            PAlertArray.append(dbCVHandler.currentPrice(splitPAlerts[i]));
-
-
-            double price = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
+            double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
             double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
-            int check = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
+            int check      = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
 
             if((thPrice < price && check == 1) || (thPrice > price && check == -1)){
                 dbPHandler.deleteAlert(splitPAlerts[i]);
                 dbPAchHandler.removePAAlert(splitPAlerts[i]);
-                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],thPrice,price);
+                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice);//add check descript
+            } else {
+                PAlertArray.append(splitPAlerts[i]);
+                PAlertArray.append(":");
+                PAlertArray.append(dbPHandler.getPrice_Val(splitPAlerts[i]));
+                PAlertArray.append(":");
+                PAlertArray.append(dbPHandler.getThresh_Check(splitPAlerts[i]));
+                PAlertArray.append("-c->");
+                PAlertArray.append(dbCVHandler.currentPrice(splitPAlerts[i]));
+                PAlertArray.append("\n");
             }
-            PAlertArray.append("\n");
             tv1.append(PAlertArray);
         }
 
+        String priceAchAlrts    = dbPAchHandler.dbToString();
+        String[] splitPAchAlrts = priceAchAlrts.split("[\n]");
+        int len2                = splitPAchAlrts.length;
+
+        if(splitPAchAlrts[0].equals("")) len2 = 0;
+        PAchAlertArray.setLength(0);
+
+        for (int j = 0;j < len2;j++){
+
+            PAchAlertArray.append(splitPAchAlrts[j]);
+            PAchAlertArray.append(" passed set threshold of ");
+            PAchAlertArray.append(dbPAchHandler.getThresh_Val(splitPAchAlrts[j]));
+            PAchAlertArray.append(" at ");
+            PAchAlertArray.append(dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]));
+            PAchAlertArray.append("\n");
+        }
+        tv2.append(PAchAlertArray);
 
     }
 

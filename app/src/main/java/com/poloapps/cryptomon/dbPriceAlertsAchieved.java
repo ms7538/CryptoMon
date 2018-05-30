@@ -10,7 +10,7 @@ import android.content.ContentValues;
 public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
 
     private static final int    DATABASE_VERSION     = 1;
-    private static final String DATABASE_NAME        = "cryptomon4c.db";
+    private static final String DATABASE_NAME        = "cryptomon4d.db";
 
     private static final String TABLE_CM_ACH_ALERTS  = "achieved_price_alerts";
     private static final String COLUMN_ID            = "_id";
