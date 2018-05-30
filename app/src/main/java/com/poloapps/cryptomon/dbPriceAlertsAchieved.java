@@ -10,7 +10,7 @@ import android.content.ContentValues;
 public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
 
     private static final int    DATABASE_VERSION     = 1;
-    private static final String DATABASE_NAME        = "cryptomon4.db";
+    private static final String DATABASE_NAME        = "cryptomon4c.db";
 
     private static final String TABLE_CM_ACH_ALERTS  = "achieved_price_alerts";
     private static final String COLUMN_ID            = "_id";
@@ -63,10 +63,6 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("cryptosymb")) != null){
                 dbString.append(c.getString(c.getColumnIndex("cryptosymb")));
-                dbString.append(" passed ");
-                dbString.append(c.getString(c.getColumnIndex("thresh_value")));
-                dbString.append(" at ");
-                dbString.append(c.getString(c.getColumnIndex("thresh_breaker")));
                 dbString.append("\n");
             }
             c.moveToNext();
@@ -75,5 +71,40 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
+    public String getThresh_Val(String in){
 
+        StringBuilder dbString = new StringBuilder();
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+                dbString.append(c.getString(c.getColumnIndex("thresh_value")));
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+
+        return dbString.toString();
+    }
+    public String getThresh_Brk(String in){
+
+        StringBuilder dbString = new StringBuilder();
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+                dbString.append(c.getString(c.getColumnIndex("thresh_breaker")));
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+
+        return dbString.toString();
+    }
 }
