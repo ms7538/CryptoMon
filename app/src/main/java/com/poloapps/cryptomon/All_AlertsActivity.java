@@ -1,5 +1,6 @@
 package com.poloapps.cryptomon;
 
+import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 
@@ -14,6 +15,9 @@ public class All_AlertsActivity extends BaseActivity {
     dbPriceAlertsAchieved dbPAchHandler;
     StringBuilder PAlertArray   = new StringBuilder();
     StringBuilder PAchAlertArray = new StringBuilder();
+    String LC_url       = "https://api.coinmarketcap.com/v1/ticker/";
+    ProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,10 @@ public class All_AlertsActivity extends BaseActivity {
         final TextView tv1    = findViewById(R.id.tv1);
         final TextView tv2    = findViewById(R.id.tv2);
         final TextView tv3    = findViewById(R.id.tv3);
+
+        //TODO implement dbCurrentVals refresh
+
+
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1 = splitPAlerts.length;
@@ -58,7 +66,8 @@ public class All_AlertsActivity extends BaseActivity {
             if((thPrice < price && check == 1) || (thPrice > price && check == -1)){
                 dbPHandler.deleteAlert(splitPAlerts[i]);
                 dbPAchHandler.removePAAlert(splitPAlerts[i]);
-                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice);//add check descript
+                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice);
+                //TODO add check description
             } else {
                 PAlertArray.append(splitPAlerts[i]);
                 PAlertArray.append(":");
