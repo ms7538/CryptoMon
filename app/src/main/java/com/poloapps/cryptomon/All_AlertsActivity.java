@@ -3,19 +3,27 @@ package com.poloapps.cryptomon;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
-
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class All_AlertsActivity extends BaseActivity {
     dbPriceHandler  dbPHandler;
     dbVolumeHandler dbVHandler;
     dbCurrentValsHandler dbCVHandler;
     dbPriceAlertsAchieved dbPAchHandler;
-    StringBuilder PAlertArray   = new StringBuilder();
+    StringBuilder PAlertArray    = new StringBuilder();
     StringBuilder PAchAlertArray = new StringBuilder();
-    String LC_url       = "https://api.coinmarketcap.com/v1/ticker/";
+    String LC_url                = "https://api.coinmarketcap.com/v1/ticker/";
     ProgressDialog dialog;
 
 
@@ -34,6 +42,7 @@ public class All_AlertsActivity extends BaseActivity {
         dbVHandler    = new dbVolumeHandler(this, null);
         dbCVHandler   = new dbCurrentValsHandler(this, null);
         dbPAchHandler = new dbPriceAlertsAchieved(this, null);
+
     }
 
     @Override
@@ -45,8 +54,7 @@ public class All_AlertsActivity extends BaseActivity {
         final TextView tv2    = findViewById(R.id.tv2);
         final TextView tv3    = findViewById(R.id.tv3);
 
-        //TODO implement dbCurrentVals refresh
-
+        updateCurrentVals();
 
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
@@ -112,5 +120,53 @@ public class All_AlertsActivity extends BaseActivity {
         tv1.setText("");
         tv2.setText("");
         tv3.setText("");
+    }
+
+    void updateCurrentVals(){
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading....");
+        dialog.show();
+        StringRequest crypto100_request = new StringRequest(LC_url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String string) {
+
+                        try {
+
+                            JSONArray T100_Array = new JSONArray(string);
+
+                            for (int i = 0; i < T100_Array.length(); i++) {
+
+                                JSONObject obj1 = T100_Array.getJSONObject(i);
+
+                                String rate       = obj1.getString("price_usd");
+                                Double d_rate     = Double.parseDouble(rate);
+                                Double curr_vol   = Double.parseDouble(
+                                        obj1.getString("24h_volume_usd"));
+                                String link_id    = obj1.getString("id");
+                                dbCVHandler.deleteEntry(link_id);
+                                dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
+                                dialog.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            dialog.dismiss();
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getApplicationContext(), "Some error occurred!!",
+                        Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+
+        });
+        RequestQueue rQueue = Volley.newRequestQueue(All_AlertsActivity.this);
+        rQueue.add(crypto100_request);
+
     }
 }

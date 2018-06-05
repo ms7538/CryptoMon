@@ -109,6 +109,7 @@ public class Top_100_Activity extends BaseActivity {
                     for (int i = 0; i < T100_Array.length(); i++) {
 
                         JSONObject obj1 = T100_Array.getJSONObject(i);
+
                         String rate       = obj1.getString(price_key);
                         Double d_rate     = Double.parseDouble(rate);
                         Double curr_vol   = Double.parseDouble(obj1.getString(volume_24h_key));
@@ -253,5 +254,4 @@ public class Top_100_Activity extends BaseActivity {
         if(!Dollar) currency_check = Curr;
         if (!Objects.equals(T100, currency_check)) restart();
     }
-
 }
