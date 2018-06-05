@@ -40,11 +40,15 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addPriceAchAlert(String cryptoSymb, double breaker, double threshold, boolean check) {
+    public void addPriceAchAlert(
+            String cryptoSymb, double breaker, double threshold, boolean check) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
-        values.put(COLUMN_THRESH_BRK, breaker);
-        values.put(COLUMN_THRESH_VAL, threshold);
+
+        values.put(COLUMN_CRYPTOSYMB,   cryptoSymb);
+        values.put(COLUMN_THRESH_BRK,   breaker);
+        values.put(COLUMN_THRESH_VAL,   threshold);
+        values.put(COLUMN_BREAKER_CHCK, check);
+
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_CM_ACH_ALERTS, null, values);
         db.close();
@@ -101,6 +105,25 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
                 dbString.append(c.getString(c.getColumnIndex("thresh_breaker")));
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+
+        return dbString.toString();
+    }
+
+    public String getColumnBreakerChck(String in){
+
+        StringBuilder dbString = new StringBuilder();
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+                dbString.append(c.getString(c.getColumnIndex("breaker_check")));
             }
             c.moveToNext();
         }
