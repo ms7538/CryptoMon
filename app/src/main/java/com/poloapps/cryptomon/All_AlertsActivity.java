@@ -52,8 +52,8 @@ public class All_AlertsActivity extends BaseActivity {
         PAchAlertArray.setLength(0);
         final TextView tv1    = findViewById(R.id.tv1);
         final TextView tv2    = findViewById(R.id.tv2);
-        final TextView tv3    = findViewById(R.id.tv3);
 
+        //final TextView tv3    = findViewById(R.id.tv3);
         boolean upBelowCheck  = false;
         String checkDescript  = " surpassed ";
 
@@ -65,19 +65,19 @@ public class All_AlertsActivity extends BaseActivity {
         if(splitPAlerts[0].equals("")) len1 = 0;
         int i = 0;
         for (i = 0;i < len1;i++){
-            //for reach line: query dbP for check, Thresh Val; query dbCV for current price.
-            // if th > curr then check = 1 | if th < curr then check = -1
-            // alarm if th < curr && check = 1 | th > curr && check = -1
             PAlertArray.setLength(0);
 
             double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
             double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
             int check      = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
+            upBelowCheck   = false;
 
             if((thPrice < price && check == 1) || (thPrice > price && check == -1)){
                 dbPHandler.deleteAlert(splitPAlerts[i]);
                 dbPAchHandler.removePAAlert(splitPAlerts[i]);
+
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,check);
+
 
             } else {
                 PAlertArray.append(splitPAlerts[i]);
@@ -100,10 +100,11 @@ public class All_AlertsActivity extends BaseActivity {
         PAchAlertArray.setLength(0);
 
         for (int j = 0;j < len2;j++){
-
             PAchAlertArray.append(splitPAchAlrts[j]);
+         
             if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1"))
                 checkDescript = " fell below ";
+
             PAchAlertArray.append(checkDescript).append("set threshold of ");
             PAchAlertArray.append(dbPAchHandler.getThresh_Val(splitPAchAlrts[j]));
             PAchAlertArray.append(" at ");
@@ -111,7 +112,6 @@ public class All_AlertsActivity extends BaseActivity {
             PAchAlertArray.append("\n");
         }
         tv2.append(PAchAlertArray);
-
     }
 
     @Override
@@ -134,14 +134,10 @@ public class All_AlertsActivity extends BaseActivity {
         dialog.show();
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
-
                     @Override
                     public void onResponse(String string) {
-
                         try {
-
                             JSONArray T100_Array = new JSONArray(string);
-
                             for (int i = 0; i < T100_Array.length(); i++) {
 
                                 JSONObject obj1 = T100_Array.getJSONObject(i);
@@ -161,17 +157,14 @@ public class All_AlertsActivity extends BaseActivity {
                         }
                     }
                 }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(getApplicationContext(), "Some error occurred!!",
                         Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
-
         });
         RequestQueue rQueue = Volley.newRequestQueue(All_AlertsActivity.this);
         rQueue.add(crypto100_request);
-
     }
 }
