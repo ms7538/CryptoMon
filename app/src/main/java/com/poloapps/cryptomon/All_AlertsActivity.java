@@ -54,7 +54,7 @@ public class All_AlertsActivity extends BaseActivity {
         final TextView tv2    = findViewById(R.id.tv2);
 
         //final TextView tv3    = findViewById(R.id.tv3);
-        boolean upBelowCheck  = false;
+
         String checkDescript  = " surpassed ";
 
         updateCurrentVals();
@@ -70,7 +70,7 @@ public class All_AlertsActivity extends BaseActivity {
             double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
             double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
             int check      = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
-            upBelowCheck   = false;
+
 
             if((thPrice < price && check == 1) || (thPrice > price && check == -1)){
                 dbPHandler.deleteAlert(splitPAlerts[i]);
@@ -102,8 +102,9 @@ public class All_AlertsActivity extends BaseActivity {
         for (int j = 0;j < len2;j++){
             PAchAlertArray.append(splitPAchAlrts[j]);
          
-            if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1"))
+            if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1")) {
                 checkDescript = " fell below ";
+            }else  checkDescript  = " surpassed ";
 
             PAchAlertArray.append(checkDescript).append("set threshold of ");
             PAchAlertArray.append(dbPAchHandler.getThresh_Val(splitPAchAlrts[j]));
