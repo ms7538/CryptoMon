@@ -6,11 +6,10 @@ import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
 
-
 public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
 
-    private static final int    DATABASE_VERSION     = 2;
-    private static final String DATABASE_NAME        = "cryptomon4_de.db";
+    private static final int    DATABASE_VERSION     = 1;
+    private static final String DATABASE_NAME        = "cryptomon4f.db";
 
     private static final String TABLE_CM_ACH_ALERTS  = "achieved_price_alerts";
     private static final String COLUMN_ID            = "_id";
@@ -18,8 +17,6 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
     private static final String COLUMN_THRESH_BRK    = "thresh_breaker";
     private static final String COLUMN_THRESH_VAL    = "thresh_value";
     private static final String COLUMN_BREAKER_CHCK  = "breaker_check";
-
-
 
     dbPriceAlertsAchieved(Context context, SQLiteDatabase.CursorFactory factory) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -29,8 +26,9 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query = " CREATE TABLE " + TABLE_CM_ACH_ALERTS + " ( " + COLUMN_ID +
                 " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_CRYPTOSYMB + " TEXT, " +
-                COLUMN_THRESH_BRK + " BLOB, " + COLUMN_THRESH_VAL + " BLOB, " +
-                COLUMN_BREAKER_CHCK + "BLOB " + " ); ";
+                COLUMN_THRESH_BRK + " BLOB, " + COLUMN_THRESH_VAL + " BLOB, "+
+                COLUMN_BREAKER_CHCK + " INTEGER " + " ); ";
+
         db.execSQL(query);
     }
 
@@ -40,13 +38,12 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addPriceAchAlert(
-            String cryptoSymb, double breaker, double threshold, boolean check) {
-        ContentValues values = new ContentValues();
 
-        values.put(COLUMN_CRYPTOSYMB,   cryptoSymb);
-        values.put(COLUMN_THRESH_BRK,   breaker);
-        values.put(COLUMN_THRESH_VAL,   threshold);
+    public void addPriceAchAlert(String cryptoSymb, double breaker, double threshold, int check) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
+        values.put(COLUMN_THRESH_BRK, breaker);
+        values.put(COLUMN_THRESH_VAL, threshold);
         values.put(COLUMN_BREAKER_CHCK, check);
 
         SQLiteDatabase db = getWritableDatabase();
