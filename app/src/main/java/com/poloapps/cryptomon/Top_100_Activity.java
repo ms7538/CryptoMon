@@ -1,7 +1,6 @@
 package com.poloapps.cryptomon;
 
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -150,7 +149,7 @@ public class Top_100_Activity extends BaseActivity {
                                 R.id.delta7_d,R.id.list_24h_volume,R.id.id_link};
 
                     ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), rankList,
-                                              R.layout.list_item, from, to) {
+                                              R.layout.t100_list_item, from, to) {
 
                         @Override
                         public View getView(int position, View cnvrtView, ViewGroup parent){
