@@ -47,7 +47,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/t100_listView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbarThumbVertical="@color/navy_blue"

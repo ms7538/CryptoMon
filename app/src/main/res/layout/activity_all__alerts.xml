@@ -24,5 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""/>
+    <ListView
+        android:id="@+id/priceAchievedAlert_listView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarThumbVertical="@color/navy_blue"
+        android:fadeScrollbars="false"/>
 
 </LinearLayout>

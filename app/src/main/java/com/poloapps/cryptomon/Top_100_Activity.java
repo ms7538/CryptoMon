@@ -101,7 +101,7 @@ public class Top_100_Activity extends BaseActivity {
                         volume_24h_key = "24h_volume_" + Curr;
                     }
                     rankList = new ArrayList<>();
-                    ListView lv = findViewById(R.id.list);
+                    ListView lv = findViewById(R.id.t100_listView);
 
                     JSONArray T100_Array = new JSONArray(string);
 
