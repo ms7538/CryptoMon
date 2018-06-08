@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
@@ -16,16 +17,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class All_AlertsActivity extends BaseActivity {
-    dbPriceHandler  dbPHandler;
-    dbVolumeHandler dbVHandler;
-    dbCurrentValsHandler dbCVHandler;
+
+    dbPriceHandler        dbPHandler;
+    dbVolumeHandler       dbVHandler;
+    dbCurrentValsHandler  dbCVHandler;
     dbPriceAlertsAchieved dbPAchHandler;
+    ProgressDialog        dialog;
+    ArrayList<HashMap<String, String>> PriceAchievedList;
+
+    long createdTime             = System.currentTimeMillis() / 1000L;
+
     StringBuilder PAlertArray    = new StringBuilder();
     StringBuilder PAchAlertArray = new StringBuilder();
-    String LC_url                = "https://api.coinmarketcap.com/v1/ticker/";
-    ProgressDialog dialog;
-
+    String        LC_url         = "https://api.coinmarketcap.com/v1/ticker/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +69,7 @@ public class All_AlertsActivity extends BaseActivity {
 
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
-        int len1 = splitPAlerts.length;
+        int len1              = splitPAlerts.length;
         if(splitPAlerts[0].equals("")) len1 = 0;
         int i = 0;
         for (i = 0;i < len1;i++){
@@ -69,15 +77,13 @@ public class All_AlertsActivity extends BaseActivity {
 
             double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
             double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
-            int check      = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
+            int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
 
 
             if((thPrice < price && check == 1) || (thPrice > price && check == -1)){
                 dbPHandler.deleteAlert(splitPAlerts[i]);
                 dbPAchHandler.removePAAlert(splitPAlerts[i]);
-
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,check);
-
 
             } else {
                 PAlertArray.append(splitPAlerts[i]);
@@ -95,16 +101,19 @@ public class All_AlertsActivity extends BaseActivity {
         String priceAchAlrts    = dbPAchHandler.dbToString();
         String[] splitPAchAlrts = priceAchAlrts.split("[\n]");
         int len2                = splitPAchAlrts.length;
-
         if(splitPAchAlrts[0].equals("")) len2 = 0;
         PAchAlertArray.setLength(0);
+        PriceAchievedList = new ArrayList<>();
+        ListView priceAch_lv = findViewById(R.id.priceAchievedAlert_listView);
 
         for (int j = 0;j < len2;j++){
+
             PAchAlertArray.append(splitPAchAlrts[j]);
          
             if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1")) {
                 checkDescript = " fell below ";
-            }else  checkDescript  = " surpassed ";
+            }else
+                checkDescript = " surpassed ";
 
             PAchAlertArray.append(checkDescript).append("set threshold of ");
             PAchAlertArray.append(dbPAchHandler.getThresh_Val(splitPAchAlrts[j]));
@@ -112,7 +121,7 @@ public class All_AlertsActivity extends BaseActivity {
             PAchAlertArray.append(dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]));
             PAchAlertArray.append("\n");
         }
-        tv2.append(PAchAlertArray);
+        //tv2.append(PAchAlertArray);
     }
 
     @Override
