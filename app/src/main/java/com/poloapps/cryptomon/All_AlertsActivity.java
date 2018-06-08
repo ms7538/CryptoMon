@@ -100,16 +100,24 @@ public class All_AlertsActivity extends BaseActivity {
 
         String priceAchAlrts    = dbPAchHandler.dbToString();
         String[] splitPAchAlrts = priceAchAlrts.split("[\n]");
+
         int len2                = splitPAchAlrts.length;
         if(splitPAchAlrts[0].equals("")) len2 = 0;
+
         PAchAlertArray.setLength(0);
-        PriceAchievedList = new ArrayList<>();
+        PriceAchievedList    = new ArrayList<>();
         ListView priceAch_lv = findViewById(R.id.priceAchievedAlert_listView);
 
         for (int j = 0;j < len2;j++){
 
+            HashMap<String, String> item = new HashMap<>();
+
+            item.put("rank",    "todo");
+
+     
+            PriceAchievedList.add(item);
+
             PAchAlertArray.append(splitPAchAlrts[j]);
-         
             if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1")) {
                 checkDescript = " fell below ";
             }else
