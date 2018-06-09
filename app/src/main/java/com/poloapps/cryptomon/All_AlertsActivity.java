@@ -114,7 +114,7 @@ public class All_AlertsActivity extends BaseActivity {
 
             item.put("rank",    "todo");
 
-     
+
             PriceAchievedList.add(item);
 
             PAchAlertArray.append(splitPAchAlrts[j]);
