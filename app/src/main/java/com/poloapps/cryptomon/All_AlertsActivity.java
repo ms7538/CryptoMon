@@ -110,24 +110,24 @@ public class All_AlertsActivity extends BaseActivity {
 
         for (int j = 0;j < len2;j++){
 
-            HashMap<String, String> item = new HashMap<>();
+            String id        = splitPAchAlrts[j];
+            String threshVal = dbPAchHandler.getThresh_Val(splitPAchAlrts[j]);
+            String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]);
 
-            item.put("rank",    "todo");
-
-
-            PriceAchievedList.add(item);
-
-            PAchAlertArray.append(splitPAchAlrts[j]);
             if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1")) {
                 checkDescript = " fell below ";
             }else
                 checkDescript = " surpassed ";
 
-            PAchAlertArray.append(checkDescript).append("set threshold of ");
-            PAchAlertArray.append(dbPAchHandler.getThresh_Val(splitPAchAlrts[j]));
-            PAchAlertArray.append(" at ");
-            PAchAlertArray.append(dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]));
-            PAchAlertArray.append("\n");
+            HashMap<String, String> item = new HashMap<>();
+
+            item.put("id"         ,id);
+            item.put("threshold"  ,threshVal);
+            item.put("Breaker"    ,threshBrk);
+            item.put("descriptor" ,checkDescript);
+
+            PriceAchievedList.add(item);
+
         }
         //tv2.append(PAchAlertArray);
     }
