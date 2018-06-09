@@ -119,15 +119,13 @@ public class All_AlertsActivity extends BaseActivity {
             }else
                 checkDescript = " surpassed ";
 
+            String disp_msg = id + checkDescript + threshVal + " at " + threshBrk;
             HashMap<String, String> item = new HashMap<>();
 
-            item.put("id"         ,id);
-            item.put("threshold"  ,threshVal);
-            item.put("Breaker"    ,threshBrk);
-            item.put("descriptor" ,checkDescript);
+            item.put("id"    ,id);
+            item.put("msg"   ,disp_msg);
 
             PriceAchievedList.add(item);
-
         }
         //tv2.append(PAchAlertArray);
     }

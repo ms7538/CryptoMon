@@ -202,5 +202,5 @@
     <string name="clear">clear</string>
     <string name="_24h_vol">24h Vol:</string>
     <string name="set_alert">SET ALERTS</string>
-    <string name="dismiss">Dismiss</string>
+    <string name="dismiss">Dismiss:</string>
 </resources>
