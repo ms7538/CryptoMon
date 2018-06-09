@@ -1,10 +1,18 @@
 package com.poloapps.cryptomon;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
@@ -19,6 +27,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class All_AlertsActivity extends BaseActivity {
 
@@ -59,12 +69,7 @@ public class All_AlertsActivity extends BaseActivity {
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
         final TextView tv1    = findViewById(R.id.tv1);
-        final TextView tv2    = findViewById(R.id.tv2);
-
-        //final TextView tv3    = findViewById(R.id.tv3);
-
         String checkDescript  = " surpassed ";
-
         updateCurrentVals();
 
         String priceAlerts    = dbPHandler.dbToString();
@@ -78,7 +83,6 @@ public class All_AlertsActivity extends BaseActivity {
             double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
             double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
             int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
-
 
             if((thPrice < price && check == 1) || (thPrice > price && check == -1)){
                 dbPHandler.deleteAlert(splitPAlerts[i]);
@@ -127,7 +131,37 @@ public class All_AlertsActivity extends BaseActivity {
 
             PriceAchievedList.add(item);
         }
-        //tv2.append(PAchAlertArray);
+        String[] from = {"msg","id"};
+        int[] to = {R.id.price_ach_msg,R.id.dismiss_price_ach_alert};
+
+        ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), PriceAchievedList,
+                R.layout.price_achieved_list_item, from, to) {
+
+            @Override
+            public View getView(int position, View cnvrtView, ViewGroup parent){
+
+                View view = super.getView(position, cnvrtView, parent);
+
+                TextView message_tv = view.findViewById(R.id.price_ach_msg);
+                Button linkButton = view.findViewById(R.id.dismiss_price_ach_alert);
+
+                Map<String, String> currentRow = PriceAchievedList.get(position);
+
+
+
+                linkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+                dialog.dismiss();
+                return view;
+            }
+        };
+        priceAch_lv.setAdapter(listAdapter);
+
     }
 
     @Override
