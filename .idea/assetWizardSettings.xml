@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_add_alert_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_format_list_numbered_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,9 +44,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="no_alerts_logo" />
+                                      <entry key="outputName" value="ic_action_t100" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="d1dce5" />
+                                      <entry key="themeColor" value="55e52e" />
                                     </map>
                                   </option>
                                 </PersistentState>
