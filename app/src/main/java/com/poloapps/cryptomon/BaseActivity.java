@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -23,6 +24,26 @@ import java.util.Objects;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    dbPriceHandler        dbPHandler;
+    dbVolumeHandler       dbVHandler;
+    dbCurrentValsHandler  dbCVHandler;
+    dbPriceAlertsAchieved dbPAchHandler;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String priceAchieved = dbPAchHandler.dbToString();
+        if (!priceAchieved.equals("")){
+            Toast.makeText(getApplicationContext(), "RED ICON",
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "GREY ICON",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -32,14 +32,8 @@ import java.util.Objects;
 
 public class All_AlertsActivity extends BaseActivity {
 
-    dbPriceHandler        dbPHandler;
-    dbVolumeHandler       dbVHandler;
-    dbCurrentValsHandler  dbCVHandler;
-    dbPriceAlertsAchieved dbPAchHandler;
     ProgressDialog        dialog;
     ArrayList<HashMap<String, String>> PriceAchievedList;
-
-    long createdTime             = System.currentTimeMillis() / 1000L;
 
     StringBuilder PAlertArray    = new StringBuilder();
     StringBuilder PAchAlertArray = new StringBuilder();

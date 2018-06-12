@@ -44,8 +44,6 @@ public class Top_100_Activity extends BaseActivity {
     long createdTime = System.currentTimeMillis() / 1000L;
     ArrayList<HashMap<String, String>> rankList;
     ProgressDialog dialog;
-    dbCurrentValsHandler dbCVHandler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
