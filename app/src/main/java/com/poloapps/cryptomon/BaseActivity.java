@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -31,11 +32,21 @@ public abstract class BaseActivity extends AppCompatActivity {
     dbPriceAlertsAchieved dbPAchHandler;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        dbPHandler    = new dbPriceHandler(this, null);
+        dbVHandler    = new dbVolumeHandler(this, null);
+        dbCVHandler   = new dbCurrentValsHandler(this, null);
+        dbPAchHandler = new dbPriceAlertsAchieved(this, null);
+        
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
-        String priceAchieved = "";
-                //dbPAchHandler.dbToString();
+        String priceAchieved = dbPAchHandler.dbToString();
         if (!priceAchieved.equals("")){
             Toast.makeText(getApplicationContext(), "RED ICON",
                     Toast.LENGTH_SHORT).show();

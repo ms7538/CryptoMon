@@ -60,7 +60,7 @@ public class Top_100_Activity extends BaseActivity {
                 DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
         String LC_url       = "https://api.coinmarketcap.com/v1/ticker/";
-        dbCVHandler         = new dbCurrentValsHandler(this, null);
+
         AdView mAdView      = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);

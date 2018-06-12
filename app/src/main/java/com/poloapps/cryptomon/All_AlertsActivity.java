@@ -50,10 +50,6 @@ public class All_AlertsActivity extends BaseActivity {
                                                                               R.color.dark_gray)));
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
-        dbPHandler    = new dbPriceHandler(this, null);
-        dbVHandler    = new dbVolumeHandler(this, null);
-        dbCVHandler   = new dbCurrentValsHandler(this, null);
-        dbPAchHandler = new dbPriceAlertsAchieved(this, null);
 
     }
 
