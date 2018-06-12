@@ -135,7 +135,7 @@ public class All_AlertsActivity extends BaseActivity {
             public View getView(int position, View cnvrtView, ViewGroup parent){
 
                 View view = super.getView(position, cnvrtView, parent);
-                //TextView message_tv = view.findViewById(R.id.price_ach_msg);
+
                 Button linkButton   = view.findViewById(R.id.dismiss_price_ach_alert);
                 final Map<String, String> currentRow = PriceAchievedList.get(position);
 

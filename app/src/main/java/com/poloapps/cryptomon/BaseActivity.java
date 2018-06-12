@@ -34,7 +34,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        String priceAchieved = dbPAchHandler.dbToString();
+        String priceAchieved = "";
+                //dbPAchHandler.dbToString();
         if (!priceAchieved.equals("")){
             Toast.makeText(getApplicationContext(), "RED ICON",
                     Toast.LENGTH_SHORT).show();
