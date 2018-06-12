@@ -43,23 +43,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        String priceAchieved = dbPAchHandler.dbToString();
-        if (!priceAchieved.equals("")){
-            Toast.makeText(getApplicationContext(), "RED ICON",
-                    Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(getApplicationContext(), "GREY ICON",
-                    Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.settings_menu, menu);
+        String priceAchieved = dbPAchHandler.dbToString();
+        MenuItem alertsIcon  = menu.findItem(R.id.action_alerts);
+
+        if (!priceAchieved.equals(""))alertsIcon.setIcon(R.drawable.ic_action_alert_red);
+        else                          alertsIcon.setIcon(R.drawable.no_alerts_logo);
         return true;
     }
 
