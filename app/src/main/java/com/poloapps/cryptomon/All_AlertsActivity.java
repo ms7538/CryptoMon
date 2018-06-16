@@ -32,12 +32,12 @@ import java.util.Objects;
 
 public class All_AlertsActivity extends BaseActivity {
 
-    ProgressDialog        dialog;
+
     ArrayList<HashMap<String, String>> PriceAchievedList;
 
     StringBuilder PAlertArray    = new StringBuilder();
     StringBuilder PAchAlertArray = new StringBuilder();
-    String        LC_url         = "https://api.coinmarketcap.com/v1/ticker/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,44 +164,5 @@ public class All_AlertsActivity extends BaseActivity {
         tv3.setText("");
     }
 
-    void updateCurrentVals(){
 
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading....");
-        dialog.show();
-        StringRequest crypto100_request = new StringRequest(LC_url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String string) {
-                        try {
-                            JSONArray T100_Array = new JSONArray(string);
-                            for (int i = 0; i < T100_Array.length(); i++) {
-
-                                JSONObject obj1 = T100_Array.getJSONObject(i);
-
-                                String rate       = obj1.getString("price_usd");
-                                Double d_rate     = Double.parseDouble(rate);
-                                Double curr_vol   = Double.parseDouble(
-                                        obj1.getString("24h_volume_usd"));
-                                String link_id    = obj1.getString("id");
-                                dbCVHandler.deleteEntry(link_id);
-                                dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
-                                dialog.dismiss();
-                            }
-                        } catch (JSONException e) {
-                            dialog.dismiss();
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getApplicationContext(), "Some error occurred!!",
-                        Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
-        RequestQueue rQueue = Volley.newRequestQueue(All_AlertsActivity.this);
-        rQueue.add(crypto100_request);
-    }
 }

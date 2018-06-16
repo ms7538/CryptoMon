@@ -1,6 +1,7 @@
 package com.poloapps.cryptomon;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
@@ -16,6 +17,16 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 /**
@@ -25,7 +36,8 @@ import java.util.Objects;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-
+    String                LC_url         = "https://api.coinmarketcap.com/v1/ticker/";
+    ProgressDialog        dialog;
     dbPriceHandler        dbPHandler;
     dbVolumeHandler       dbVHandler;
     dbCurrentValsHandler  dbCVHandler;
@@ -390,6 +402,47 @@ public abstract class BaseActivity extends AppCompatActivity {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
+    }
+
+    void updateCurrentVals(){
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading....");
+        dialog.show();
+        StringRequest crypto100_request = new StringRequest(LC_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String string) {
+                        try {
+                            JSONArray T100_Array = new JSONArray(string);
+                            for (int i = 0; i < T100_Array.length(); i++) {
+
+                                JSONObject obj1 = T100_Array.getJSONObject(i);
+
+                                String rate       = obj1.getString("price_usd");
+                                Double d_rate     = Double.parseDouble(rate);
+                                Double curr_vol   = Double.parseDouble(
+                                        obj1.getString("24h_volume_usd"));
+                                String link_id    = obj1.getString("id");
+                                dbCVHandler.deleteEntry(link_id);
+                                dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
+                                dialog.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            dialog.dismiss();
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getApplicationContext(), "Some error occurred!!",
+                        Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+        RequestQueue rQueue = Volley.newRequestQueue(BaseActivity.this);
+        rQueue.add(crypto100_request);
     }
 //http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt
 }

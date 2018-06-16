@@ -43,7 +43,7 @@ import com.google.android.gms.ads.AdView;
 public class Top_100_Activity extends BaseActivity {
     long createdTime = System.currentTimeMillis() / 1000L;
     ArrayList<HashMap<String, String>> rankList;
-    ProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
