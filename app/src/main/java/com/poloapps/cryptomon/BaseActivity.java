@@ -404,6 +404,33 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    void checkPriceAchieved(){
+
+
+        String priceAlerts    = dbPHandler.dbToString();
+        String[] splitPAlerts = priceAlerts.split("[\n]");
+        int len1              = splitPAlerts.length;
+
+        if (splitPAlerts[0].equals("")) len1 = 0;
+
+        for (int i = 0; i < len1; i++) {
+
+            double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
+            double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
+            int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
+
+            if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
+
+                dbPHandler.deleteAlert(splitPAlerts[i]);
+                dbPAchHandler.removePAAlert(splitPAlerts[i]);
+                dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
+            }
+        }
+
+
+
+        }
+
     void updateCurrentVals(){
 
         dialog = new ProgressDialog(this);
@@ -444,5 +471,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         RequestQueue rQueue = Volley.newRequestQueue(BaseActivity.this);
         rQueue.add(crypto100_request);
     }
-//http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt
+
 }
