@@ -51,7 +51,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         dbVHandler    = new dbVolumeHandler(this, null);
         dbCVHandler   = new dbCurrentValsHandler(this, null);
         dbPAchHandler = new dbPriceAlertsAchieved(this, null);
-        
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateCurrentVals();
+        checkPriceAchieved();
     }
 
     @Override
@@ -426,10 +433,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
             }
         }
-
-
-
-        }
+    }
 
     void updateCurrentVals(){
 

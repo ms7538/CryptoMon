@@ -32,12 +32,10 @@ import java.util.Objects;
 
 public class All_AlertsActivity extends BaseActivity {
 
-
     ArrayList<HashMap<String, String>> PriceAchievedList;
 
     StringBuilder PAlertArray    = new StringBuilder();
     StringBuilder PAchAlertArray = new StringBuilder();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,45 +48,31 @@ public class All_AlertsActivity extends BaseActivity {
                                                                               R.color.dark_gray)));
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
         final TextView tv1    = findViewById(R.id.tv1);
         String checkDescript  = " surpassed ";
-        updateCurrentVals();
-
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;
+
         if(splitPAlerts[0].equals("")) len1 = 0;
-        int i = 0;
-        for (i = 0;i < len1;i++){
+        for (int i = 0;i < len1;i++){
             PAlertArray.setLength(0);
-
-            double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
-            double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
-            int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
-
-            if((thPrice < price && check == 1) || (thPrice > price && check == -1)){
-                dbPHandler.deleteAlert(splitPAlerts[i]);
-                dbPAchHandler.removePAAlert(splitPAlerts[i]);
-                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,check);
-
-            } else {
-                PAlertArray.append(splitPAlerts[i]);
-                PAlertArray.append(":");
-                PAlertArray.append(dbPHandler.getPrice_Val(splitPAlerts[i]));
-                PAlertArray.append(":");
-                PAlertArray.append(dbPHandler.getThresh_Check(splitPAlerts[i]));
-                PAlertArray.append("-c->");
-                PAlertArray.append(dbCVHandler.currentPrice(splitPAlerts[i]));
-                PAlertArray.append("\n");
-            }
+            PAlertArray.append(splitPAlerts[i]);
+            PAlertArray.append(":");
+            PAlertArray.append(dbPHandler.getPrice_Val(splitPAlerts[i]));
+            PAlertArray.append(":");
+            PAlertArray.append(dbPHandler.getThresh_Check(splitPAlerts[i]));
+            PAlertArray.append("-c->");
+            PAlertArray.append(dbCVHandler.currentPrice(splitPAlerts[i]));
+            PAlertArray.append("\n");
             tv1.append(PAlertArray);
         }
 

@@ -246,7 +246,7 @@ public class Top_100_Activity extends BaseActivity {
         String  Curr   = mSettings.getString("Curr_code","eur");
         String  T100   = mSettings.getString("t100_curr","usd");
         Long resumeTime  = System.currentTimeMillis() / 1000L;
-        checkPriceAchieved();
+
         if (resumeTime - createdTime > 299) restart();
         String currency_check = "usd";
         if(!Dollar) currency_check = Curr;
