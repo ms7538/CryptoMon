@@ -69,6 +69,9 @@ public class CryptoSelectActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
+
+        updateCurrentVals();
+
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);

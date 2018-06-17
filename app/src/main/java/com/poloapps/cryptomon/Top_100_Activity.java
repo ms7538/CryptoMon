@@ -202,6 +202,7 @@ public class Top_100_Activity extends BaseActivity {
                             return view;
                         }
                     };
+                    dialog.dismiss();
                     lv.setAdapter(listAdapter);
                 } catch (JSONException e) {
                     dialog.dismiss();

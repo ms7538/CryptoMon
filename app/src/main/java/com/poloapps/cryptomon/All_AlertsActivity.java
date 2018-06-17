@@ -53,7 +53,7 @@ public class All_AlertsActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-
+        updateCurrentVals();
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
         final TextView tv1    = findViewById(R.id.tv1);
