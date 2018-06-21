@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,12 +37,14 @@ import java.util.Objects;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    String                LC_url         = "https://api.coinmarketcap.com/v1/ticker/";
+    String                      LC_url   = "https://api.coinmarketcap.com/v1/ticker/";
+    private static final String TAG      = "com.poloapps.cryptomon";
     ProgressDialog        dialog;
     dbPriceHandler        dbPHandler;
     dbVolumeHandler       dbVHandler;
     dbCurrentValsHandler  dbCVHandler;
     dbPriceAlertsAchieved dbPAchHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -419,9 +422,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         int len1              = splitPAlerts.length;
 
         if (splitPAlerts[0].equals("")){
+            Log.i(TAG, "StopService is called");
             len1 = 0;
             StopServiceCM();
-        } else StartServiceCM();
+        } else {
+            Log.i(TAG, "StartService is called");
+            StartServiceCM();
+        }
 
         for (int i = 0; i < len1; i++) {
 
@@ -480,11 +487,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void StartServiceCM(){
-        Intent intent = new Intent(this,IntentServiceCM.class);
+        Intent intent = new Intent(this,serviceCM.class);
         startService(intent);
     }
     void StopServiceCM(){
-        Intent intent = new Intent(this,IntentServiceCM.class);
+        Intent intent = new Intent(this,serviceCM.class);
         stopService(intent);
     }
 

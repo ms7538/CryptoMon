@@ -37,8 +37,12 @@
         <activity
             android:name=".All_AlertsActivity"
             android:screenOrientation="portrait" />
-        
-        <service android:name=".IntentServiceCM" />
+
+        <service
+            android:name=".serviceCM"
+            android:enabled="true"
+            android:exported="true"
+            android:permission=""></service>
     </application>
 
 </manifest>
