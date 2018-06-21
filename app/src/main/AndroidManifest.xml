@@ -34,8 +34,11 @@
             android:name=".CryptoSelectActivity"
             android:parentActivityName=".Top_100_Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".All_AlertsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".All_AlertsActivity"
+            android:screenOrientation="portrait" />
+        
+        <service android:name=".IntentServiceCM" />
     </application>
 
 </manifest>

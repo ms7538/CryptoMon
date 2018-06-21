@@ -418,7 +418,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;
 
-        if (splitPAlerts[0].equals("")) len1 = 0;
+        if (splitPAlerts[0].equals("")){
+            len1 = 0;
+            StopServiceCM();
+        } else StartServiceCM();
 
         for (int i = 0; i < len1; i++) {
 
@@ -474,6 +477,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
         RequestQueue rQueue = Volley.newRequestQueue(BaseActivity.this);
         rQueue.add(crypto100_request);
+    }
+
+    void StartServiceCM(){
+        Intent intent = new Intent(this,IntentServiceCM.class);
+        startService(intent);
+    }
+    void StopServiceCM(){
+        Intent intent = new Intent(this,IntentServiceCM.class);
+        stopService(intent);
     }
 
 }
