@@ -38,7 +38,7 @@ import java.util.Objects;
 
 public abstract class BaseActivity extends AppCompatActivity {
     String                      LC_url   = "https://api.coinmarketcap.com/v1/ticker/";
-    private static final String TAG      = "com.poloapps.cryptomon";
+
     ProgressDialog        dialog;
     dbPriceHandler        dbPHandler;
     dbVolumeHandler       dbVHandler;
@@ -416,17 +416,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     void checkPriceAchieved(){
 
-
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;
 
         if (splitPAlerts[0].equals("")){
-            Log.i(TAG, "StopService is called");
             len1 = 0;
             StopServiceCM();
         } else {
-            Log.i(TAG, "StartService is called");
             StartServiceCM();
         }
 
