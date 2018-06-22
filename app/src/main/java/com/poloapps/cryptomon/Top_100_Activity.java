@@ -243,10 +243,10 @@ public class Top_100_Activity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        Boolean Dollar = mSettings.getBoolean("Dollar", true);
-        String  Curr   = mSettings.getString("Curr_code","eur");
-        String  T100   = mSettings.getString("t100_curr","usd");
-        Long resumeTime  = System.currentTimeMillis() / 1000L;
+        Boolean Dollar              = mSettings.getBoolean("Dollar", true);
+        String  Curr                = mSettings.getString("Curr_code","eur");
+        String  T100                = mSettings.getString("t100_curr","usd");
+        Long resumeTime             = System.currentTimeMillis() / 1000L;
 
         if (resumeTime - createdTime > 299) restart();
         String currency_check = "usd";
