@@ -37,7 +37,7 @@ import java.util.Objects;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    String                      LC_url   = "https://api.coinmarketcap.com/v1/ticker/";
+    String LC_url   = "https://api.coinmarketcap.com/v1/ticker/";
 
     ProgressDialog        dialog;
     dbPriceHandler        dbPHandler;
