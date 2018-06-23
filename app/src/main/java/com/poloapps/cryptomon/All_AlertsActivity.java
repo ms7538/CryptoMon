@@ -1,9 +1,5 @@
 package com.poloapps.cryptomon;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -14,21 +10,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class All_AlertsActivity extends BaseActivity {
 
@@ -137,10 +121,10 @@ public class All_AlertsActivity extends BaseActivity {
 
     @Override
     public void onPause(){
+        super.onPause();
         final TextView tv3 = findViewById(R.id.tv3);
         final TextView tv2 = findViewById(R.id.tv2);
         final TextView tv1 = findViewById(R.id.tv1);
-        super.onPause();
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
         tv1.setText("");

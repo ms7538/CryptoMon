@@ -1,7 +1,9 @@
 package com.poloapps.cryptomon;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
@@ -9,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,14 +60,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-
+        StopRunningService();
         checkPriceAchieved();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    protected void onStop() {
+        super.onStop();
+       //checkStartService();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+       //TODO implement onCreate and OnDestroy counter to start service
+        // checkStartService();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.settings_menu, menu);
         String priceAchieved = dbPAchHandler.dbToString();
         MenuItem alertsIcon  = menu.findItem(R.id.action_alerts);
@@ -333,7 +345,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 dialog2.show();
                 return true;
 
-
             case R.id.action_about:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
@@ -397,10 +408,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     dialog4.dismiss();
                 }});
 
-
                 return true;
-
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -415,20 +423,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void checkPriceAchieved(){
-
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;
 
         if (splitPAlerts[0].equals("")){
             len1 = 0;
-            StopServiceCM();
-        } else {
-            StartServiceCM();
         }
 
         for (int i = 0; i < len1; i++) {
-
             double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
             double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
             int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
@@ -443,7 +446,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void updateCurrentVals(){
-
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading....");
         dialog.show();
@@ -483,6 +485,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         rQueue.add(crypto100_request);
     }
 
+    void checkStartService(){
+        String priceAlerts    = dbPHandler.dbToString();
+        String[] splitPAlerts = priceAlerts.split("[\n]");
+
+        if (!splitPAlerts[0].equals("")){
+            StartServiceCM();
+        }
+
+    }
     void StartServiceCM(){
         Intent intent = new Intent(this,serviceCM.class);
         startService(intent);
@@ -490,6 +501,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     void StopServiceCM(){
         Intent intent = new Intent(this,serviceCM.class);
         stopService(intent);
+    }
+
+    void  StopRunningService(){
+        if( isMyServiceRunning(serviceCM.class)){
+            Toast.makeText(getApplicationContext(), "STOPPING SERVICE",
+                    Toast.LENGTH_SHORT).show();
+            StopServiceCM();
+        }
+    }
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
+        for (ActivityManager.RunningServiceInfo service :
+                manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

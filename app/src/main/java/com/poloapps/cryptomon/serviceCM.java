@@ -45,8 +45,8 @@ public class serviceCM extends Service {
                         hasStarted = true;
                         Toast.makeText(getApplicationContext(), "Service is running",
                                 Toast.LENGTH_SHORT).show();
-                        updateCurrentVals();
-                        checkPriceAchieved();
+                        //updateCurrentVals();
+                        //checkPriceAchieved();
                        //TODO returnNumberAlerts();
 
                     } catch (Exception e) {
