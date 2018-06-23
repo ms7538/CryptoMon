@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -25,6 +26,8 @@ import org.json.JSONObject;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class serviceCM extends Service {
     String LC_url   = "https://api.coinmarketcap.com/v1/ticker/";
@@ -45,6 +48,7 @@ public class serviceCM extends Service {
                         hasStarted = true;
                         Toast.makeText(getApplicationContext(), "Service is running",
                                 Toast.LENGTH_SHORT).show();
+                        Log.i("CM22","service running");
                         //updateCurrentVals();
                         //checkPriceAchieved();
                        //TODO returnNumberAlerts();

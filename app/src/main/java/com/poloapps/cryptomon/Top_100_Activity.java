@@ -226,9 +226,25 @@ public class Top_100_Activity extends BaseActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+
+        editor.putBoolean("t100_active", false);
+        editor.apply();
+
+        Boolean csActive   = mSettings.getBoolean("cs_active", false);
+        Boolean aaActive = mSettings.getBoolean("aa_active", false);
+
+        if(!csActive && !aaActive) checkStartService();
+
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
         SharedPreferences.Editor editor = mSettings.edit();
         Boolean Dollar = mSettings.getBoolean("Dollar", true);
         String  Curr   = mSettings.getString("Curr_code","eur");
@@ -242,15 +258,21 @@ public class Top_100_Activity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
+        SharedPreferences.Editor editor = mSettings.edit();
+
         Boolean Dollar              = mSettings.getBoolean("Dollar", true);
         String  Curr                = mSettings.getString("Curr_code","eur");
         String  T100                = mSettings.getString("t100_curr","usd");
-        Long resumeTime             = System.currentTimeMillis() / 1000L;
 
+        editor.putBoolean("t100_active", true);
+        editor.apply();
+
+        Long resumeTime             = System.currentTimeMillis() / 1000L;
         if (resumeTime - createdTime > 299) restart();
         String currency_check = "usd";
         if(!Dollar) currency_check = Curr;
         if (!Objects.equals(T100, currency_check)) restart();
     }
+
 }

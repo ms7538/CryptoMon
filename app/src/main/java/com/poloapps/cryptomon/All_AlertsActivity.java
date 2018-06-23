@@ -1,5 +1,6 @@
 package com.poloapps.cryptomon;
 
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -37,6 +38,12 @@ public class All_AlertsActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+
+        editor.putBoolean("aa_active", true);
+        editor.apply();
+
         updateCurrentVals();
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
@@ -119,6 +126,22 @@ public class All_AlertsActivity extends BaseActivity {
 
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+
+        editor.putBoolean("aa_active", false);
+        editor.apply();
+
+        Boolean csActive   = mSettings.getBoolean("cs_active", false);
+        Boolean t100Active = mSettings.getBoolean("t100_active", false);
+
+        if(!csActive && !t100Active) checkStartService();
+    }
+
     @Override
     public void onPause(){
         super.onPause();
@@ -131,6 +154,7 @@ public class All_AlertsActivity extends BaseActivity {
         tv2.setText("");
         tv3.setText("");
     }
+
 
 
 }

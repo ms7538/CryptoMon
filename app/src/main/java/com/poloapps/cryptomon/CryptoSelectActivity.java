@@ -71,10 +71,12 @@ public class CryptoSelectActivity extends BaseActivity {
         super.onResume();
 
         updateCurrentVals();
-
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+
+        editor.putBoolean("cs_active", true);
+        editor.apply();
 
         final LayoutInflater li    = LayoutInflater.from(CryptoSelectActivity.this);
         final String Curr          = mSettings.getString("Curr_code","eur");
@@ -486,6 +488,20 @@ public class CryptoSelectActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+
+        editor.putBoolean("cs_active", false);
+        editor.apply();
+
+        Boolean aaActive   = mSettings.getBoolean("aa_active", false);
+        Boolean t100Active = mSettings.getBoolean("t100_active", false);
+
+        if(!aaActive && !t100Active) checkStartService();
+    }
 }
 
 

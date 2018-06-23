@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,8 +39,8 @@ import java.util.Objects;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-    String LC_url   = "https://api.coinmarketcap.com/v1/ticker/";
-
+    String                LC_url         = "https://api.coinmarketcap.com/v1/ticker/";
+    Integer               startStopCount = 0;
     ProgressDialog        dialog;
     dbPriceHandler        dbPHandler;
     dbVolumeHandler       dbVHandler;
@@ -60,21 +61,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        startStopCount++;
         StopRunningService();
         checkPriceAchieved();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-       //checkStartService();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-       //TODO implement onCreate and OnDestroy counter to start service
-        // checkStartService();
     }
 
     @Override
