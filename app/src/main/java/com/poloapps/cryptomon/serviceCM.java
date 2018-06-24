@@ -27,8 +27,6 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
-
 public class serviceCM extends Service {
     String LC_url   = "https://api.coinmarketcap.com/v1/ticker/";
     private boolean hasStarted = false;
@@ -46,12 +44,16 @@ public class serviceCM extends Service {
                 public void run() {
                     try {
                         hasStarted = true;
-                        Toast.makeText(getApplicationContext(), "Service is running",
-                                Toast.LENGTH_SHORT).show();
+
                         Log.i("CM22","service running");
-                        //updateCurrentVals();
-                        //checkPriceAchieved();
-                       //TODO returnNumberAlerts();
+                        updateCurrentVals();
+                        checkPriceAchieved();
+
+                        int achievedAlerts  = returnNumberAlerts();
+                        if (achievedAlerts > 0 ){
+                            Log.i("CM22","Number of Alerts: " +
+                                                                Integer.toString(achievedAlerts));
+                        }
 
                     } catch (Exception e) {
                         // error, do something
@@ -64,9 +66,12 @@ public class serviceCM extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(getApplicationContext(), "Service started",
-                Toast.LENGTH_SHORT).show();
-        if (!hasStarted) timer.schedule(task, 0 , 10000);  // interval of 10 sec
+        Log.i("CM22","service started");
+        if (!hasStarted) {
+            timer.schedule(task, 15000 , 60000);  // interval of 30 sec
+            Log.i("CM22","service scheduled");
+            hasStarted = true;
+        }
 
         return  Service.START_STICKY;
 
@@ -113,7 +118,6 @@ public class serviceCM extends Service {
     }
 
     void updateCurrentVals(){
-
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
                     @Override
@@ -150,8 +154,18 @@ public class serviceCM extends Service {
         rQueue.add(crypto100_request);
     }
 
-    void checkPriceAchieved(){
+    int returnNumberAlerts(){
+        String priceAchieved   = dbPAchHandler.dbToString();
+        String[] splitPAAlerts = priceAchieved.split("[\n]");
+        int len2               = splitPAAlerts.length;
 
+        if (splitPAAlerts[0].equals("")){
+            len2 = 0;
+        }
+        return len2;
+    }
+
+    void checkPriceAchieved(){
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;

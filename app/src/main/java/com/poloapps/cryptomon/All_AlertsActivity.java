@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class All_AlertsActivity extends BaseActivity {
         super.onResume();
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
+        getIntent().removeExtra("restart");
 
         editor.putBoolean("aa_active", true);
         editor.apply();
@@ -138,8 +140,10 @@ public class All_AlertsActivity extends BaseActivity {
 
         Boolean csActive   = mSettings.getBoolean("cs_active", false);
         Boolean t100Active = mSettings.getBoolean("t100_active", false);
+        Boolean restart    = getIntent().getBooleanExtra("restart", false);
+        getIntent().removeExtra("restart");
 
-        if(!csActive && !t100Active) checkStartService();
+        if(!csActive && !t100Active && !restart ) checkStartService();
     }
 
     @Override
@@ -149,12 +153,9 @@ public class All_AlertsActivity extends BaseActivity {
         final TextView tv2 = findViewById(R.id.tv2);
         final TextView tv1 = findViewById(R.id.tv1);
         PAlertArray.setLength(0);
-        PAchAlertArray.setLength(0);
+
         tv1.setText("");
         tv2.setText("");
         tv3.setText("");
     }
-
-
-
 }

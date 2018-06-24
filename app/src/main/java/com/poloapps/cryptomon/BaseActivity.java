@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,6 @@ import java.util.Objects;
 
 public abstract class BaseActivity extends AppCompatActivity {
     String                LC_url         = "https://api.coinmarketcap.com/v1/ticker/";
-    Integer               startStopCount = 0;
     ProgressDialog        dialog;
     dbPriceHandler        dbPHandler;
     dbVolumeHandler       dbVHandler;
@@ -61,9 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startStopCount++;
         StopRunningService();
-        checkPriceAchieved();
     }
 
     @Override
@@ -92,6 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(
                         BaseActivity.this,
                         Top_100_Activity.class);
+                intent2.putExtra("restart", false);
                 BaseActivity.this.startActivity(intent2);
                 return true;
 
@@ -99,6 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Intent intent = new Intent(
                         BaseActivity.this,
                         All_AlertsActivity.class);
+                intent.putExtra("restart", false);
                 BaseActivity.this.startActivity(intent);
                 return true;
 
@@ -406,7 +406,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void restart(){
+
         Intent intent = getIntent();
+        intent.putExtra("restart", true);
         finish();
         startActivity(intent);
     }
@@ -494,8 +496,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     void  StopRunningService(){
         if( isMyServiceRunning(serviceCM.class)){
-            Toast.makeText(getApplicationContext(), "STOPPING SERVICE",
-                    Toast.LENGTH_SHORT).show();
+            Log.i("CM22","service stopping");
             StopServiceCM();
         }
     }

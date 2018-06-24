@@ -1,6 +1,5 @@
 package com.poloapps.cryptomon;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,26 +15,21 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
 import java.util.Map;
 import java.util.Objects;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -60,7 +54,6 @@ public class Top_100_Activity extends BaseActivity {
                 DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
         String LC_url       = "https://api.coinmarketcap.com/v1/ticker/";
-
         AdView mAdView      = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -138,7 +131,6 @@ public class Top_100_Activity extends BaseActivity {
                         item.put("24h_vol", volume_24h);
                         item.put("id_link", link_id);
                         rankList.add(item);
-
                     }
 
                     String[] from = {"rank","name","rate","d1h",
@@ -194,6 +186,7 @@ public class Top_100_Activity extends BaseActivity {
                                                    CryptoSelectActivity.class);
                                            intent.putExtra("crypto_id",  link_id.getText());
                                            intent.putExtra("crypto_name",nameSymb.getText());
+                                           intent.putExtra("restart", false);
                                            Top_100_Activity.this.startActivity(intent);
                                        }
                                    });
@@ -204,11 +197,11 @@ public class Top_100_Activity extends BaseActivity {
                     };
                     dialog.dismiss();
                     lv.setAdapter(listAdapter);
+
                 } catch (JSONException e) {
                     dialog.dismiss();
                     e.printStackTrace();
                 }
-
             }
             }, new Response.ErrorListener() {
 
@@ -218,7 +211,6 @@ public class Top_100_Activity extends BaseActivity {
                        Toast.LENGTH_SHORT).show();
                dialog.dismiss();
            }
-
        });
         RequestQueue rQueue = Volley.newRequestQueue(Top_100_Activity.this);
         rQueue.add(crypto100_request);
@@ -235,11 +227,19 @@ public class Top_100_Activity extends BaseActivity {
         editor.apply();
 
         Boolean csActive   = mSettings.getBoolean("cs_active", false);
-        Boolean aaActive = mSettings.getBoolean("aa_active", false);
+        Boolean aaActive   = mSettings.getBoolean("aa_active", false);
+        Boolean restart    = getIntent().getBooleanExtra("restart", false);
+        getIntent().removeExtra("restart");
 
-        if(!csActive && !aaActive) checkStartService();
-
+        if(!csActive && !aaActive && !restart) checkStartService();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkPriceAchieved();
+    }
+
 
     @Override
     protected void onPause() {
@@ -260,7 +260,7 @@ public class Top_100_Activity extends BaseActivity {
         super.onResume();
         SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
         SharedPreferences.Editor editor = mSettings.edit();
-
+        getIntent().removeExtra("restart");
         Boolean Dollar              = mSettings.getBoolean("Dollar", true);
         String  Curr                = mSettings.getString("Curr_code","eur");
         String  T100                = mSettings.getString("t100_curr","usd");
@@ -274,5 +274,4 @@ public class Top_100_Activity extends BaseActivity {
         if(!Dollar) currency_check = Curr;
         if (!Objects.equals(T100, currency_check)) restart();
     }
-
 }

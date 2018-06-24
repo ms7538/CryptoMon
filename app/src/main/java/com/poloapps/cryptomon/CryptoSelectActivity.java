@@ -74,7 +74,7 @@ public class CryptoSelectActivity extends BaseActivity {
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
-
+        getIntent().removeExtra("restart");
         editor.putBoolean("cs_active", true);
         editor.apply();
 
@@ -499,8 +499,10 @@ public class CryptoSelectActivity extends BaseActivity {
 
         Boolean aaActive   = mSettings.getBoolean("aa_active", false);
         Boolean t100Active = mSettings.getBoolean("t100_active", false);
+        Boolean restart    = getIntent().getBooleanExtra("restart", false);
+        getIntent().removeExtra("restart");
 
-        if(!aaActive && !t100Active) checkStartService();
+        if(!aaActive && !t100Active && !restart) checkStartService();
     }
 }
 
