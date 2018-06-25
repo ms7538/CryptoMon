@@ -39,7 +39,7 @@ public class serviceCM extends Service {
     private  static  final int uniqueID = 243823;
     private  static  final int uID      = 527354;
     String idUnique = Integer.toString(uniqueID);
-    
+
 
     private boolean hasStarted = false;
     final Handler   handler    = new Handler();
@@ -248,14 +248,12 @@ public class serviceCM extends Service {
             len1 = 0;
             stopSelf();
         }
-
         for (int i = 0; i < len1; i++) {
             double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
             double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
             int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
 
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
-
                 dbPHandler.deleteAlert(splitPAlerts[i]);
                 dbPAchHandler.removePAAlert(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
