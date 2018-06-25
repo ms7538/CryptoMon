@@ -3,6 +3,7 @@ package com.poloapps.cryptomon;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,7 +30,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class serviceCM extends Service {
-    String LC_url   = "https://api.coinmarketcap.com/v1/ticker/";
+
+    String LC_url    = "https://api.coinmarketcap.com/v1/ticker/";
+    String strTicker = "CM ALERTS:";
+    String strCTp1   = "Number of Alerts: ";
+
+    NotificationCompat.Builder cmNotification;
+    private  static  final int uniqueID = 243823;
+    private  static  final int uID      = 527354;
+    String idUnique = Integer.toString(uniqueID);
+    String uIDstr   = Integer.toString(uID);
+
     private boolean hasStarted = false;
     final Handler   handler    = new Handler();
     Timer           timer      = new Timer();
@@ -51,6 +63,64 @@ public class serviceCM extends Service {
 
                         int achievedAlerts  = returnNumberAlerts();
                         if (achievedAlerts > 0 ){
+                            Intent intent =
+                                    new Intent(getApplication(), All_AlertsActivity.class);
+
+                            if (Build.VERSION.SDK_INT >= 26) {
+
+                                NotificationChannel channel = new NotificationChannel(idUnique,
+                                        strTicker, NotificationManager.IMPORTANCE_MIN);
+
+                                ((NotificationManager) Objects.requireNonNull(getSystemService
+                                        (Context.NOTIFICATION_SERVICE)))
+                                        .createNotificationChannel(channel);
+
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                PendingIntent pendingIntent =
+                                        PendingIntent.getActivity(getApplication(),
+                                                0, intent, 0);
+
+                                Notification notification = new
+                                        NotificationCompat.Builder(getApplication(),idUnique)
+                                        .setContentTitle(strTicker)
+                                        .setTicker(strTicker)
+                                        .setOngoing(false)
+                                        .setSmallIcon(R.drawable.ic_action_alert_red)
+                                        .setContentIntent(pendingIntent)
+                                        .setAutoCancel(true)
+                                        .setContentText(
+                                                strCTp1 + Integer.toString(achievedAlerts)).build();
+
+                                notification.flags |= Notification.FLAG_AUTO_CANCEL;
+                                createNotificationChannel();
+                                NotificationManagerCompat notificationManager
+                                        = NotificationManagerCompat.from(getApplicationContext());
+                                notificationManager.notify(uID, notification);
+
+                            } else {
+
+                                cmNotification.setSmallIcon(R.drawable.ic_action_alert_red);
+                                cmNotification.setTicker(strTicker);
+                                cmNotification.setWhen(System.currentTimeMillis());
+                                cmNotification.setContentTitle(strTicker);
+                                cmNotification.setContentText(
+                                        strCTp1 + Integer.toString(achievedAlerts));
+
+
+                                PendingIntent pendingIntent =
+                                        PendingIntent.getActivity(
+                                                getApplicationContext(), 0,
+                                                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                cmNotification.setContentIntent(pendingIntent);
+
+                                NotificationManager nm =
+                                        (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                                assert nm != null;
+                                nm.notify(uniqueID, cmNotification.build());
+
+                            }
+
                             Log.i("CM22","Number of Alerts: " +
                                                                 Integer.toString(achievedAlerts));
                         }
@@ -66,20 +136,20 @@ public class serviceCM extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         Log.i("CM22","service started");
         if (!hasStarted) {
             timer.schedule(task, 15000 , 60000);  // interval of 30 sec
             Log.i("CM22","service scheduled");
             hasStarted = true;
         }
-
         return  Service.START_STICKY;
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         task.cancel();
         hasStarted = false;
         Toast.makeText(getApplicationContext(), "Service has stopped",
@@ -90,9 +160,12 @@ public class serviceCM extends Service {
     public void onCreate() {
         super.onCreate();
 
-        dbPHandler    = new dbPriceHandler(this, null);
-        dbCVHandler   = new dbCurrentValsHandler(this, null);
-        dbPAchHandler = new dbPriceAlertsAchieved(this, null);
+        cmNotification = new NotificationCompat.Builder(this, Integer.toString(uniqueID));
+        cmNotification.setAutoCancel(true);
+
+        dbPHandler     = new dbPriceHandler(this, null);
+        dbCVHandler    = new dbCurrentValsHandler(this, null);
+        dbPAchHandler  = new dbPriceAlertsAchieved(this, null);
 
         if (Build.VERSION.SDK_INT >= 26) {
             String CHANNEL_ID = "my_channel_01";
@@ -105,6 +178,7 @@ public class serviceCM extends Service {
 
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setContentTitle("")
+                    .setAutoCancel(true)
                     .setContentText("").build();
 
             startForeground(1, notification);
@@ -186,6 +260,22 @@ public class serviceCM extends Service {
                 dbPAchHandler.removePAAlert(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
             }
+        }
+    }
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = idUnique;
+            String description = strTicker;
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(idUnique, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
         }
     }
 
