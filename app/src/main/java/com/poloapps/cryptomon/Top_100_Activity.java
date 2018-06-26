@@ -237,6 +237,7 @@ public class Top_100_Activity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        updateCurrentVals();
         checkPriceAchieved();
     }
 

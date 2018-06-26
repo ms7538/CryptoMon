@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -30,17 +31,16 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class serviceCM extends Service {
-
     String LC_url    = "https://api.coinmarketcap.com/v1/ticker/";
     String strTicker = "CM ALERTS:";
-    String strCTp1   = "Number of Alerts: ";
+    String strCTp1   = "New Alerts: ";
 
     NotificationCompat.Builder cmNotification;
     private  static  final int uniqueID = 243823;
     private  static  final int uID      = 527354;
-    String idUnique = Integer.toString(uniqueID);
 
-
+    String idUnique            = Integer.toString(uniqueID);
+    Integer overwritten        = 0;
     private boolean hasStarted = false;
     final Handler   handler    = new Handler();
     Timer           timer      = new Timer();
@@ -56,12 +56,13 @@ public class serviceCM extends Service {
                 public void run() {
                     try {
                         hasStarted = true;
-
                         Log.i("CM22","service running");
                         updateCurrentVals();
                         checkPriceAchieved();
 
                         int achievedAlerts  = returnNumberAlerts();
+                        overwritten = 0;
+
                         if (achievedAlerts > 0 ){
                             Intent intent =
                                     new Intent(getApplication(), All_AlertsActivity.class);
@@ -99,7 +100,6 @@ public class serviceCM extends Service {
                                 notificationManager.notify(uID, notification);
 
                             } else {
-
                                 cmNotification.setSmallIcon(R.drawable.ic_action_alert_red);
                                 cmNotification.setTicker(strTicker);
                                 cmNotification.setWhen(System.currentTimeMillis());
@@ -120,11 +120,9 @@ public class serviceCM extends Service {
                                 nm.notify(uniqueID, cmNotification.build());
 
                             }
-
                             Log.i("CM22","Number of Alerts: " +
                                                                 Integer.toString(achievedAlerts));
                         }
-
                     } catch (Exception e) {
                         // error, do something
                     }
@@ -136,12 +134,12 @@ public class serviceCM extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         Log.i("CM22","service started");
         if (!hasStarted) {
             timer.schedule(task, 15000 , 60000);  // interval of 30 sec
             Log.i("CM22","service scheduled");
-            hasStarted = true;
+            hasStarted  = true;
+            overwritten = 0;
         }
         return  Service.START_STICKY;
     }
@@ -183,13 +181,9 @@ public class serviceCM extends Service {
 
             startForeground(1, notification);
         }
-
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+    @Override public IBinder onBind(Intent intent) { return null; }
 
     void updateCurrentVals(){
         StringRequest crypto100_request = new StringRequest(LC_url,
@@ -231,15 +225,19 @@ public class serviceCM extends Service {
     int returnNumberAlerts(){
         String priceAchieved   = dbPAchHandler.dbToString();
         String[] splitPAAlerts = priceAchieved.split("[\n]");
-        int len2               = splitPAAlerts.length;
 
+        int len2               = splitPAAlerts.length;
         if (splitPAAlerts[0].equals("")){
             len2 = 0;
         }
-        return len2;
+
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        int dispAlerts = mSettings.getInt("disp_price_alerts",0);
+        return len2 - dispAlerts + overwritten;
     }
 
     void checkPriceAchieved(){
+
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;
@@ -255,7 +253,10 @@ public class serviceCM extends Service {
 
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
                 dbPHandler.deleteAlert(splitPAlerts[i]);
-                dbPAchHandler.removePAAlert(splitPAlerts[i]);
+                if(dbPAchHandler.alertExists(splitPAlerts[i])){
+                    dbPAchHandler.removePAAlert(splitPAlerts[i]);
+                    overwritten++;
+                }
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
             }
         }

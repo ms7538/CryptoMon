@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,10 +41,7 @@ public class All_AlertsActivity extends BaseActivity {
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         getIntent().removeExtra("restart");
-
-        editor.putBoolean("aa_active", true);
-        editor.apply();
-
+        overwritten = 0;
         updateCurrentVals();
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
@@ -74,6 +70,10 @@ public class All_AlertsActivity extends BaseActivity {
 
         int len2                = splitPAchAlrts.length;
         if(splitPAchAlrts[0].equals("")) len2 = 0;
+
+        editor.putInt("disp_price_alerts", len2);
+        editor.putBoolean("aa_active", true);
+        editor.apply();
 
         PAchAlertArray.setLength(0);
         PriceAchievedList    = new ArrayList<>();
@@ -120,7 +120,7 @@ public class All_AlertsActivity extends BaseActivity {
                     }
                 });
 
-                dialog.dismiss();
+
                 return view;
             }
         };
@@ -144,6 +144,12 @@ public class All_AlertsActivity extends BaseActivity {
         getIntent().removeExtra("restart");
 
         if(!csActive && !t100Active && !restart ) checkStartService();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateCurrentVals();
+        checkPriceAchieved();
     }
 
     @Override

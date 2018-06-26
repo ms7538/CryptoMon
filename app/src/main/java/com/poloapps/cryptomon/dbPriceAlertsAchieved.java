@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
+import android.widget.Toast;
 
 public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
 
@@ -37,7 +38,6 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.execSQL(" DROP TABLE IF EXISTS " + TABLE_CM_ACH_ALERTS);
         onCreate(db);
     }
-
 
     public void addPriceAchAlert(String cryptoSymb, double breaker, double threshold, int check) {
         ContentValues values = new ContentValues();
@@ -74,6 +74,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
+
     public String getThresh_Val(String in){
 
         StringBuilder dbString = new StringBuilder();
@@ -92,6 +93,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
 
         return dbString.toString();
     }
+
     public String getThresh_Brk(String in){
 
         StringBuilder dbString = new StringBuilder();
@@ -126,7 +128,25 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         }
         c.close();
         db.close();
-
         return dbString.toString();
     }
+
+    public Boolean alertExists(String in){
+
+        Boolean exists = false;
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+                exists = true;
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return exists;
+    }
+
 }

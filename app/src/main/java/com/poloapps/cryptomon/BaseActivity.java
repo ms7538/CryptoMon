@@ -47,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     dbCurrentValsHandler  dbCVHandler;
     dbPriceAlertsAchieved dbPAchHandler;
 
+    Integer overwritten   = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +68,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.settings_menu, menu);
-        String priceAchieved = dbPAchHandler.dbToString();
-        MenuItem alertsIcon  = menu.findItem(R.id.action_alerts);
 
-        if (!priceAchieved.equals(""))alertsIcon.setIcon(R.drawable.ic_action_alert_red);
-        else                          alertsIcon.setIcon(R.drawable.no_alerts_logo);
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        String priceAchieved   = dbPAchHandler.dbToString();
+        String[] splitPAAlerts = priceAchieved.split("[\n]");
+        int len2               = splitPAAlerts.length;
+        if (splitPAAlerts[0].equals("")) len2 = 0;
+
+        int dispAlerts         = mSettings.getInt("disp_price_alerts",0);
+        int newAlerts          = len2 - dispAlerts + overwritten;
+        MenuItem alertsIcon    = menu.findItem(R.id.action_alerts);
+
+        if (newAlerts > 0) alertsIcon.setIcon(R.drawable.ic_action_alert_red);
+        else               alertsIcon.setIcon(R.drawable.no_alerts_logo);
         return true;
     }
 
@@ -430,16 +439,17 @@ public abstract class BaseActivity extends AppCompatActivity {
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
 
                 dbPHandler.deleteAlert(splitPAlerts[i]);
-                dbPAchHandler.removePAAlert(splitPAlerts[i]);
+                if(dbPAchHandler.alertExists(splitPAlerts[i])){
+                    dbPAchHandler.removePAAlert(splitPAlerts[i]);
+                    overwritten++;
+                }
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
             }
         }
     }
 
     void updateCurrentVals(){
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading....");
-        dialog.show();
+
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
                     @Override
@@ -457,10 +467,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 String link_id    = obj1.getString("id");
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
-                                dialog.dismiss();
                             }
                         } catch (JSONException e) {
-                            dialog.dismiss();
+
                             e.printStackTrace();
                         }
                     }
@@ -469,7 +478,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(getApplicationContext(), "Some error occurred!!",
                         Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
             }
         });
         RequestQueue rQueue = Volley.newRequestQueue(BaseActivity.this);
