@@ -58,9 +58,9 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="imageAsset" value="C:\Users\Marko\Desktop\PoloApps\ic_action_font_download (1)\res\drawable-xxxhdpi\ic_action_font_download.png" />
-                                      <entry key="outputName" value="no_alerts_logo" />
+                                      <entry key="outputName" value="ic_action_yellow" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="4a484a" />
+                                      <entry key="themeColor" value="ffff26" />
                                     </map>
                                   </option>
                                 </PersistentState>

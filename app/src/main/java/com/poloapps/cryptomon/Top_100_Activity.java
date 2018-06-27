@@ -266,7 +266,7 @@ public class Top_100_Activity extends BaseActivity {
         Boolean Dollar              = mSettings.getBoolean("Dollar", true);
         String  Curr                = mSettings.getString("Curr_code","eur");
         String  T100                = mSettings.getString("t100_curr","usd");
-        StopRunningService();
+        stopRunningService();
         editor.putBoolean("t100_active", true);
         editor.apply();
 

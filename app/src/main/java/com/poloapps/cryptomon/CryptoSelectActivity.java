@@ -78,7 +78,7 @@ public class CryptoSelectActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-        StopRunningService();
+        stopRunningService();
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();

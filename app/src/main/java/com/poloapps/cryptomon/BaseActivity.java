@@ -62,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        StopRunningService();
+        stopRunningService();
     }
 
     @Override
@@ -70,17 +70,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.settings_menu, menu);
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        String priceAchieved   = dbPAchHandler.dbToString();
-        String[] splitPAAlerts = priceAchieved.split("[\n]");
-        int len2               = splitPAAlerts.length;
-        if (splitPAAlerts[0].equals("")) len2 = 0;
 
+        int lenPAch            = numberPAchAlerts();
         int dispAlerts         = mSettings.getInt("disp_price_alerts",0);
-        int newAlerts          = len2 - dispAlerts + overwritten;
+        int newAlerts          = lenPAch - dispAlerts + overwritten;
         MenuItem alertsIcon    = menu.findItem(R.id.action_alerts);
+        int setAlerts          = numberPAlerts();
 
-        if (newAlerts > 0) alertsIcon.setIcon(R.drawable.ic_action_red2);
-        else               alertsIcon.setIcon(R.drawable.no_alerts_logo);
+        if      (newAlerts > 0) alertsIcon.setIcon(R.drawable.ic_action_red2);
+        else if (setAlerts > 0 )alertsIcon.setIcon(R.drawable.ic_action_yellow);
+        else                    alertsIcon.setIcon(R.drawable.no_alerts_logo);
         return true;
     }
 
@@ -92,14 +91,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
 
-
         switch (item.getItemId()) {
 
             case R.id.action_t100:
                 Intent intent2 = new Intent(
                         BaseActivity.this,
                         Top_100_Activity.class);
-                intent2.putExtra("restart", false);
+                intent2.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent2);
                 return true;
 
@@ -107,7 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Intent intent = new Intent(
                         BaseActivity.this,
                         All_AlertsActivity.class);
-                intent.putExtra("restart", false);
+                intent.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent);
                 return true;
 
@@ -165,7 +163,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                         "AElfTrader","PolymathNetwork","BytomBlockchain","Bytomchain","monacoin",
                         "QASH","ReddCoin","AionNetwork","AionTrader","GolemProject","GolemTrader"};
 
-
                 for(int i = 0; i < TV_IDs.length ;i++) {
                     final int j = i;
                     TextView TV_name = mView.findViewById(TV_IDs[i]);
@@ -180,7 +177,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                         }});
                 }
-
                 Dismiss_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
@@ -422,7 +418,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void updateCurrentVals(){
-
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
                     @Override
@@ -444,11 +439,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                             String priceAlerts    = dbPHandler.dbToString();
                             String[] splitPAlerts = priceAlerts.split("[\n]");
-                            int len1              = splitPAlerts.length;
 
-                            if (splitPAlerts[0].equals("")){
-                                len1 = 0;
-                            }
+                            int len1 = numberPAlerts();
 
                             for (int i = 0; i < len1; i++) {
                                 double price   = Double.parseDouble(
@@ -491,25 +483,43 @@ public abstract class BaseActivity extends AppCompatActivity {
         String[] splitPAlerts = priceAlerts.split("[\n]");
 
         if (!splitPAlerts[0].equals("")){
-            StartServiceCM();
+            startServiceCM();
         }
-
     }
-    void StartServiceCM(){
+
+    void startServiceCM(){
         Intent intent = new Intent(this,serviceCM.class);
         startService(intent);
     }
-    void StopServiceCM(){
+
+    void stopServiceCM(){
         Intent intent = new Intent(this,serviceCM.class);
         stopService(intent);
     }
 
-    void  StopRunningService(){
+    int numberPAlerts(){
+        String priceAlerts    = dbPHandler.dbToString();
+        String[] splitPAlerts = priceAlerts.split("[\n]");
+        int lenPArray         = splitPAlerts.length;
+        if (splitPAlerts[0].equals("")) lenPArray = 0;
+        return lenPArray;
+    }
+
+    int numberPAchAlerts(){
+        String priceAchieved   = dbPAchHandler.dbToString();
+        String[] splitPAAlerts = priceAchieved.split("[\n]");
+        int lenPAchArray       = splitPAAlerts.length;
+        if (splitPAAlerts[0].equals("")) lenPAchArray = 0;
+        return lenPAchArray;
+    }
+
+    void stopRunningService(){
         if( isMyServiceRunning(serviceCM.class)){
             Log.i("CM22","service stopping");
-            StopServiceCM();
+            stopServiceCM();
         }
     }
+
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         assert manager != null;

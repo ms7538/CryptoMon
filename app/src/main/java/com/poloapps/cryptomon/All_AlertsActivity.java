@@ -43,7 +43,7 @@ public class All_AlertsActivity extends BaseActivity {
         final SharedPreferences.Editor editor = mSettings.edit();
         getIntent().removeExtra("restart");
         overwritten = 0;
-        StopRunningService();
+        stopRunningService();
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
         final TextView tv1    = findViewById(R.id.tv1);
