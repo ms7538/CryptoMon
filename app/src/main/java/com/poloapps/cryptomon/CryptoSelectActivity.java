@@ -65,12 +65,21 @@ public class CryptoSelectActivity extends BaseActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+
+        editor.putBoolean("cs_active", true);
+        editor.apply();
+    }
 
     @Override
     public void onResume() {
         super.onResume();
+        StopRunningService();
 
-        updateCurrentVals();
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);

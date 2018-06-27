@@ -79,7 +79,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         int newAlerts          = len2 - dispAlerts + overwritten;
         MenuItem alertsIcon    = menu.findItem(R.id.action_alerts);
 
-        if (newAlerts > 0) alertsIcon.setIcon(R.drawable.ic_action_alert_red);
+        if (newAlerts > 0) alertsIcon.setIcon(R.drawable.ic_action_red2);
         else               alertsIcon.setIcon(R.drawable.no_alerts_logo);
         return true;
     }

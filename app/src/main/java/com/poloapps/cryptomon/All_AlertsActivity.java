@@ -42,7 +42,7 @@ public class All_AlertsActivity extends BaseActivity {
         final SharedPreferences.Editor editor = mSettings.edit();
         getIntent().removeExtra("restart");
         overwritten = 0;
-        updateCurrentVals();
+        StopRunningService();
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
         final TextView tv1    = findViewById(R.id.tv1);
@@ -120,14 +120,12 @@ public class All_AlertsActivity extends BaseActivity {
                     }
                 });
 
-
                 return view;
             }
         };
         priceAch_lv.setAdapter(listAdapter);
 
     }
-
 
     @Override
     protected void onStop() {
@@ -148,6 +146,12 @@ public class All_AlertsActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+
+        editor.putBoolean("aa_active", true);
+        editor.apply();
+
         updateCurrentVals();
         checkPriceAchieved();
     }

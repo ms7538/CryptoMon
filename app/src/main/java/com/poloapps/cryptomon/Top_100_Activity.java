@@ -35,9 +35,9 @@ import com.google.android.gms.ads.AdView;
 
 //v1.1    created
 public class Top_100_Activity extends BaseActivity {
+
     long createdTime = System.currentTimeMillis() / 1000L;
     ArrayList<HashMap<String, String>> rankList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +191,6 @@ public class Top_100_Activity extends BaseActivity {
                                        }
                                    });
 
-                            dialog.dismiss();
                             return view;
                         }
                     };
@@ -237,10 +236,14 @@ public class Top_100_Activity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+        editor.putBoolean("t100_active", true);
+        editor.apply();
         updateCurrentVals();
         checkPriceAchieved();
     }
-
 
     @Override
     protected void onPause() {
@@ -265,7 +268,7 @@ public class Top_100_Activity extends BaseActivity {
         Boolean Dollar              = mSettings.getBoolean("Dollar", true);
         String  Curr                = mSettings.getString("Curr_code","eur");
         String  T100                = mSettings.getString("t100_curr","usd");
-
+        StopRunningService();
         editor.putBoolean("t100_active", true);
         editor.apply();
 

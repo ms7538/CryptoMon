@@ -70,7 +70,7 @@ public class serviceCM extends Service {
                             if (Build.VERSION.SDK_INT >= 26) {
 
                                 NotificationChannel channel = new NotificationChannel(idUnique,
-                                        strTicker, NotificationManager.IMPORTANCE_MIN);
+                                        strTicker, NotificationManager.IMPORTANCE_HIGH);
 
                                 ((NotificationManager) Objects.requireNonNull(getSystemService
                                         (Context.NOTIFICATION_SERVICE)))
@@ -87,6 +87,7 @@ public class serviceCM extends Service {
                                         .setContentTitle(strTicker)
                                         .setTicker(strTicker)
                                         .setOngoing(false)
+                                        .setPriority(NotificationManager.IMPORTANCE_MAX)
                                         .setSmallIcon(R.drawable.ic_action_alert_red)
                                         .setContentIntent(pendingIntent)
                                         .setAutoCancel(true)

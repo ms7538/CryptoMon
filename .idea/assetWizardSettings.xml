@@ -40,13 +40,27 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="-10" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_action_t100" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\Marko\Desktop\PoloApps\ic_action_font_download (1)\res\drawable-xxxhdpi\ic_action_font_download.png" />
+                                      <entry key="outputName" value="no_alerts_logo" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="55e52e" />
+                                      <entry key="themeColor" value="4a484a" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -117,6 +131,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>
