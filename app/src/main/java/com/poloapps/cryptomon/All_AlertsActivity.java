@@ -33,6 +33,7 @@ public class All_AlertsActivity extends BaseActivity {
                                                                               R.color.dark_gray)));
         PAlertArray.setLength(0);
         PAchAlertArray.setLength(0);
+        updateCurrentVals();
     }
 
     @Override
@@ -151,9 +152,6 @@ public class All_AlertsActivity extends BaseActivity {
 
         editor.putBoolean("aa_active", true);
         editor.apply();
-
-        updateCurrentVals();
-        checkPriceAchieved();
     }
 
     @Override

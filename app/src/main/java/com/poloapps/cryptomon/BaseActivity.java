@@ -415,41 +415,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void restart(){
-
         Intent intent = getIntent();
         intent.putExtra("restart", true);
         finish();
         startActivity(intent);
     }
 
-    void checkPriceAchieved(){
-        String priceAlerts    = dbPHandler.dbToString();
-        String[] splitPAlerts = priceAlerts.split("[\n]");
-        int len1              = splitPAlerts.length;
-
-        if (splitPAlerts[0].equals("")){
-            len1 = 0;
-        }
-
-        for (int i = 0; i < len1; i++) {
-            double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
-            double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
-            int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
-
-            if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
-
-                dbPHandler.deleteAlert(splitPAlerts[i]);
-                if(dbPAchHandler.alertExists(splitPAlerts[i])){
-                    dbPAchHandler.removePAAlert(splitPAlerts[i]);
-                    overwritten++;
-                }
-                dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
-            }
-        }
-    }
-
     void updateCurrentVals(){
-
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
                     @Override
@@ -467,6 +439,35 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 String link_id    = obj1.getString("id");
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
+                            }
+
+                            String priceAlerts    = dbPHandler.dbToString();
+                            String[] splitPAlerts = priceAlerts.split("[\n]");
+                            int len1              = splitPAlerts.length;
+
+                            if (splitPAlerts[0].equals("")){
+                                len1 = 0;
+                            }
+
+                            for (int i = 0; i < len1; i++) {
+                                double price   = Double.parseDouble(
+                                        dbCVHandler.currentPrice(splitPAlerts[i]));
+                                double thPrice = Double.parseDouble(
+                                        dbPHandler.getPrice_Val(splitPAlerts[i]));
+                                int    check   = Integer.parseInt(
+                                        dbPHandler.getThresh_Check(splitPAlerts[i]));
+
+                                if ((thPrice < price && check == 1) ||
+                                        (thPrice > price && check == -1)) {
+
+                                    dbPHandler.deleteAlert(splitPAlerts[i]);
+                                    if(dbPAchHandler.alertExists(splitPAlerts[i])){
+                                        dbPAchHandler.removePAAlert(splitPAlerts[i]);
+                                        overwritten++;
+                                    }
+                                    dbPAchHandler.addPriceAchAlert(
+                                            splitPAlerts[i], price, thPrice, check);
+                                }
                             }
                         } catch (JSONException e) {
 

@@ -49,7 +49,7 @@ public class Top_100_Activity extends BaseActivity {
         bar.setDisplayShowTitleEnabled(false);
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
-
+        updateCurrentVals();
         String reqCurrentTime =
                 DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
@@ -241,8 +241,7 @@ public class Top_100_Activity extends BaseActivity {
         final SharedPreferences.Editor editor = mSettings.edit();
         editor.putBoolean("t100_active", true);
         editor.apply();
-        updateCurrentVals();
-        checkPriceAchieved();
+
     }
 
     @Override
