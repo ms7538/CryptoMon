@@ -422,6 +422,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void updateCurrentVals(){
+
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
                     @Override
@@ -468,9 +469,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     dbPAchHandler.addPriceAchAlert(
                                             splitPAlerts[i], price, thPrice, check);
                                 }
+
                             }
                         } catch (JSONException e) {
-
                             e.printStackTrace();
                         }
                     }

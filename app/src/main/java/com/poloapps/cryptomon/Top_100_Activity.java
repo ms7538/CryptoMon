@@ -49,7 +49,9 @@ public class Top_100_Activity extends BaseActivity {
         bar.setDisplayShowTitleEnabled(false);
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
+
         updateCurrentVals();
+
         String reqCurrentTime =
                 DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
@@ -194,9 +196,8 @@ public class Top_100_Activity extends BaseActivity {
                             return view;
                         }
                     };
-                    dialog.dismiss();
                     lv.setAdapter(listAdapter);
-
+                    dialog.dismiss();
                 } catch (JSONException e) {
                     dialog.dismiss();
                     e.printStackTrace();
@@ -236,12 +237,10 @@ public class Top_100_Activity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         editor.putBoolean("t100_active", true);
         editor.apply();
-
     }
 
     @Override
