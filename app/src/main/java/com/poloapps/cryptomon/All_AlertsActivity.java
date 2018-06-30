@@ -62,6 +62,14 @@ public class All_AlertsActivity extends BaseActivity {
             PAlertArray.append(dbPHandler.getThresh_Check(splitPAlerts[i]));
             PAlertArray.append("-c->");
             PAlertArray.append(dbCVHandler.currentPrice(splitPAlerts[i]));
+
+            long millis        = System.currentTimeMillis();
+            Integer curr_hours = (int) (millis/1000/60/60);
+            Integer set_hours  = Integer.parseInt(dbCVHandler.currentHour(splitPAlerts[i]));
+
+            PAlertArray.append(" Stale -> ");
+            PAlertArray.append(curr_hours - set_hours);
+
             PAlertArray.append("\n");
             tv1.append(PAlertArray);
         }
@@ -73,7 +81,7 @@ public class All_AlertsActivity extends BaseActivity {
         if(splitPAchAlrts[0].equals("")) len2 = 0;
 
         editor.putInt("disp_price_alerts", len2);
-        editor.putBoolean("aa_active", true);
+        editor.putBoolean("aa_active"    , true);
         editor.apply();
 
         PAchAlertArray.setLength(0);
@@ -94,8 +102,8 @@ public class All_AlertsActivity extends BaseActivity {
             String disp_msg = id + checkDescript + threshVal + " at " + threshBrk;
             HashMap<String, String> item = new HashMap<>();
 
-            item.put("id"    ,id);
-            item.put("msg"   ,disp_msg);
+            item.put("id" , id);
+            item.put("msg", disp_msg);
 
             PriceAchievedList.add(item);
         }

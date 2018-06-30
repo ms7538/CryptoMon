@@ -202,8 +202,11 @@ public class serviceCM extends Service {
                                 Double curr_vol   = Double.parseDouble(
                                         obj1.getString("24h_volume_usd"));
                                 String link_id    = obj1.getString("id");
+                                long millis       = System.currentTimeMillis();
+                                Integer hours     = (int) (millis/1000/60/60);
+
                                 dbCVHandler.deleteEntry(link_id);
-                                dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
+                                dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
 
                             }
                         } catch (JSONException e) {

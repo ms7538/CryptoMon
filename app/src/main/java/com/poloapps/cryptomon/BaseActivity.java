@@ -433,8 +433,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 Double curr_vol   = Double.parseDouble(
                                         obj1.getString("24h_volume_usd"));
                                 String link_id    = obj1.getString("id");
+                                long millis       = System.currentTimeMillis();
+                                Integer hours     = (int) (millis/1000/60/60);
+
                                 dbCVHandler.deleteEntry(link_id);
-                                dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
+                                dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
                             }
 
                             String priceAlerts    = dbPHandler.dbToString();
@@ -531,5 +534,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return false;
     }
-
 }

@@ -55,8 +55,6 @@ public class Top_100_Activity extends BaseActivity {
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
 
-        updateCurrentVals();
-
         String reqCurrentTime =
                 DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
@@ -121,8 +119,11 @@ public class Top_100_Activity extends BaseActivity {
                         String delta_1d   = obj1.getString("percent_change_24h");
                         String delta_7d   = obj1.getString("percent_change_7d");
                         String link_id    = obj1.getString("id");
+                        long millis       = System.currentTimeMillis();
+                        Integer hours     = (int) (millis/1000/60/60);
+
                         dbCVHandler.deleteEntry(link_id);
-                        dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
+                        dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol, hours);
 
                         HashMap<String, String> item = new HashMap<>();
                         item.put("rank",    rank);
