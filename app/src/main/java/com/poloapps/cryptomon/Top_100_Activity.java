@@ -42,6 +42,11 @@ public class Top_100_Activity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading....");
+        dialog.show();
+
         setContentView(R.layout.activity_top_100);
         final TextView Time2 = findViewById(R.id.t100_request_time);
         android.support.v7.app.ActionBar bar = getSupportActionBar();
@@ -71,10 +76,6 @@ public class Top_100_Activity extends BaseActivity {
         final DecimalFormat form  = new DecimalFormat("#,###,###,###.##");
         final DecimalFormat form2 = new DecimalFormat("#.######");
         final DecimalFormat form3 = new DecimalFormat("#,###,###,###");
-
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading....");
-        dialog.show();
 
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
