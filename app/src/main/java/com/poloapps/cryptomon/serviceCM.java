@@ -137,7 +137,7 @@ public class serviceCM extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("CM22","service started");
         if (!hasStarted) {
-            timer.schedule(task, 15000 , 60000);  // interval of 30 sec
+            timer.schedule(task, 15000 , 600000);  // interval of 10 min
             Log.i("CM22","service scheduled");
             hasStarted  = true;
             overwritten = 0;
@@ -263,7 +263,7 @@ public class serviceCM extends Service {
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
                 dbHelperMethod(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
-            } else if (cur_hrs - set_hrs > 1) {
+            } else if (cur_hrs - set_hrs > 12) {
                 dbHelperMethod(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, 100);
             }
