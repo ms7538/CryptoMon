@@ -76,7 +76,6 @@ public class All_AlertsActivity extends BaseActivity {
 
         String priceAchAlrts    = dbPAchHandler.dbToString();
         String[] splitPAchAlrts = priceAchAlrts.split("[\n]");
-
         int len2                = splitPAchAlrts.length;
         if(splitPAchAlrts[0].equals("")) len2 = 0;
 
@@ -94,17 +93,18 @@ public class All_AlertsActivity extends BaseActivity {
             String threshVal = dbPAchHandler.getThresh_Val(splitPAchAlrts[j]);
             String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]);
 
-            if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1")) {
+            if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1"))
                 checkDescript = " fell below ";
-            }else
+            else if (dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("1"))
                 checkDescript = " surpassed ";
-
             String disp_msg = id + checkDescript + threshVal + " at " + threshBrk;
-            HashMap<String, String> item = new HashMap<>();
 
+            if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("100"))
+                disp_msg = id + " data not available any more";
+
+            HashMap<String, String> item = new HashMap<>();
             item.put("id" , id);
             item.put("msg", disp_msg);
-
             PriceAchievedList.add(item);
         }
         String[] from = {"msg","id"};

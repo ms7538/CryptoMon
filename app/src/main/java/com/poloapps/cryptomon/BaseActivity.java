@@ -40,6 +40,7 @@ import java.util.Objects;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+
     String                LC_url         = "https://api.coinmarketcap.com/v1/ticker/";
     ProgressDialog        dialog;
     dbPriceHandler        dbPHandler;
@@ -426,7 +427,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                             JSONArray T100_Array = new JSONArray(string);
                             for (int i = 0; i < T100_Array.length(); i++) {
 
-                                JSONObject obj1 = T100_Array.getJSONObject(i);
+                                JSONObject obj1   = T100_Array.getJSONObject(i);
 
                                 String rate       = obj1.getString("price_usd");
                                 Double d_rate     = Double.parseDouble(rate);

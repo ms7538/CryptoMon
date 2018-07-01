@@ -250,21 +250,34 @@ public class serviceCM extends Service {
             len1 = 0;
             stopSelf();
         }
+
         for (int i = 0; i < len1; i++) {
+
             double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
             double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
             int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
+            int    set_hrs = Integer.parseInt(dbCVHandler.currentHour(splitPAlerts[i]));
+            long   millis  = System.currentTimeMillis();
+            int    cur_hrs = (int) (millis/1000/60/60);
 
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
-                dbPHandler.deleteAlert(splitPAlerts[i]);
-                if(dbPAchHandler.alertExists(splitPAlerts[i])){
-                    dbPAchHandler.removePAAlert(splitPAlerts[i]);
-                    overwritten++;
-                }
+                dbHelperMethod(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
+            } else if (cur_hrs - set_hrs > 1) {
+                dbHelperMethod(splitPAlerts[i]);
+                dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, 100);
             }
         }
     }
+
+    void dbHelperMethod(String in){
+        dbPHandler.deleteAlert(in);
+        if(dbPAchHandler.alertExists(in)){
+            dbPAchHandler.removePAAlert(in);
+            overwritten++;
+        }
+    }
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = idUnique;
