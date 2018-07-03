@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Top_100_Activity"
+            android:name=".T100Activity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,10 +33,10 @@
         </activity>
         <activity
             android:name=".CryptoSelectActivity"
-            android:parentActivityName=".Top_100_Activity"
+            android:parentActivityName=".T100Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".All_AlertsActivity"
+            android:name=".AllAlertsActivity"
             android:screenOrientation="portrait" />
         <receiver
             android:enabled="true"

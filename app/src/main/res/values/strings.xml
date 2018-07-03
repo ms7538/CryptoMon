@@ -203,4 +203,9 @@
     <string name="_24h_vol">24h Vol:</string>
     <string name="set_alert">SET ALERTS</string>
     <string name="dismiss">Dismiss:</string>
+    <string name="delete">Delete</string>
+    <string name="current">Current</string>
+    <string name="threshold">Threshold</string>
+    <string name="type">Type</string>
+    <string name="xx">XX</string>
 </resources>

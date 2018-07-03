@@ -65,7 +65,7 @@ public class serviceCM extends Service {
 
                         if (achievedAlerts > 0 ){
                             Intent intent =
-                                    new Intent(getApplication(), All_AlertsActivity.class);
+                                    new Intent(getApplication(), AllAlertsActivity.class);
 
                             if (Build.VERSION.SDK_INT >= 26) {
 

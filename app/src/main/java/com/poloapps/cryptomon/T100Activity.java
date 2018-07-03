@@ -34,7 +34,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 //v1.1    created
-public class Top_100_Activity extends BaseActivity {
+public class T100Activity extends BaseActivity {
 
     long createdTime = System.currentTimeMillis() / 1000L;
     ArrayList<HashMap<String, String>> rankList;
@@ -186,12 +186,12 @@ public class Top_100_Activity extends BaseActivity {
                                        @Override
                                        public void onClick(View v) {
                                            Intent intent = new Intent(
-                                                   Top_100_Activity.this,
+                                                   T100Activity.this,
                                                    CryptoSelectActivity.class);
                                            intent.putExtra("crypto_id",  link_id.getText());
                                            intent.putExtra("crypto_name",nameSymb.getText());
                                            intent.putExtra("restart", false);
-                                           Top_100_Activity.this.startActivity(intent);
+                                           T100Activity.this.startActivity(intent);
                                        }
                                    });
 
@@ -214,7 +214,7 @@ public class Top_100_Activity extends BaseActivity {
                dialog.dismiss();
            }
        });
-        RequestQueue rQueue = Volley.newRequestQueue(Top_100_Activity.this);
+        RequestQueue rQueue = Volley.newRequestQueue(T100Activity.this);
         rQueue.add(crypto100_request);
         createdTime = System.currentTimeMillis() / 1000L;
     }

@@ -97,7 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             case R.id.action_t100:
                 Intent intent2 = new Intent(
                         BaseActivity.this,
-                        Top_100_Activity.class);
+                        T100Activity.class);
                 intent2.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent2);
                 return true;
@@ -105,7 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             case R.id.action_alerts:
                 Intent intent = new Intent(
                         BaseActivity.this,
-                        All_AlertsActivity.class);
+                        AllAlertsActivity.class);
                 intent.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent);
                 return true;
