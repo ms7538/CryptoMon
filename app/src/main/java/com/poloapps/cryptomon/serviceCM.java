@@ -200,7 +200,7 @@ public class serviceCM extends Service {
                                 String rate       = obj1.getString("price_usd");
                                 Double d_rate     = Double.parseDouble(rate);
                                 Double curr_vol   = Double.parseDouble(
-                                        obj1.getString("24h_volume_usd"));
+                                                           obj1.getString("24h_volume_usd"));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
                                 Integer hours     = (int) (millis/1000/60/60);

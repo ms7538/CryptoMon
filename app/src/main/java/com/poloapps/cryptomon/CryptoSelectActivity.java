@@ -82,7 +82,7 @@ public class CryptoSelectActivity extends BaseActivity {
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        //final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         getIntent().removeExtra("restart");
         editor.putBoolean("cs_active", true);
         editor.apply();
@@ -176,10 +176,10 @@ public class CryptoSelectActivity extends BaseActivity {
                                                                 object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
-                            double currPrice = usdP;
-                            if(!Dollar){
-                               currPrice = not_usdP;
-                            }
+//                            double currPrice = usdP;
+//                            if(!Dollar){
+//                               currPrice = not_usdP;
+//                            }
 
                             if      (usdP     < 0.01) USD_frmt = frmt2;
                             else if (usdP     > 99)   USD_frmt = frmt0;
@@ -262,8 +262,8 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             VolumeUSD.setText(USD_Volume);
 
-                            editor.putFloat ("price_init_f",  (float) currPrice);
-                            editor.putString("price_initial", frmt.format((currPrice)));
+                            editor.putFloat ("price_init_f",  (float) usdP);
+                            editor.putString("price_initial", frmt.format((usdP)));
 
                             editor.putFloat("vol_init_i", Float.parseFloat(USD_Volume_val));
                             editor.putString("vol_initial", frmt3.format(
@@ -362,7 +362,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 builder3.setView(alertsMenu);
                 final String  Symbol      = getIntent().getStringExtra("crypto_id");
                 TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
-                TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
+                //TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
                 final EditText priceInput = alertsMenu.findViewById(R.id.price_input);
                 final EditText volInput   = alertsMenu.findViewById(R.id.volume_input);
                 final Button setPriceBtn  = alertsMenu.findViewById(R.id.price_setBtn);
@@ -397,11 +397,11 @@ public class CryptoSelectActivity extends BaseActivity {
                     volInput.setHint(initVolume);
                     alertVol         = false;
                 }
-                String symbolCurrent = "$";
-                if(!Dollar){
-                    symbolCurrent = mSettings.getString("Curr_symb","€");
-                    alertsSym.setText(symbolCurrent);
-                }
+                //String symbolCurrent = "$";
+//                if(!Dollar){
+//                    symbolCurrent = mSettings.getString("Curr_symb","€");
+//                    alertsSym.setText(symbolCurrent);
+//                }
 
                 setPriceBtn.setOnClickListener(new View.OnClickListener() {
                     @Override

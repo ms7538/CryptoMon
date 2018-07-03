@@ -86,6 +86,8 @@ public class T100Activity extends BaseActivity {
                     String price_key      = "price_usd";
                     String curr_symbol    = "$";
                     String volume_24h_key = "24h_volume_usd";
+                    String us_price_key   = price_key;
+                    String us_vol_key     = volume_24h_key;
 
                     if(!Dollar){
                         price_key      = "price_" + Curr;
@@ -106,6 +108,9 @@ public class T100Activity extends BaseActivity {
                         Double curr_vol   = Double.parseDouble(obj1.getString(volume_24h_key));
                         String volume_24h = curr_symbol + form3.format(curr_vol);
 
+                        Double usPrice   = Double.parseDouble(obj1.getString(us_price_key));
+                        Double usVolume  = Double.parseDouble(obj1.getString(us_vol_key));
+
                         if (d_rate < .01) rate  = curr_symbol + form2.format(d_rate);
                         else              rate  = curr_symbol + form.format(d_rate);
 
@@ -123,7 +128,7 @@ public class T100Activity extends BaseActivity {
                         Integer hours     = (int) (millis/1000/60/60);
 
                         dbCVHandler.deleteEntry(link_id);
-                        dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol, hours);
+                        dbCVHandler.addCurrentVals(link_id,usPrice,usVolume, hours);
 
                         HashMap<String, String> item = new HashMap<>();
                         item.put("rank",    rank);
