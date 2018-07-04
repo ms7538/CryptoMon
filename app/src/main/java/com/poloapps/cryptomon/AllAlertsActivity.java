@@ -7,15 +7,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class AllAlertsActivity extends BaseActivity {
@@ -47,6 +50,9 @@ public class AllAlertsActivity extends BaseActivity {
         overwritten = 0;
         stopRunningService();
 
+        TextView     achievedTopMsg = findViewById(R.id.achieved_top_msg);
+        TextView     setTopMsg      = findViewById(R.id.set_top_msg);
+
         String checkDescript  = " surpassed ";
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
@@ -55,8 +61,12 @@ public class AllAlertsActivity extends BaseActivity {
         ListView priceSet_lv  = findViewById(R.id.priceSet_listView);
         String type           = "Price";
         if(splitPAlerts[0].equals("")) len1 = 0;
-
-
+        if(len1 == 0) setTopMsg.setText(getString(R.string.no_alerts_set));
+        else {
+            String msg = String.format(Locale.US, "%d", len1) + " " +
+                                                                        getString(R.string.running);
+            setTopMsg.setText(msg);
+        }
         for (int i = 0;i < len1;i++){
             String id_set    = splitPAlerts[i];
             String cur_val   = dbCVHandler.currentPrice(splitPAlerts[i]);
@@ -102,6 +112,13 @@ public class AllAlertsActivity extends BaseActivity {
         int len2                = splitPAchAlrts.length;
         if(splitPAchAlrts[0].equals("")) len2 = 0;
 
+        if(len2 == 0) {
+            achievedTopMsg.setText(getString(R.string.no_achieved_alerts));
+        }else {
+            String msg = String.format(Locale.US, "%d", len2) + " "
+                                                                     + getString(R.string.achieved);
+            achievedTopMsg.setText(msg);
+        }
         editor.putInt("disp_price_alerts", len2);
         editor.putBoolean("aa_active"    , true);
         editor.apply();

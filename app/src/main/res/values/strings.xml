@@ -211,4 +211,7 @@
     <string name="xdel">x</string>
     <string name="no_achieved_alerts">No Achieved Alerts</string>
     <string name="no_alerts_set">No Alerts Set</string>
+    <string name="running">Running</string>
+    <string name="achieved">Achieved</string>
+    <string name="empty"> </string>
 </resources>
