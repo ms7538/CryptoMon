@@ -263,8 +263,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             VolumeUSD.setText(USD_Volume);
 
                             editor.putFloat ("price_init_f",  (float) usdP);
-                            editor.putString("price_initial", frmt.format((usdP)));
 
+                            String priceInit = frmt.format((usdP));
+                            if (usdP >= 100)
+                                   priceInit = frmt0.format((usdP));
+
+                            editor.putString("price_initial", priceInit);
                             editor.putFloat("vol_init_i", Float.parseFloat(USD_Volume_val));
                             editor.putString("vol_initial", frmt3.format(
                                                                  Float.parseFloat(USD_Volume_val)));

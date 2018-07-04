@@ -1,24 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/light_gray"
     tools:context=".AllAlertsActivity">
+
+    <LinearLayout
+        android:id="@+id/achieved_layout"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:orientation="vertical"
+        android:background="@color/dark_gray">
+        <TextView
+            android:id="@+id/achieved_top_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/light_blue"
+            android:text="@string/no_achieved_alerts" />
+        <ListView
+            android:id="@+id/priceAch_listView"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:scrollbarThumbVertical="@color/navy_blue"
+            android:fadeScrollbars="false"/>
+
+    </LinearLayout>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/all_alerts_adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/delta_col"
+        android:foregroundGravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id" />
+
+    <LinearLayout
+        android:id="@+id/set_layout"
+        android:layout_width="match_parent"
+        android:layout_height="2225dp"
+        android:orientation="vertical"
+        android:background="@color/light_blue">
+
+        <TextView
+            android:id="@+id/set_top_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:text="@string/no_alerts_set" />
 
     <ListView
         android:id="@+id/priceSet_listView"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
         android:scrollbarThumbVertical="@color/navy_blue"
         android:fadeScrollbars="false"/>
 
-    <ListView
-        android:id="@+id/priceAch_listView"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:scrollbarThumbVertical="@color/navy_blue"
-        android:fadeScrollbars="false"/>
+    </LinearLayout>
 
 </LinearLayout>

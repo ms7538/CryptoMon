@@ -11,6 +11,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +32,9 @@ public class AllAlertsActivity extends BaseActivity {
         bar.setDisplayShowTitleEnabled(false);
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
+        AdView mAdView      = findViewById(R.id.all_alerts_adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         updateCurrentVals();
     }
 

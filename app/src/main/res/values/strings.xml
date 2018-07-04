@@ -209,4 +209,6 @@
     <string name="type">Alert:</string>
     <string name="xx">XX</string>
     <string name="xdel">x</string>
+    <string name="no_achieved_alerts">No Achieved Alerts</string>
+    <string name="no_alerts_set">No Alerts Set</string>
 </resources>
