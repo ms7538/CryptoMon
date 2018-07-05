@@ -206,7 +206,7 @@
     <string name="delete">Delete</string>
     <string name="current">Current:</string>
     <string name="threshold">Threshold:</string>
-    <string name="type">Alert:</string>
+    <string name="type">Alert</string>
     <string name="xx">XX</string>
     <string name="xdel">x</string>
     <string name="no_achieved_alerts">No Achieved Alerts</string>
