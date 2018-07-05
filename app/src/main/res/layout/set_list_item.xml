@@ -19,13 +19,13 @@
 
         <TextView
             android:id="@+id/set_alert_name"
-            android:layout_width="130dp"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:text="@string/xx"
             android:textAllCaps="true"
             android:textColor="@color/l4col"
-            android:textSize="15sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/set_alert_type"
@@ -40,15 +40,9 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_column="3"
-            android:text="@string/type"
+            android:text="@string/running"
             android:textColor="@color/bright_yellow"
             android:textSize="15sp" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black">
     </TableRow>
 
     <TableRow
@@ -71,6 +65,14 @@
             android:text="@string/xx"
             android:textColor="@color/l3col"
             android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:text="@string/type"
+            android:textColor="@color/bright_yellow"
+            android:textSize="15sp" />
 
     </TableRow>
 
