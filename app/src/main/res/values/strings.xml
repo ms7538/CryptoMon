@@ -214,4 +214,6 @@
     <string name="running">Running</string>
     <string name="achieved">Achieved</string>
     <string name="empty"> </string>
+    <string name="r_alert">Alert:</string>
+    <string name="_set">Alert Set</string>
 </resources>

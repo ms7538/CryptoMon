@@ -72,17 +72,24 @@ public class AllAlertsActivity extends BaseActivity {
             String cur_val   = dbCVHandler.currentPrice(splitPAlerts[i]);
             String thr_val   = dbPHandler.getPrice_Val(splitPAlerts[i]);
 
+            int    set_hrs   = Integer.parseInt(dbCVHandler.currentHour(splitPAlerts[i]));
+            long   millis    = System.currentTimeMillis();
+            int    cur_hrs   = (int) (millis/1000/60/60);
+
+            String setHrs  = Integer.toString(set_hrs - cur_hrs);
+
             HashMap<String, String> s_item = new HashMap<>();
             s_item.put("id_set" , id_set);
             s_item.put("cur_val", cur_val);
             s_item.put("thr_val", thr_val);
             s_item.put("type"   , type);
+            s_item.put("set_hrs", setHrs);
 
             PriceSetList.add(s_item);
         }
-        String[] fr1 = {"id_set", "cur_val", "thr_val", "type" };
+        String[] fr1 = {"id_set", "cur_val", "thr_val", "type", "set_hrs" };
         int[]    to1 = {R.id.set_alert_name, R.id.set_current_val, R.id.set_threshold_val,
-                                                                               R.id.set_alert_type};
+                R.id.set_alert_type, R.id.set_updated_val};
 
         ListAdapter setAdapter = new SimpleAdapter(getApplicationContext(), PriceSetList,
                 R.layout.set_list_item, fr1, to1) {
@@ -94,6 +101,8 @@ public class AllAlertsActivity extends BaseActivity {
 
                 Button delButton   = view.findViewById(R.id.del_set_btn);
                 final Map<String, String> currentRow = PriceSetList.get(position);
+                TextView dispStale = view.findViewById(R.id.set_updated_val);
+
 
                 delButton.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -1,10 +1,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="100dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/black"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".AllAlertsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/del_set_btn"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/xdel"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/set_alert_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/xx"
+            android:textAllCaps="true"
+            android:textColor="@color/l4col"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,31 +43,22 @@
         android:background="@android:color/black">
 
         <TextView
-            android:id="@+id/set_alert_name"
-            android:layout_width="135dp"
-            android:layout_height="wrap_content"
+            android:id="@+id/set_alert_type"
+            android:layout_width="wrap_content"
             android:layout_column="1"
+            android:layout_height="wrap_content"
             android:text="@string/xx"
-            android:textAllCaps="true"
-            android:textColor="@color/l4col"
+            android:textColor="@color/l3col"
             android:textSize="13sp" />
 
         <TextView
-            android:id="@+id/set_alert_type"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/_set"
             android:layout_column="2"
-            android:text="@string/xx"
-            android:textColor="@color/l3col"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:text="@string/running"
             android:textColor="@color/bright_yellow"
-            android:textSize="15sp" />
+            android:textSize="13sp" />
+
     </TableRow>
 
     <TableRow
@@ -53,6 +69,7 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_column="1"
+            android:layout_width="80dp"
             android:text="@string/threshold"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
@@ -65,14 +82,6 @@
             android:text="@string/xx"
             android:textColor="@color/l3col"
             android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:text="@string/type"
-            android:textColor="@color/bright_yellow"
-            android:textSize="15sp" />
 
     </TableRow>
 
@@ -90,7 +99,7 @@
 
             <TextView
                 android:id="@+id/set_updated_val"
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/xx"
                 android:textColor="@color/red"
@@ -116,15 +125,7 @@
             android:textColor="@color/l3col"
             android:textSize="14sp" />
 
-
     </TableRow>
 </TableLayout>
-
-    <Button
-        android:id="@+id/del_set_btn"
-        android:layout_width="40dp"
-        android:layout_height="35dp"
-        android:text="@string/xdel"
-        android:textColor="@color/red" />
 
 </LinearLayout>
