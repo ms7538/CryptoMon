@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -25,6 +26,9 @@ public class AllAlertsActivity extends BaseActivity {
 
     ArrayList<HashMap<String, String>> PriceAchievedList;
     ArrayList<HashMap<String, String>> PriceSetList;
+    final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
+    final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
+    final DecimalFormat frmt2 = new DecimalFormat("#.########");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class AllAlertsActivity extends BaseActivity {
         stopRunningService();
         final int YELLOW  = ContextCompat.getColor(getApplicationContext(),(R.color.bright_yellow));
         final int RED     = ContextCompat.getColor(getApplicationContext(),(R.color.red));
-        final int GREEN  = ContextCompat.getColor(getApplicationContext(),(R.color.green2));
+        final int GREEN   = ContextCompat.getColor(getApplicationContext(),(R.color.green2));
 
         TextView     achievedTopMsg = findViewById(R.id.achieved_top_msg);
         TextView     setTopMsg      = findViewById(R.id.set_top_msg);
@@ -99,15 +103,34 @@ public class AllAlertsActivity extends BaseActivity {
 
             @Override
             public View getView(int position, View cnvrtView, ViewGroup parent){
-
+                DecimalFormat thresh = frmt;
+                DecimalFormat curr   = frmt;
                 View view = super.getView(position, cnvrtView, parent);
 
-                Button delButton    = view.findViewById(R.id.del_set_btn);
+                Button delButton      = view.findViewById(R.id.del_set_btn);
                 final Map<String, String> currentRow = PriceSetList.get(position);
-                TextView dispStale  = view.findViewById(R.id.set_updated_val);
-                TextView txtCurrent = view.findViewById(R.id.set_current_txt);
+                TextView dispStale    = view.findViewById(R.id.set_updated_val);
+                TextView txtCurrent   = view.findViewById(R.id.set_current_txt);
+                TextView setThreshVal = view.findViewById(R.id.set_threshold_val);
+                TextView setCurrVal   = view.findViewById(R.id.set_current_val);
 
-               String hrsVal = dispStale.getText().toString();
+                double valTh   = Double.parseDouble(setThreshVal.getText().toString());
+                double valCr   = Double.parseDouble(setCurrVal.getText().toString());
+
+                if      (valTh < .01)  thresh = frmt2;
+                else if (valTh >= 100) thresh = frmt0;
+                else                   thresh = frmt;
+
+                if      (valCr < .01)  curr = frmt2;
+                else if (valCr >= 100) curr = frmt0;
+                else                   curr = frmt;
+
+                String dispThr = "$"  + thresh.format(valTh);
+                String dispCur = "$"  + curr.format(valCr);
+                setThreshVal.setText(dispThr);
+                setCurrVal.setText(dispCur);
+
+                String hrsVal = dispStale.getText().toString();
 
                 int hrs = Integer.parseInt(hrsVal);
 
