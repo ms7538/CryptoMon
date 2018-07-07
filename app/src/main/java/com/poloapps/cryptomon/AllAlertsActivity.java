@@ -49,6 +49,9 @@ public class AllAlertsActivity extends BaseActivity {
         getIntent().removeExtra("restart");
         overwritten = 0;
         stopRunningService();
+        final int YELLOW  = ContextCompat.getColor(getApplicationContext(),(R.color.bright_yellow));
+        final int RED     = ContextCompat.getColor(getApplicationContext(),(R.color.red));
+        final int GREEN  = ContextCompat.getColor(getApplicationContext(),(R.color.green2));
 
         TextView     achievedTopMsg = findViewById(R.id.achieved_top_msg);
         TextView     setTopMsg      = findViewById(R.id.set_top_msg);
@@ -99,11 +102,28 @@ public class AllAlertsActivity extends BaseActivity {
 
                 View view = super.getView(position, cnvrtView, parent);
 
-                Button delButton   = view.findViewById(R.id.del_set_btn);
+                Button delButton    = view.findViewById(R.id.del_set_btn);
                 final Map<String, String> currentRow = PriceSetList.get(position);
-                TextView dispStale = view.findViewById(R.id.set_updated_val);
+                TextView dispStale  = view.findViewById(R.id.set_updated_val);
+                TextView txtCurrent = view.findViewById(R.id.set_current_txt);
 
+               String hrsVal = dispStale.getText().toString();
 
+                int hrs = Integer.parseInt(hrsVal);
+
+                if (hrs < 2){
+                    dispStale.setTextColor(GREEN);
+                    txtCurrent.setTextColor(GREEN);
+
+                }else if (hrs < 6){
+                    dispStale.setTextColor(YELLOW);
+                    txtCurrent.setTextColor(YELLOW);
+                }else{
+                    dispStale.setTextColor(RED);
+                    txtCurrent.setTextColor(RED);
+                }
+
+                dispStale.append( "h");
                 delButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -201,6 +221,7 @@ public class AllAlertsActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        stopRunningService();
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
 
@@ -211,6 +232,9 @@ public class AllAlertsActivity extends BaseActivity {
     @Override
     public void onPause(){
         super.onPause();
-
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+        editor.putBoolean("aa_active", false);
+        editor.apply();
     }
 }

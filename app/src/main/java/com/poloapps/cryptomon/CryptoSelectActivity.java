@@ -517,6 +517,14 @@ public class CryptoSelectActivity extends BaseActivity {
 
         if(!aaActive && !t100Active && !restart) checkStartService();
     }
+    @Override
+    public void onPause(){
+        super.onPause();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+        editor.putBoolean("cs_active", false);
+        editor.apply();
+    }
 }
 
 

@@ -258,6 +258,7 @@ public class T100Activity extends BaseActivity {
         Boolean Dollar = mSettings.getBoolean("Dollar", true);
         String  Curr   = mSettings.getString("Curr_code","eur");
 
+        editor.putBoolean("t100_active", false);
         String T100_currency = "usd";
         if(!Dollar) T100_currency = Curr;
         editor.putString("t100_curr",T100_currency);
@@ -270,9 +271,9 @@ public class T100Activity extends BaseActivity {
         SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
         SharedPreferences.Editor editor = mSettings.edit();
         getIntent().removeExtra("restart");
-        Boolean Dollar              = mSettings.getBoolean("Dollar", true);
-        String  Curr                = mSettings.getString("Curr_code","eur");
-        String  T100                = mSettings.getString("t100_curr","usd");
+        Boolean Dollar                  = mSettings.getBoolean("Dollar", true);
+        String  Curr                    = mSettings.getString("Curr_code","eur");
+        String  T100                    = mSettings.getString("t100_curr","usd");
         stopRunningService();
         editor.putBoolean("t100_active", true);
         editor.apply();
@@ -283,4 +284,6 @@ public class T100Activity extends BaseActivity {
         if(!Dollar) currency_check = Curr;
         if (!Objects.equals(T100, currency_check)) restart();
     }
+
+
 }
