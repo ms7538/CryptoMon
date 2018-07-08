@@ -3,8 +3,7 @@
     android:layout_height="100dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/black"
-    android:orientation="vertical"
-    tools:context=".AllAlertsActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,6 +25,8 @@
             android:layout_height="wrap_content"
             android:text="@string/xx"
             android:textAllCaps="true"
+            android:gravity="center"
+            android:background="@color/delta_col"
             android:textColor="@color/l4col"
             android:textSize="15sp" />
 

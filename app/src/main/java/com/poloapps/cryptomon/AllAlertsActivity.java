@@ -199,7 +199,7 @@ public class AllAlertsActivity extends BaseActivity {
             PriceAchievedList.add(item);
         }
         String[] from = {"msg","id"};
-        int[]    to   = {R.id.price_ach_msg,R.id.del_ach_btn};
+        int[]    to   = {R.id.price_ach_msg,R.id.ach_alert_name};
 
         ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), PriceAchievedList,
                 R.layout.achieved_list_item, from, to) {
