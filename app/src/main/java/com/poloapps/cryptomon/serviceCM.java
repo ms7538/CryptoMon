@@ -263,7 +263,7 @@ public class serviceCM extends Service {
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
                 dbHelperMethod(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
-            } else if (cur_hrs - set_hrs > 12) {
+            } else if (cur_hrs - set_hrs > 0) {
                 dbHelperMethod(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, 100);
             }
