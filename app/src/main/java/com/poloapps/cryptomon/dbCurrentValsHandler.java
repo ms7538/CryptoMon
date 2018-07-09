@@ -7,15 +7,16 @@ import android.content.Context;
 import android.content.ContentValues;
 
 public class dbCurrentValsHandler extends SQLiteOpenHelper {
-    private static final int    DATABASE_VERSION  = 4;
+    private static final int    DATABASE_VERSION  = 5;
     private static final String DATABASE_NAME     = "cryptomon3b.db";
 
     private static final String TABLE_CM_CVALS    = "current_vals";
     private static final String COLUMN_ID         = "_id";
     private static final String COLUMN_CRYPTOSYMB = "cryptosymb";
+    private static final String COLUMN_CURRSYMB   = "currsymbol";
     private static final String COLUMN_CURR_PRICE = "price_current";
     private static final String COLUMN_CURR_VOL   = "volume_current";
-    private static final String COLUMN_CURR_HOUR   = "time_current";
+    private static final String COLUMN_CURR_HOUR  = "time_current";
 
     dbCurrentValsHandler(Context context, SQLiteDatabase.CursorFactory factory) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -24,9 +25,9 @@ public class dbCurrentValsHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = " CREATE TABLE " + TABLE_CM_CVALS + " ( " + COLUMN_ID +
-                " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_CRYPTOSYMB + " TEXT, " +
-                COLUMN_CURR_PRICE + " INTEGER, " + COLUMN_CURR_VOL + " BLOB, "
-                +  COLUMN_CURR_HOUR  + " INTEGER "   + "  ); ";
+                " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_CRYPTOSYMB + " TEXT, "
+                + COLUMN_CURRSYMB + " TEXT, " + COLUMN_CURR_PRICE + " INTEGER, "
+                + COLUMN_CURR_VOL + " BLOB, " +  COLUMN_CURR_HOUR  + " INTEGER "   + "  ); ";
         db.execSQL(query);
     }
 
@@ -41,7 +42,8 @@ public class dbCurrentValsHandler extends SQLiteOpenHelper {
         values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
         values.put(COLUMN_CURR_PRICE, pr_value);
         values.put(COLUMN_CURR_VOL,   vol_value);
-        values.put(COLUMN_CURR_HOUR,   day);
+        values.put(COLUMN_CURRSYMB,   "$");
+        values.put(COLUMN_CURR_HOUR,  day);
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_CM_CVALS, null, values);
         db.close();

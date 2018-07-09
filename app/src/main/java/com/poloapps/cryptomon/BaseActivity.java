@@ -462,8 +462,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                                         dbPAchHandler.removePAAlert(splitPAlerts[i]);
                                         overwritten++;
                                     }
+                                    int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
                                     dbPAchHandler.addPriceAchAlert(
-                                            splitPAlerts[i], price, thPrice, check);
+                                            splitPAlerts[i], price, thPrice, check, cur_mins);
                                 }
 
                             }

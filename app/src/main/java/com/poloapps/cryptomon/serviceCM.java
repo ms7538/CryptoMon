@@ -253,19 +253,20 @@ public class serviceCM extends Service {
 
         for (int i = 0; i < len1; i++) {
 
-            double price   = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
-            double thPrice = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
-            int    check   = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
-            int    set_hrs = Integer.parseInt(dbCVHandler.currentHour(splitPAlerts[i]));
-            long   millis  = System.currentTimeMillis();
-            int    cur_hrs = (int) (millis/1000/60/60);
+            double price    = Double.parseDouble(dbCVHandler.currentPrice(splitPAlerts[i]));
+            double thPrice  = Double.parseDouble(dbPHandler.getPrice_Val(splitPAlerts[i]));
+            int    check    = Integer.parseInt(dbPHandler.getThresh_Check(splitPAlerts[i]));
+            int    set_hrs  = Integer.parseInt(dbCVHandler.currentHour(splitPAlerts[i]));
+            long   millis   = System.currentTimeMillis();
+            int    cur_hrs  = (int) (millis/1000/60/60);
+            int    cur_mins = (int) (millis/1000/60);
 
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
                 dbHelperMethod(splitPAlerts[i]);
-                dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, check);
-            } else if (cur_hrs - set_hrs > 0) {
+                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,check,cur_mins);
+            } else if (cur_hrs - set_hrs > 2) {
                 dbHelperMethod(splitPAlerts[i]);
-                dbPAchHandler.addPriceAchAlert(splitPAlerts[i], price, thPrice, 100);
+                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,100,cur_mins);
             }
         }
     }

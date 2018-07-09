@@ -8,12 +8,13 @@ import android.content.ContentValues;
 
 public class dbVolumeHandler extends SQLiteOpenHelper {
 
-    private static final int    DATABASE_VERSION  = 1;
+    private static final int    DATABASE_VERSION  = 2;
     private static final String DATABASE_NAME     = "cryptomon2.db";
 
     private static final String TABLE_CM_ALERTS2  = "vol_alerts";
     private static final String COLUMN_ID         = "_id";
     private static final String COLUMN_CRYPTOSYMB = "cryptosymb";
+    private static final String COLUMN_CURRSYMB   = "currsymbol";
     private static final String COLUMN_THRESH_IND = "vol_indicator";
     private static final String COLUMN_THRESH_VAL = "vol_value";
 
@@ -25,7 +26,8 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query = " CREATE TABLE " + TABLE_CM_ALERTS2 + " ( " + COLUMN_ID +
                 " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_CRYPTOSYMB + " TEXT, " +
-                COLUMN_THRESH_IND + " INTEGER, " + COLUMN_THRESH_VAL + " BLOB " + " ); ";
+                COLUMN_CURRSYMB + " TEXT, " +  COLUMN_THRESH_IND + " INTEGER, " +
+                                                            COLUMN_THRESH_VAL + " BLOB " + " ); ";
         db.execSQL(query);
     }
 
@@ -38,6 +40,7 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
     public void addVolAlert(String cryptoSymb, int threshold_check, double vol_value) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
+        values.put(COLUMN_CURRSYMB,   "$");
         values.put(COLUMN_THRESH_IND, threshold_check);
         values.put(COLUMN_THRESH_VAL, vol_value);
         SQLiteDatabase db = getWritableDatabase();

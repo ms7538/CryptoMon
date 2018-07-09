@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:textSize="12sp"
             android:text="@string/x"
             android:textColor="@color/bright_yellow" />
 

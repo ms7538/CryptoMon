@@ -20,8 +20,11 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -188,6 +191,7 @@ public class AllAlertsActivity extends BaseActivity {
             String threshVal = dbPAchHandler.getThresh_Val(splitPAchAlrts[j]);
             String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]);
             String check     = dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]);
+            String min_ach   = dbPAchHandler.getAchievedTimeStamp(splitPAchAlrts[j]);
             String type1     = "Price";
             String top_msg   = getString(R.string.alert_achieved);
 
@@ -203,13 +207,14 @@ public class AllAlertsActivity extends BaseActivity {
             item.put("check",  check);
             item.put("type",   type1);
             item.put("thresh", threshVal);
+            item.put("min_ach",min_ach);
             item.put("breaker",threshBrk);
 
             PriceAchievedList.add(item);
         }
-        String[] from = {"id", "type", "msg", "thresh", "breaker"};
+        String[] from = {"id", "type", "msg", "thresh", "breaker", "min_ach"};
         int[]    to   = {R.id.ach_alert_name, R.id.ach_alert_type, R.id.price_ach_msg,
-                                                       R.id.ach_thresh_val, R.id.ach_threshold_brk};
+                R.id.ach_thresh_val, R.id.ach_threshold_brk, R.id.ach_time_stamp};
 
         ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), PriceAchievedList,
                 R.layout.achieved_list_item, from, to) {
@@ -220,19 +225,33 @@ public class AllAlertsActivity extends BaseActivity {
 
                 View view = super.getView(position, cnvrtView, parent);
 
-                ImageView checkIcon = view.findViewById(R.id.ach_icon_specifier);
-
-                Button linkButton   = view.findViewById(R.id.del_ach_btn);
+                final TextView Time2 = view.findViewById(R.id.ach_time_stamp);
+                final TextView valT  = view.findViewById(R.id.ach_thresh_val);
+                final TextView valB  = view.findViewById(R.id.ach_threshold_brk);
+                ImageView checkIcon  = view.findViewById(R.id.ach_icon_specifier);
+                Button linkButton    = view.findViewById(R.id.del_ach_btn);
                 final Map<String, String> currentRow = PriceAchievedList.get(position);
-
-                String check = currentRow.get("check");
+                String check         = currentRow.get("check");
+                long tStamp          = Long.parseLong(currentRow.get("min_ach"));
+                Date date            = new java.util.Date(tStamp*60*1000L);
+                String reqTime       = DateFormat.getDateTimeInstance().format(date);
+                Time2.setText(reqTime);
 
                 if (!check.equals("100")) {
+
+                    double threshVal        = Double.parseDouble(currentRow.get("thresh"));
+                    double breakVal         = Double.parseDouble(currentRow.get("breaker"));
+
+                    String valThr = "$"  + frmt.format(threshVal);
+                    String valBrk = "$"  + frmt.format(breakVal);
+                    valT.setText(valThr);
+                    valB.setText(valBrk);
+
                     if(check.equals("1"))
                         checkIcon.setBackground(getDrawable(R.drawable.ic_action_surpass));
                     else
                         checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
-                }
+                }else   checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
 
                 linkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
