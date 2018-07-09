@@ -208,7 +208,7 @@ public class AllAlertsActivity extends BaseActivity {
             PriceAchievedList.add(item);
         }
         String[] from = {"id", "type", "msg", "thresh", "breaker"};
-        int[]    to   = {R.id.ach_alert_name, R.id.set_alert_type, R.id.price_ach_msg,
+        int[]    to   = {R.id.ach_alert_name, R.id.ach_alert_type, R.id.price_ach_msg,
                                                        R.id.ach_thresh_val, R.id.ach_threshold_brk};
 
         ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), PriceAchievedList,
