@@ -82,7 +82,7 @@
                 android:layout_column="1"
                 android:gravity="center"
                 android:text="@string/threshold"
-                android:textColor="@color/l1col"
+                android:textColor="@color/l4col"
                 android:textSize="14sp" />
 
             <TextView
