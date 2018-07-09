@@ -243,8 +243,12 @@ public class AllAlertsActivity extends BaseActivity {
                 String check     = currentRow.get("check");
                 long tStamp      = Long.parseLong(currentRow.get("min_ach"));
                 Date date        = new java.util.Date(tStamp*60*1000L);
-                String reqTime   = DateFormat.getDateTimeInstance().format(date);
-                Time2.setText(reqTime);
+
+                String reqTime   = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+                String reqDay    = DateFormat.getDateInstance().format(date);
+
+                String achTime   = reqDay + " " + reqTime;
+                Time2.setText(achTime);
                 double threshVal        = Double.parseDouble(currentRow.get("thresh"));
                 String valThr = "$"  + frmt.format(threshVal);
                 valT.setText(valThr);
@@ -262,7 +266,10 @@ public class AllAlertsActivity extends BaseActivity {
                         valB.setTextColor(RED);
                     }
 
-                } else checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
+                } else {
+                    checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
+                    CS_sel.setEnabled(false);
+                }
 
                 CMC_link.setOnClickListener(new View.OnClickListener() {
                     @Override

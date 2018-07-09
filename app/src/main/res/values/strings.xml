@@ -221,4 +221,5 @@
     <string name="data_not_available">Data Not Available</string>
     <string name="coinmarketcap_link">CoinMarketCap Link</string>
     <string name="delete_achieved_alert">Delete Achieved Alert</string>
+    <string name="hhmma">hh:mm a</string>
 </resources>
