@@ -11,11 +11,12 @@
         android:background="@android:color/black"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/del_set_btn"
             android:layout_width="40dp"
             android:layout_height="35dp"
             android:layout_marginEnd="5dp"
+            android:foreground="@drawable/ic_action_del"
             android:text="@string/xdel"
             android:textColor="@color/red" />
 

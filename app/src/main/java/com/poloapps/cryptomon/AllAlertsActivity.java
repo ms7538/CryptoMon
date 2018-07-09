@@ -120,7 +120,7 @@ public class AllAlertsActivity extends BaseActivity {
                 DecimalFormat curr   = frmt;
                 View view = super.getView(position, cnvrtView, parent);
 
-                Button delButton      = view.findViewById(R.id.del_set_btn);
+                ImageButton delButton = view.findViewById(R.id.del_set_btn);
                 final Map<String, String> currentRow = PriceSetList.get(position);
                 TextView dispStale    = view.findViewById(R.id.set_updated_val);
                 TextView txtCurrent   = view.findViewById(R.id.set_current_txt);

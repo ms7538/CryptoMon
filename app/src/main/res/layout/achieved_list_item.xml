@@ -3,20 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="95dp"
-    android:background="@android:color/black"
+    android:background="@android:color/darker_gray"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bright_yellow"
+        android:layout_height="30dp"
+        android:background="@color/fade6"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/del_ach_btn"
-            android:layout_width="40dp"
-            android:layout_height="33dp"
-            android:layout_marginEnd="5dp"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
             android:foreground="@drawable/ic_action_del"
             android:text="@string/xdel"
             android:textColor="@color/red"
@@ -25,7 +24,7 @@
         <TextView
             android:id="@+id/ach_alert_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/dk_red"
             android:gravity="center"
             android:text="@string/xx"
@@ -37,13 +36,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/l2col"
+        android:background="@color/fade4"
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_height="match_parent"
-            android:background="@color/bright_yellow"
+            android:background="@color/fade6"
             android:orientation="vertical">
 
             <ImageButton
@@ -72,14 +71,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/l3col"
+        android:background="@color/dark_gray"
         android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/l5col"
+        android:background="@color/dark_gray"
         android:orientation="horizontal">
 
         <TextView
@@ -173,14 +172,15 @@
                 android:textSize="13sp" />
         </TableRow>
     </TableLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/bright_yellow"
-        android:gravity="center"
-        android:text="@string/xx"
-        android:textSize="1sp"
-        tools:ignore="SmallSp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/fade6"
+            android:gravity="center"
+            android:text="@string/xx"
+            android:textSize="1sp"
+            tools:ignore="SmallSp" />
     </LinearLayout>
 </LinearLayout>
 </LinearLayout>
