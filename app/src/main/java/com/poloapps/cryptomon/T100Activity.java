@@ -158,7 +158,7 @@ public class T100Activity extends BaseActivity {
                             TextView delta_1h = view.findViewById(R.id.h1);
                             TextView delta_1d = view.findViewById(R.id.d1);
                             TextView delta_7d = view.findViewById(R.id.delta7_d);
-                            final TextView nameSymb = view.findViewById(R.id.list_name);
+
 
                             final TextView link_id = view.findViewById(R.id.id_link);
                             link_id.setPaintFlags(link_id.getPaintFlags()
@@ -194,7 +194,6 @@ public class T100Activity extends BaseActivity {
                                                    T100Activity.this,
                                                    CryptoSelectActivity.class);
                                            intent.putExtra("crypto_id",  link_id.getText());
-                                           intent.putExtra("crypto_name",nameSymb.getText());
                                            intent.putExtra("restart", false);
                                            T100Activity.this.startActivity(intent);
                                        }

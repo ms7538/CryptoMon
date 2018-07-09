@@ -1,14 +1,20 @@
 package com.poloapps.cryptomon;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -63,6 +69,7 @@ public class AllAlertsActivity extends BaseActivity {
         final int YELLOW  = ContextCompat.getColor(getApplicationContext(),(R.color.bright_yellow));
         final int RED     = ContextCompat.getColor(getApplicationContext(),(R.color.red));
         final int GREEN   = ContextCompat.getColor(getApplicationContext(),(R.color.green2));
+        final LayoutInflater li    = LayoutInflater.from(getApplicationContext());
 
         TextView     achievedTopMsg = findViewById(R.id.achieved_top_msg);
         TextView     setTopMsg      = findViewById(R.id.set_top_msg);
@@ -224,26 +231,27 @@ public class AllAlertsActivity extends BaseActivity {
 
                 View view = super.getView(position, cnvrtView, parent);
 
-                final TextView Time2 = view.findViewById(R.id.ach_time_stamp);
-                final TextView valT  = view.findViewById(R.id.ach_thresh_val);
-                final TextView valB  = view.findViewById(R.id.ach_threshold_brk);
-                ImageView checkIcon  = view.findViewById(R.id.ach_icon_specifier);
-                Button linkButton    = view.findViewById(R.id.del_ach_btn);
+                TextView Time2        = view.findViewById(R.id.ach_time_stamp);
+                TextView valT         = view.findViewById(R.id.ach_thresh_val);
+                TextView valB         = view.findViewById(R.id.ach_threshold_brk);
+                ImageButton CMC_link  = view.findViewById(R.id.cmc_ach_btn);
+                ImageButton CS_sel    = view.findViewById(R.id.csel_ach_btn);
+                ImageView checkIcon   = view.findViewById(R.id.ach_icon_specifier);
+                ImageButton delButton = view.findViewById(R.id.del_ach_btn);
+
                 final Map<String, String> currentRow = PriceAchievedList.get(position);
-                String check         = currentRow.get("check");
-                long tStamp          = Long.parseLong(currentRow.get("min_ach"));
-                Date date            = new java.util.Date(tStamp*60*1000L);
-                String reqTime       = DateFormat.getDateTimeInstance().format(date);
+                String check     = currentRow.get("check");
+                long tStamp      = Long.parseLong(currentRow.get("min_ach"));
+                Date date        = new java.util.Date(tStamp*60*1000L);
+                String reqTime   = DateFormat.getDateTimeInstance().format(date);
                 Time2.setText(reqTime);
+                double threshVal        = Double.parseDouble(currentRow.get("thresh"));
+                String valThr = "$"  + frmt.format(threshVal);
+                valT.setText(valThr);
 
                 if (!check.equals("100")) {
-
-                    double threshVal        = Double.parseDouble(currentRow.get("thresh"));
                     double breakVal         = Double.parseDouble(currentRow.get("breaker"));
-
-                    String valThr = "$"  + frmt.format(threshVal);
                     String valBrk = "$"  + frmt.format(breakVal);
-                    valT.setText(valThr);
                     valB.setText(valBrk);
 
                     if(check.equals("1")) {
@@ -256,13 +264,61 @@ public class AllAlertsActivity extends BaseActivity {
 
                 } else checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
 
-                linkButton.setOnClickListener(new View.OnClickListener() {
+                CMC_link.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        @SuppressLint({"InflateParams", "ViewHolder"})
+                        final View CMC_linkMenu = li.inflate(R.layout.cmc_link_menu ,null);
+                        final AlertDialog.Builder builder2 = new AlertDialog.Builder(
+                                AllAlertsActivity.this);
+                        builder2.setView(CMC_linkMenu);
+                        final AlertDialog dialog2  = builder2.create();
+                        dialog2.show();
+
+                        TextView Link = CMC_linkMenu.findViewById(R.id.cmc_link_id);
+                        Link.setText(currentRow.get("id"));
+                        Button OK      = CMC_linkMenu.findViewById(R.id.cmc_OK_btn);
+                        Button NO      = CMC_linkMenu.findViewById(R.id.cmc_NO_btn);
+                        final String CMC_url = getString(R.string.cryptos_display_link)
+                                                                    + currentRow.get("id")+ "/";
+                        OK.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Uri uri       = Uri.parse(CMC_url);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                dialog2.dismiss();
+                                startActivity(intent);
+                            }
+                        });
+                        NO.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog2.dismiss();
+                            }
+                        });
+                    }
+                });
+                delButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dbPAchHandler.removePAAlert(currentRow.get("id"));
                         restart();
                     }
                 });
+
+                CS_sel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(
+                                AllAlertsActivity.this,
+                                CryptoSelectActivity.class);
+                        intent.putExtra("crypto_id", currentRow.get("id"));
+                        intent.putExtra("restart", false);
+                        AllAlertsActivity.this.startActivity(intent);
+                    }
+                });
+
                 return view;
             }
         };

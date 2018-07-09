@@ -9,16 +9,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"
+        android:background="@color/bright_yellow"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/del_ach_btn"
             android:layout_width="40dp"
-            android:layout_height="35dp"
+            android:layout_height="33dp"
             android:layout_marginEnd="5dp"
+            android:foreground="@drawable/ic_action_del"
             android:text="@string/xdel"
-            android:textColor="@color/red" />
+            android:textColor="@color/red"
+            android:contentDescription="@string/delete_achieved_alert"/>
 
         <TextView
             android:id="@+id/ach_alert_name"
@@ -31,6 +33,48 @@
             android:textColor="@color/white"
             android:textSize="15sp" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/l2col"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@color/bright_yellow"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/cmc_ach_btn"
+                android:foreground="@drawable/ic_action_cmc"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:text="@string/xdel"
+                android:textColor="@color/red"
+                android:contentDescription="@string/coinmarketcap_link" />
+
+            <ImageButton
+                android:id="@+id/csel_ach_btn"
+                android:layout_width="35dp"
+                android:layout_height="33dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:contentDescription="@string/coinmarketcap_link"
+                android:foreground="@drawable/ic_action_csel"
+                android:text="@string/xdel"
+                android:textColor="@color/red" />
+
+        </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/l3col"
+        android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,7 +122,7 @@
             android:background="@android:color/black">
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:gravity="center"
@@ -89,7 +133,7 @@
             <TextView
                 android:id="@+id/ach_thresh_val"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="5dp"
                 android:layout_column="2"
                 android:text="@string/xx"
                 android:textColor="@color/l4col"
@@ -113,7 +157,7 @@
                     android:id="@+id/ach_icon_specifier"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:layout_marginStart="75dp"
+                    android:layout_marginStart="55dp"
                     android:contentDescription="@string/data_na_icon"
                     app:srcCompat="@drawable/ic_action_not_available" />
             </LinearLayout>
@@ -122,7 +166,7 @@
                 android:id="@+id/ach_threshold_brk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="5dp"
                 android:layout_column="2"
                 android:text="@string/not_avail"
                 android:textColor="@color/bright_yellow"
@@ -132,9 +176,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@color/dk_red"
+        android:background="@color/bright_yellow"
         android:gravity="center"
         android:text="@string/xx"
         android:textSize="1sp"
         tools:ignore="SmallSp" />
+    </LinearLayout>
+</LinearLayout>
 </LinearLayout>

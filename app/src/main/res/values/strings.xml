@@ -219,4 +219,6 @@
     <string name="alert_achieved">Alert Achieved:</string>
     <string name="data_na_icon">data_na_icon</string>
     <string name="data_not_available">Data Not Available</string>
+    <string name="coinmarketcap_link">CoinMarketCap Link</string>
+    <string name="delete_achieved_alert">Delete Achieved Alert</string>
 </resources>
