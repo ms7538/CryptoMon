@@ -67,7 +67,6 @@ public class AllAlertsActivity extends BaseActivity {
         TextView     achievedTopMsg = findViewById(R.id.achieved_top_msg);
         TextView     setTopMsg      = findViewById(R.id.set_top_msg);
 
-        String checkDescript  = " surpassed ";
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;
@@ -247,11 +246,15 @@ public class AllAlertsActivity extends BaseActivity {
                     valT.setText(valThr);
                     valB.setText(valBrk);
 
-                    if(check.equals("1"))
+                    if(check.equals("1")) {
                         checkIcon.setBackground(getDrawable(R.drawable.ic_action_surpass));
-                    else
+                        valB.setTextColor(GREEN);
+                    } else {
                         checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
-                }else   checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
+                        valB.setTextColor(RED);
+                    }
+                    
+                } else checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
 
                 linkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
