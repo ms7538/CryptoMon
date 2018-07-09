@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="95dp"
     android:background="@android:color/black"
     android:orientation="vertical">
 
@@ -54,6 +54,15 @@
             android:gravity="center"
             android:text="@string/xx"
             android:textColor="@color/l4col" />
+        <TextView
+            android:id="@+id/ach_time_stamp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/x"
+            android:textColor="@color/bright_yellow" />
+
     </LinearLayout>
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -118,16 +127,13 @@
                 android:textColor="@color/bright_yellow"
                 android:textSize="13sp" />
         </TableRow>
-
     </TableLayout>
-
     <TextView
-        android:id="@+id/ach_time_stamp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_height="5dp"
+        android:background="@color/dk_red"
         android:gravity="center"
-        android:text="@string/x"
-        android:textColor="@color/bright_yellow" />
-
+        android:text="@string/xx"
+        android:textSize="1sp"
+        tools:ignore="SmallSp" />
 </LinearLayout>
