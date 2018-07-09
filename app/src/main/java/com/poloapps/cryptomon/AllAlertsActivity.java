@@ -2,15 +2,19 @@ package com.poloapps.cryptomon;
 
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -183,34 +187,52 @@ public class AllAlertsActivity extends BaseActivity {
             String id        = splitPAchAlrts[j];
             String threshVal = dbPAchHandler.getThresh_Val(splitPAchAlrts[j]);
             String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]);
+            String check     = dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]);
+            String type1     = "Price";
+            String top_msg   = getString(R.string.alert_achieved);
 
-            if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("-1"))
-                checkDescript = " fell below ";
-            else if (dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("1"))
-                checkDescript = " surpassed ";
-            String disp_msg = id + checkDescript + threshVal + " at " + threshBrk;
-
-            if(dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]).equals("100"))
-                disp_msg = id + " data not available any more";
+            if (check.equals("100")) {
+                type1 = "";
+                top_msg = getString(R.string.data_not_available);
+                threshBrk = "N/A";
+            }
 
             HashMap<String, String> item = new HashMap<>();
-            item.put("id" , id);
-            item.put("msg", disp_msg);
+            item.put("id" ,    id);
+            item.put("msg",    top_msg);
+            item.put("check",  check);
+            item.put("type",   type1);
+            item.put("thresh", threshVal);
+            item.put("breaker",threshBrk);
+
             PriceAchievedList.add(item);
         }
-        String[] from = {"msg","id"};
-        int[]    to   = {R.id.price_ach_msg,R.id.ach_alert_name};
+        String[] from = {"id", "type", "msg", "thresh", "breaker"};
+        int[]    to   = {R.id.ach_alert_name, R.id.set_alert_type, R.id.price_ach_msg,
+                                                       R.id.ach_thresh_val, R.id.ach_threshold_brk};
 
         ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), PriceAchievedList,
                 R.layout.achieved_list_item, from, to) {
 
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public View getView(int position, View cnvrtView, ViewGroup parent){
 
                 View view = super.getView(position, cnvrtView, parent);
 
+                ImageView checkIcon = view.findViewById(R.id.ach_icon_specifier);
+
                 Button linkButton   = view.findViewById(R.id.del_ach_btn);
                 final Map<String, String> currentRow = PriceAchievedList.get(position);
+
+                String check = currentRow.get("check");
+
+                if (!check.equals("100")) {
+                    if(check.equals("1"))
+                        checkIcon.setBackground(getDrawable(R.drawable.ic_action_surpass));
+                    else
+                        checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
+                }
 
                 linkButton.setOnClickListener(new View.OnClickListener() {
                     @Override

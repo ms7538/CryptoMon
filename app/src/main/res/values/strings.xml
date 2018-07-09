@@ -218,4 +218,5 @@
     <string name="_set">Alert Set</string>
     <string name="alert_achieved">Alert Achieved:</string>
     <string name="data_na_icon">data_na_icon</string>
+    <string name="data_not_available">Data Not Available</string>
 </resources>
