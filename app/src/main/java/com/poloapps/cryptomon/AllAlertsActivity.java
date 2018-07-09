@@ -253,7 +253,7 @@ public class AllAlertsActivity extends BaseActivity {
                         checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
                         valB.setTextColor(RED);
                     }
-                    
+
                 } else checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
 
                 linkButton.setOnClickListener(new View.OnClickListener() {
