@@ -154,6 +154,7 @@ public class AllAlertsActivity extends BaseActivity {
                 TextView txtCurrent   = view.findViewById(R.id.set_current_txt);
                 TextView setThreshVal = view.findViewById(R.id.set_threshold_val);
                 TextView setCurrVal   = view.findViewById(R.id.set_current_val);
+                ImageButton CS_sel    = view.findViewById(R.id.set_cs_btn);
                 final String   type   = currentRow.get("type");
 
                 double valTh   = Double.parseDouble(setThreshVal.getText().toString());
@@ -187,7 +188,12 @@ public class AllAlertsActivity extends BaseActivity {
                     dispStale.setTextColor(RED);
                     txtCurrent.setTextColor(RED);
                 }
-
+                CS_sel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startCSActivity(currentRow.get("id_set"));
+                    }
+                });
                 dispStale.append( "h");
                 delButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -382,12 +388,7 @@ public class AllAlertsActivity extends BaseActivity {
                     CS_sel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(
-                                    AllAlertsActivity.this,
-                                    CryptoSelectActivity.class);
-                            intent.putExtra("crypto_id", currentRow.get("id"));
-                            intent.putExtra("restart", false);
-                            AllAlertsActivity.this.startActivity(intent);
+                            startCSActivity(currentRow.get("id"));
                         }
                     });
                     return view;
@@ -430,5 +431,13 @@ public class AllAlertsActivity extends BaseActivity {
         final SharedPreferences.Editor editor = mSettings.edit();
         editor.putBoolean("aa_active", false);
         editor.apply();
+    }
+    public void startCSActivity(String in){
+        Intent intent = new Intent(
+                AllAlertsActivity.this,
+                CryptoSelectActivity.class);
+        intent.putExtra("crypto_id", in);
+        intent.putExtra("restart", false);
+        AllAlertsActivity.this.startActivity(intent);
     }
 }

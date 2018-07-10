@@ -229,15 +229,15 @@ public class T100Activity extends BaseActivity {
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
 
-        editor.putBoolean("t100_active", false);
-        editor.apply();
-
-        Boolean csActive   = mSettings.getBoolean("cs_active", false);
+               Boolean csActive   = mSettings.getBoolean("cs_active", false);
         Boolean aaActive   = mSettings.getBoolean("aa_active", false);
+        Boolean t100Active = mSettings.getBoolean("t100_active", true);
         Boolean restart    = getIntent().getBooleanExtra("restart", false);
         getIntent().removeExtra("restart");
 
-        if(!csActive && !aaActive && !restart) checkStartService();
+        if(!csActive && !aaActive && !t100Active && !restart) checkStartService();
+        editor.putBoolean("t100_active", false);
+        editor.apply();
     }
 
     @Override
