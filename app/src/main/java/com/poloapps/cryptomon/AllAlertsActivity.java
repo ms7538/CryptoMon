@@ -212,6 +212,7 @@ public class AllAlertsActivity extends BaseActivity {
         String[] splitVAchAlerts  = volAchAlerts.split("[\n]");
         int len3                  = splitVAchAlerts.length;
         String topMsg             = getString(R.string.achieved);
+        if(splitPAchAlrts[0].equals("")) len2 = 0;
         if(splitVAchAlerts[0].equals("")) len3 = 0;
 
         if(len2 == 0 && len3 == 0) {
@@ -228,12 +229,12 @@ public class AllAlertsActivity extends BaseActivity {
         AchievedList         = new ArrayList<>();
         ListView achLV       = findViewById(R.id.alertAch_listView);
 
-        for (String id : splitPAchAlrts) {
+        for (int i = 0;i < len2;i++) {
 
-            String threshVal = dbPAchHandler.getThresh_Val(id);
-            String threshBrk = dbPAchHandler.getThresh_Brk(id);
-            String check     = dbPAchHandler.getColumnBreakerChck(id);
-            String min_ach   = dbPAchHandler.getAchievedTimeStamp(id);
+            String threshVal = dbPAchHandler.getThresh_Val(splitPAchAlrts[i]);
+            String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[i]);
+            String check     = dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[i]);
+            String min_ach   = dbPAchHandler.getAchievedTimeStamp(splitPAchAlrts[i]);
             String type1     = "Price";
             String top_msg   = getString(R.string.alert_achieved);
 
@@ -244,11 +245,11 @@ public class AllAlertsActivity extends BaseActivity {
             }
 
             HashMap<String, String> item = new HashMap<>();
-            item.put("id", id);
-            item.put("msg", top_msg);
-            item.put("check", check);
-            item.put("type", type1);
-            item.put("thresh", threshVal);
+            item.put("id",      splitPAchAlrts[i]);
+            item.put("msg",     top_msg);
+            item.put("check",   check);
+            item.put("type",    type1);
+            item.put("thresh",  threshVal);
             item.put("min_ach", min_ach);
             item.put("breaker", threshBrk);
 
@@ -285,117 +286,114 @@ public class AllAlertsActivity extends BaseActivity {
         int[]    to   = {R.id.ach_alert_name, R.id.ach_alert_type, R.id.price_ach_msg,
                 R.id.ach_thresh_val, R.id.ach_threshold_brk, R.id.ach_time_stamp};
 
-        ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), AchievedList,
-                R.layout.achieved_list_item, from, to) {
+            ListAdapter listAdapter2 = new SimpleAdapter(getApplicationContext(), AchievedList,
+                    R.layout.achieved_list_item, from, to) {
 
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public View getView(int position, View cnvrtView, ViewGroup parent){
+                @Override
+                public View getView(int position, View cnvrtView, ViewGroup parent) {
 
-                View view = super.getView(position, cnvrtView, parent);
+                    View view = super.getView(position, cnvrtView, parent);
 
-                TextView Time2        = view.findViewById(R.id.ach_time_stamp);
-                TextView valT         = view.findViewById(R.id.ach_thresh_val);
-                TextView valB         = view.findViewById(R.id.ach_threshold_brk);
-                ImageButton CMC_link  = view.findViewById(R.id.cmc_ach_btn);
-                ImageButton CS_sel    = view.findViewById(R.id.csel_ach_btn);
-                ImageView checkIcon   = view.findViewById(R.id.ach_icon_specifier);
-                ImageButton delButton = view.findViewById(R.id.del_ach_btn);
+                    TextView Time2        = view.findViewById(R.id.ach_time_stamp);
+                    TextView valT         = view.findViewById(R.id.ach_thresh_val);
+                    TextView valB         = view.findViewById(R.id.ach_threshold_brk);
+                    ImageButton CMC_link  = view.findViewById(R.id.cmc_ach_btn);
+                    ImageButton CS_sel    = view.findViewById(R.id.csel_ach_btn);
+                    ImageView checkIcon   = view.findViewById(R.id.ach_icon_specifier);
+                    ImageButton delButton = view.findViewById(R.id.del_ach_btn);
 
-                final Map<String, String> currentRow = AchievedList.get(position);
-                String check     = currentRow.get("check");
-                final String type      = currentRow.get("type");
-                long tStamp      = Long.parseLong(currentRow.get("min_ach"));
-                Date date        = new java.util.Date(tStamp*60*1000L);
+                    final Map<String, String> currentRow = AchievedList.get(position);
+                    String check      = currentRow.get("check");
+                    final String type = currentRow.get("type");
+                    long tStamp       = Long.parseLong(currentRow.get("min_ach"));
+                    Date date         = new java.util.Date(tStamp * 60 * 1000L);
 
-                String reqTime   = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
-                String reqDay    = DateFormat.getDateInstance().format(date);
+                    String reqTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(date);
+                    String reqDay  = DateFormat.getDateInstance().format(date);
+                    String achTime = reqDay + " " + reqTime;
+                    Time2.setText(achTime);
 
-                String achTime   = reqDay + " " + reqTime;
-                Time2.setText(achTime);
-                double threshVal        = Double.parseDouble(currentRow.get("thresh"));
-                String valThr           = "$"  + frmt.format(threshVal);
-                valT.setText(valThr);
+                    double threshVal = Double.parseDouble(currentRow.get("thresh"));
+                    String valThr = "$" + frmt.format(threshVal);
+                    valT.setText(valThr);
 
-                if (!check.equals("100")) {
-                    double breakVal         = Double.parseDouble(currentRow.get("breaker"));
-                    String valBrk           = "$"  + frmt.format(breakVal);
-                    valB.setText(valBrk);
+                    if (!check.equals("100")) {
+                        double breakVal = Double.parseDouble(currentRow.get("breaker"));
+                        String valBrk = "$" + frmt.format(breakVal);
+                        valB.setText(valBrk);
 
-                    if(check.equals("1")) {
-                        checkIcon.setBackground(getDrawable(R.drawable.ic_action_surpass));
-                        valB.setTextColor(GREEN);
+                        if (check.equals("1")) {
+                            checkIcon.setBackground(getDrawable(R.drawable.ic_action_surpass));
+                            valB.setTextColor(GREEN);
+                        } else {
+                            checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
+                            valB.setTextColor(RED);
+                        }
                     } else {
-                        checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
-                        valB.setTextColor(RED);
+                        checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
+                        CS_sel.setEnabled(false);
                     }
-                } else {
-                    checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
-                    CS_sel.setEnabled(false);
+
+                    CMC_link.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            @SuppressLint({"InflateParams", "ViewHolder"})
+                            final View CMC_linkMenu = li.inflate(R.layout.cmc_link_menu, null);
+                            final AlertDialog.Builder builder2 = new AlertDialog.Builder(
+                                    AllAlertsActivity.this);
+                            builder2.setView(CMC_linkMenu);
+                            final AlertDialog dialog2 = builder2.create();
+                            dialog2.show();
+
+                            TextView Link = CMC_linkMenu.findViewById(R.id.cmc_link_id);
+                            Link.setText(currentRow.get("id"));
+                            Button OK = CMC_linkMenu.findViewById(R.id.cmc_OK_btn);
+                            Button NO = CMC_linkMenu.findViewById(R.id.cmc_NO_btn);
+                            final String CMC_url = getString(R.string.cryptos_display_link)
+                                    + currentRow.get("id") + "/";
+                            OK.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Uri uri = Uri.parse(CMC_url);
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                    dialog2.dismiss();
+                                    startActivity(intent);
+                                }
+                            });
+                            NO.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog2.dismiss();
+                                }
+                            });
+                        }
+                    });
+                    delButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (type.equals("Price"))
+                                dbPAchHandler.removePriceAchAlert(currentRow.get("id"));
+                            else if (type.equals("24h Volume"))
+                                dbVAchHandler.removeVolAchAlert(currentRow.get("id"));
+                            restart();
+                        }
+                    });
+                    CS_sel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(
+                                    AllAlertsActivity.this,
+                                    CryptoSelectActivity.class);
+                            intent.putExtra("crypto_id", currentRow.get("id"));
+                            intent.putExtra("restart", false);
+                            AllAlertsActivity.this.startActivity(intent);
+                        }
+                    });
+                    return view;
                 }
-
-                CMC_link.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        @SuppressLint({"InflateParams", "ViewHolder"})
-                        final View CMC_linkMenu = li.inflate(R.layout.cmc_link_menu ,null);
-                        final AlertDialog.Builder builder2 = new AlertDialog.Builder(
-                                AllAlertsActivity.this);
-                        builder2.setView(CMC_linkMenu);
-                        final AlertDialog dialog2  = builder2.create();
-                        dialog2.show();
-
-                        TextView Link = CMC_linkMenu.findViewById(R.id.cmc_link_id);
-                        Link.setText(currentRow.get("id"));
-                        Button OK      = CMC_linkMenu.findViewById(R.id.cmc_OK_btn);
-                        Button NO      = CMC_linkMenu.findViewById(R.id.cmc_NO_btn);
-                        final String CMC_url = getString(R.string.cryptos_display_link)
-                                                                    + currentRow.get("id")+ "/";
-                        OK.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Uri uri       = Uri.parse(CMC_url);
-                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                dialog2.dismiss();
-                                startActivity(intent);
-                            }
-                        });
-                        NO.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog2.dismiss();
-                            }
-                        });
-                    }
-                });
-                delButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(type.equals("Price"))
-                            dbPAchHandler.removePriceAchAlert(currentRow.get("id"));
-                        else if(type.equals("24h Volume"))
-                            dbVAchHandler.removeVolAchAlert(currentRow.get("id"));
-                        restart();
-                    }
-                });
-
-                CS_sel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(
-                                AllAlertsActivity.this,
-                                CryptoSelectActivity.class);
-                        intent.putExtra("crypto_id", currentRow.get("id"));
-                        intent.putExtra("restart", false);
-                        AllAlertsActivity.this.startActivity(intent);
-                    }
-                });
-
-                return view;
-            }
-        };
-        achLV.setAdapter(listAdapter);
+            };
+            achLV.setAdapter(listAdapter2);
     }
 
     @Override

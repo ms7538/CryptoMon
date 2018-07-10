@@ -41,7 +41,7 @@ public class serviceCM extends Service {
 
     String idUnique            = Integer.toString(uniqueID);
     Integer overwritten        = 0;
-    Integer deleteTimeHrs      = 2;
+    Integer deleteTimeHrs      = 12;
     private boolean hasStarted = false;
     final Handler   handler    = new Handler();
     Timer           timer      = new Timer();
@@ -111,7 +111,6 @@ public class serviceCM extends Service {
                                 cmNotification.setContentText(
                                         strCTp1 + Integer.toString(achievedAlerts));
 
-
                                 PendingIntent pendingIntent =
                                         PendingIntent.getActivity(
                                                 getApplicationContext(), 0,
@@ -151,7 +150,6 @@ public class serviceCM extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         task.cancel();
         hasStarted = false;
         Toast.makeText(getApplicationContext(), "Service has stopped",
@@ -166,7 +164,7 @@ public class serviceCM extends Service {
         cmNotification.setAutoCancel(true);
 
         dbPHandler     = new dbPriceHandler(this, null);
-        dbVHandler    = new dbVolumeHandler(this, null);
+        dbVHandler     = new dbVolumeHandler(this, null);
         dbCVHandler    = new dbCurrentValsHandler(this, null);
         dbPAchHandler  = new dbPriceAlertsAchieved(this, null);
         dbVAchHandler  = new dbVolAlertsAchieved(this, null);
@@ -234,15 +232,17 @@ public class serviceCM extends Service {
     int returnNumberAlerts(){
         String priceAchieved   = dbPAchHandler.dbEntries();
         String[] splitPAAlerts = priceAchieved.split("[\n]");
-
         int len2               = splitPAAlerts.length;
-        if (splitPAAlerts[0].equals("")){
-            len2 = 0;
-        }
+        if (splitPAAlerts[0].equals(""))len2 = 0;
+
+        String volAchieved     = dbVAchHandler.dbEntries();
+        String[] splitVAAlerts = volAchieved.split("[\n]");
+        int len3               = splitVAAlerts.length;
+        if (splitPAAlerts[0].equals(""))len3 = 0;
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        int dispAlerts = mSettings.getInt("disp_price_alerts",0);
-        return len2 - dispAlerts + overwritten;
+        int dispAlerts = mSettings.getInt("disp_alerts",0);
+        return len2 + len3 - dispAlerts + overwritten;
     }
 
     void checkAchieved(){
@@ -250,11 +250,7 @@ public class serviceCM extends Service {
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;
-
-        if (splitPAlerts[0].equals("")){
-            len1 = 0;
-            stopSelf();
-        }
+        if (splitPAlerts[0].equals("")) len1 = 0;
 
         for (int i = 0; i < len1; i++) {
 
@@ -279,6 +275,8 @@ public class serviceCM extends Service {
         String[] splitVAlerts = volAlerts.split("[\n]");
         int len3              = numberVAlerts();
 
+        if(len1 + len3 == 0) stopSelf();
+
         for (int j = 0; j < len3; j++) {
 
             double vol    = Double.parseDouble(dbCVHandler.currentVol(splitVAlerts[j]));
@@ -287,7 +285,7 @@ public class serviceCM extends Service {
             int cur_mins2 = (int) ((System.currentTimeMillis())/1000/60);
             int cur_hrs2  = (int) (System.currentTimeMillis()/1000/60/60);
             int set_hrs2  = Integer.parseInt(dbCVHandler.currentHour(splitVAlerts[j]));
-            
+
             if ((thVol < vol && check2 == 1) || (thVol > vol && check2 == -1)){
                 dbVHelperMethod(splitVAlerts[j]);
                 dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol, check2, cur_mins2);
