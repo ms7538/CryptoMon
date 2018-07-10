@@ -211,8 +211,10 @@
     <string name="xdel">x</string>
     <string name="no_achieved_alerts">No Achieved Alerts</string>
     <string name="no_alerts_set">No Alerts Set</string>
-    <string name="running">Running</string>
-    <string name="achieved">Achieved</string>
+    <string name="running">Alerts Running</string>
+    <string name="running1">Alert Running</string>
+    <string name="achieved">Alerts Achieved</string>
+    <string name="achieved1">Alert Achieved</string>
     <string name="empty"> </string>
     <string name="r_alert">Alert:</string>
     <string name="_set">Alert Set</string>

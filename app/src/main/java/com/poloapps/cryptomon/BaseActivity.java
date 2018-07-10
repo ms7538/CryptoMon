@@ -47,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     dbVolumeHandler       dbVHandler;
     dbCurrentValsHandler  dbCVHandler;
     dbPriceAlertsAchieved dbPAchHandler;
+    dbVolAlertsAchieved   dbVAchHandler;
 
     Integer overwritten   = 0;
 
@@ -58,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         dbVHandler    = new dbVolumeHandler(this, null);
         dbCVHandler   = new dbCurrentValsHandler(this, null);
         dbPAchHandler = new dbPriceAlertsAchieved(this, null);
+        dbVAchHandler = new dbVolAlertsAchieved(this, null);
     }
 
     @Override
@@ -72,11 +74,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
 
-        int lenPAch            = numberPAchAlerts();
-        int dispAlerts         = mSettings.getInt("disp_price_alerts",0);
-        int newAlerts          = lenPAch - dispAlerts + overwritten;
+        int lenAch             = numberPAchAlerts() + numberVAchAlerts();
+        int dispAlerts         = mSettings.getInt("disp_alerts",0);
+        int newAlerts          = lenAch - dispAlerts + overwritten;
         MenuItem alertsIcon    = menu.findItem(R.id.action_alerts);
-        int setAlerts          = numberPAlerts();
+        int setAlerts          = numberPAlerts() + numberVAlerts();
 
         if      (newAlerts > 0) alertsIcon.setIcon(R.drawable.ic_action_red2);
         else if (setAlerts > 0 )alertsIcon.setIcon(R.drawable.ic_action_yellow);
@@ -432,10 +434,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 String rate       = obj1.getString("price_usd");
                                 Double d_rate     = Double.parseDouble(rate);
                                 Double curr_vol   = Double.parseDouble(
-                                        obj1.getString("24h_volume_usd"));
+                                                            obj1.getString("24h_volume_usd"));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
-                                Integer hours     = (int) (millis/1000/60/60);
+                                Integer hours     = (int)(millis/1000/60/60);
 
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
@@ -455,19 +457,48 @@ public abstract class BaseActivity extends AppCompatActivity {
                                         dbPHandler.getThresh_Check(splitPAlerts[i]));
 
                                 if ((thPrice < price && check == 1) ||
-                                        (thPrice > price && check == -1)) {
+                                                                (thPrice > price && check == -1)) {
 
                                     dbPHandler.deleteAlert(splitPAlerts[i]);
                                     if(dbPAchHandler.alertExists(splitPAlerts[i])){
-                                        dbPAchHandler.removePAAlert(splitPAlerts[i]);
+                                        dbPAchHandler.removePriceAchAlert(splitPAlerts[i]);
                                         overwritten++;
                                     }
                                     int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
                                     dbPAchHandler.addPriceAchAlert(
                                             splitPAlerts[i], price, thPrice, check, cur_mins);
                                 }
+                            }
+
+                            String   volAlerts    = dbVHandler.listEntries();
+                            String[] splitVAlerts = volAlerts.split("[\n]");
+                            int len3              = numberVAlerts();
+
+                            for (int j = 0; j < len3; j++) {
+                                double vol    = Double.parseDouble(
+                                                        dbCVHandler.currentVol(splitVAlerts[j]));
+                                double thVol  = Double.parseDouble(
+                                                            dbVHandler.getVol_Val(splitVAlerts[j]));
+                                int check2 = Integer.parseInt(
+                                                       dbVHandler.getThresh_Check(splitVAlerts[j]));
+                                if ((thVol < vol && check2 == 1) ||
+                                                                    (thVol > vol && check2 == -1)){
+
+                                    dbVHandler.deleteAlert(splitVAlerts[j]);
+
+                                    if(dbVAchHandler.alertExists(splitVAlerts[j])){
+                                        dbVAchHandler.removeVolAchAlert(splitVAlerts[j]);
+                                        overwritten++;
+                                    }
+                                    int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
+                                    dbVAchHandler.addVolAchAlert(
+                                            splitVAlerts[j], vol, thVol, check2, cur_mins);
+                                }
+
 
                             }
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -486,8 +517,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     void checkStartService(){
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
+        String   volAlerts    = dbVHandler.listEntries();
+        String[] splitVAlerts = volAlerts.split("[\n]");
 
-        if (!splitPAlerts[0].equals("")){
+        if (!splitPAlerts[0].equals("") || !splitVAlerts[0].equals("")){
             startServiceCM();
         }
     }
@@ -510,12 +543,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         return lenPArray;
     }
 
+    int numberVAlerts(){
+        String   volAlerts    = dbVHandler.listEntries();
+        String[] splitVAlerts = volAlerts.split("[\n]");
+        int lenVArray         = splitVAlerts.length;
+        if (splitVAlerts[0].equals("")) lenVArray = 0;
+        return lenVArray;
+    }
+
     int numberPAchAlerts(){
-        String priceAchieved   = dbPAchHandler.dbToString();
+        String priceAchieved   = dbPAchHandler.dbEntries();
         String[] splitPAAlerts = priceAchieved.split("[\n]");
         int lenPAchArray       = splitPAAlerts.length;
         if (splitPAAlerts[0].equals("")) lenPAchArray = 0;
         return lenPAchArray;
+    }
+
+    int numberVAchAlerts(){
+        String volAchieved     = dbVAchHandler.dbEntries();
+        String[] splitVAAlerts = volAchieved.split("[\n]");
+        int lenVAchArray       = splitVAAlerts.length;
+        if (splitVAAlerts[0].equals("")) lenVAchArray = 0;
+        return lenVAchArray;
     }
 
     void stopRunningService(){

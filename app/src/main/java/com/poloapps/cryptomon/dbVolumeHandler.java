@@ -54,7 +54,7 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
                 + cryptoSymb + "\";");
     }
 
-    public String databaseToString(){
+    public String listEntries(){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ALERTS2 + " WHERE 1";

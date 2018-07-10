@@ -16,11 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
@@ -28,7 +26,6 @@ import com.google.android.gms.ads.AdView;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,10 +34,10 @@ import java.util.Map;
 
 public class AllAlertsActivity extends BaseActivity {
 
-    ArrayList<HashMap<String, String>> PriceAchievedList;
-    ArrayList<HashMap<String, String>> PriceSetList;
+    ArrayList<HashMap<String, String>> AchievedList;
+    ArrayList<HashMap<String, String>> AlertSetList;
     final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
-    final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
+    final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###,###");
     final DecimalFormat frmt2 = new DecimalFormat("#.########");
 
     @Override
@@ -74,24 +71,36 @@ public class AllAlertsActivity extends BaseActivity {
         TextView     achievedTopMsg = findViewById(R.id.achieved_top_msg);
         TextView     setTopMsg      = findViewById(R.id.set_top_msg);
 
-        String priceAlerts    = dbPHandler.dbToString();
+        String   priceAlerts  = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
-        int len1              = splitPAlerts.length;
-        PriceSetList          = new ArrayList<>();
-        ListView priceSet_lv  = findViewById(R.id.priceSet_listView);
-        String type           = "Price";
-        if(splitPAlerts[0].equals("")) len1 = 0;
-        if(len1 == 0) setTopMsg.setText(getString(R.string.no_alerts_set));
+        int      lenPArray    = splitPAlerts.length;
+        String   volAlerts    = dbVHandler.listEntries();
+        String[] splitVAlerts = volAlerts.split("[\n]");
+        int      lenVArray    = splitVAlerts.length;
+
+        AlertSetList      = new ArrayList<>();
+        ListView Set_lv   = findViewById(R.id.alertSet_listView);
+
+        if (splitPAlerts[0].equals("")) lenPArray = 0;
+        if (splitVAlerts[0].equals("")) lenVArray = 0;
+
+        if(lenPArray == 0 && lenVArray == 0) setTopMsg.setText(getString(R.string.no_alerts_set));
+
         else {
-            String msg = String.format(Locale.US, "%d", len1) + " " +
-                                                                        getString(R.string.running);
+            String topMsg = getString(R.string.running);
+            if(lenPArray+lenVArray == 1){
+                topMsg = getString(R.string.running1);
+            }
+            String msg = String.format(Locale.US, "%d",
+                    lenPArray+lenVArray) + " " +  topMsg;
             setTopMsg.setText(msg);
         }
-        for (int i = 0;i < len1;i++){
+
+        for (int i = 0;i < lenPArray;i++){
             String id_set    = splitPAlerts[i];
             String cur_val   = dbCVHandler.currentPrice(splitPAlerts[i]);
             String thr_val   = dbPHandler.getPrice_Val(splitPAlerts[i]);
-
+            String type       = "Price";
             int    set_hrs   = Integer.parseInt(dbCVHandler.currentHour(splitPAlerts[i]));
             long   millis    = System.currentTimeMillis();
             int    cur_hrs   = (int) (millis/1000/60/60);
@@ -105,13 +114,32 @@ public class AllAlertsActivity extends BaseActivity {
             s_item.put("type"   , type);
             s_item.put("set_hrs", setHrs);
 
-            PriceSetList.add(s_item);
+            AlertSetList.add(s_item);
         }
+        for (int j = 0; j < lenVArray; j++) {
+            String id_set    = splitVAlerts[j];
+            String cur_val   = dbCVHandler.currentVol(splitVAlerts[j]);
+            String thr_val   = dbVHandler.getVol_Val(splitVAlerts[j]);
+            String type      = "24h Volume";
+            int    set_hrs   = Integer.parseInt(dbCVHandler.currentHour(splitVAlerts[j]));
+            long   millis    = System.currentTimeMillis();
+            int    cur_hrs   = (int) (millis/1000/60/60);
+            String setHrs    = Integer.toString(set_hrs - cur_hrs);
+
+            HashMap<String, String> s_item = new HashMap<>();
+            s_item.put("id_set" , id_set);
+            s_item.put("cur_val", cur_val);
+            s_item.put("thr_val", thr_val);
+            s_item.put("type"   , type);
+            s_item.put("set_hrs", setHrs);
+            AlertSetList.add(s_item);
+        }
+
         String[] fr1 = {"id_set", "cur_val", "thr_val", "type", "set_hrs" };
         int[]    to1 = {R.id.set_alert_name, R.id.set_current_val, R.id.set_threshold_val,
                 R.id.set_alert_type, R.id.set_updated_val};
 
-        ListAdapter setAdapter = new SimpleAdapter(getApplicationContext(), PriceSetList,
+        ListAdapter setAdapter = new SimpleAdapter(getApplicationContext(), AlertSetList,
                 R.layout.set_list_item, fr1, to1) {
 
             @Override
@@ -121,11 +149,12 @@ public class AllAlertsActivity extends BaseActivity {
                 View view = super.getView(position, cnvrtView, parent);
 
                 ImageButton delButton = view.findViewById(R.id.del_set_btn);
-                final Map<String, String> currentRow = PriceSetList.get(position);
+                final Map<String, String> currentRow = AlertSetList.get(position);
                 TextView dispStale    = view.findViewById(R.id.set_updated_val);
                 TextView txtCurrent   = view.findViewById(R.id.set_current_txt);
                 TextView setThreshVal = view.findViewById(R.id.set_threshold_val);
                 TextView setCurrVal   = view.findViewById(R.id.set_current_val);
+                final String   type   = currentRow.get("type");
 
                 double valTh   = Double.parseDouble(setThreshVal.getText().toString());
                 double valCr   = Double.parseDouble(setCurrVal.getText().toString());
@@ -163,41 +192,48 @@ public class AllAlertsActivity extends BaseActivity {
                 delButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dbPHandler.deleteAlert(currentRow.get("id_set"));
+                        if(type.equals("Price"))
+                            dbPHandler.deleteAlert(currentRow.get("id_set"));
+                        else if(type.equals("24h Volume"))
+                            dbVHandler.deleteAlert(currentRow.get("id_set"));
                         restart();
                     }
                 });
                 return view;
             }
         };
-        priceSet_lv.setAdapter(setAdapter);
+        Set_lv.setAdapter(setAdapter);
 
-        String priceAchAlrts    = dbPAchHandler.dbToString();
+        String priceAchAlrts    = dbPAchHandler.dbEntries();
         String[] splitPAchAlrts = priceAchAlrts.split("[\n]");
         int len2                = splitPAchAlrts.length;
-        if(splitPAchAlrts[0].equals("")) len2 = 0;
 
-        if(len2 == 0) {
+        String   volAchAlerts     = dbVAchHandler.dbEntries();
+        String[] splitVAchAlerts  = volAchAlerts.split("[\n]");
+        int len3                  = splitVAchAlerts.length;
+        String topMsg             = getString(R.string.achieved);
+        if(splitVAchAlerts[0].equals("")) len3 = 0;
+
+        if(len2 == 0 && len3 == 0) {
             achievedTopMsg.setText(getString(R.string.no_achieved_alerts));
         }else {
-            String msg = String.format(Locale.US, "%d", len2) + " "
-                                                                     + getString(R.string.achieved);
+            if(len2 + len3 == 1) topMsg = getString(R.string.achieved1);
+            String msg = String.format(Locale.US, "%d", len2 + len3) + " " + topMsg;
             achievedTopMsg.setText(msg);
         }
-        editor.putInt("disp_price_alerts", len2);
-        editor.putBoolean("aa_active"    , true);
+        editor.putInt("disp_alerts",   len2+len3);
+        editor.putBoolean("aa_active", true);
         editor.apply();
 
-        PriceAchievedList    = new ArrayList<>();
-        ListView priceAch_lv = findViewById(R.id.priceAch_listView);
+        AchievedList         = new ArrayList<>();
+        ListView achLV       = findViewById(R.id.alertAch_listView);
 
-        for (int j = 0;j < len2;j++){
+        for (String id : splitPAchAlrts) {
 
-            String id        = splitPAchAlrts[j];
-            String threshVal = dbPAchHandler.getThresh_Val(splitPAchAlrts[j]);
-            String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[j]);
-            String check     = dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[j]);
-            String min_ach   = dbPAchHandler.getAchievedTimeStamp(splitPAchAlrts[j]);
+            String threshVal = dbPAchHandler.getThresh_Val(id);
+            String threshBrk = dbPAchHandler.getThresh_Brk(id);
+            String check     = dbPAchHandler.getColumnBreakerChck(id);
+            String min_ach   = dbPAchHandler.getAchievedTimeStamp(id);
             String type1     = "Price";
             String top_msg   = getString(R.string.alert_achieved);
 
@@ -208,6 +244,32 @@ public class AllAlertsActivity extends BaseActivity {
             }
 
             HashMap<String, String> item = new HashMap<>();
+            item.put("id", id);
+            item.put("msg", top_msg);
+            item.put("check", check);
+            item.put("type", type1);
+            item.put("thresh", threshVal);
+            item.put("min_ach", min_ach);
+            item.put("breaker", threshBrk);
+
+            AchievedList.add(item);
+        }
+        for (int ij = 0;ij < len3;ij++){
+
+            String id        = splitVAchAlerts[ij];
+            String threshVal = dbVAchHandler.getThreshVal(splitVAchAlerts[ij]);
+            String threshBrk = dbVAchHandler.getThreshBrk(splitVAchAlerts[ij]);
+            String check     = dbVAchHandler.getColumnBreakerChck(splitVAchAlerts[ij]);
+            String min_ach   = dbVAchHandler.getAchievedTimeStamp(splitVAchAlerts[ij]);
+            String type1     = "24h Volume";
+            String top_msg   = getString(R.string.alert_achieved);
+
+            if (check.equals("100")) {
+                type1 = "";
+                top_msg = getString(R.string.data_not_available);
+                threshBrk = "N/A";
+            }
+            HashMap<String, String> item = new HashMap<>();
             item.put("id" ,    id);
             item.put("msg",    top_msg);
             item.put("check",  check);
@@ -216,13 +278,14 @@ public class AllAlertsActivity extends BaseActivity {
             item.put("min_ach",min_ach);
             item.put("breaker",threshBrk);
 
-            PriceAchievedList.add(item);
+            AchievedList.add(item);
         }
+
         String[] from = {"id", "type", "msg", "thresh", "breaker", "min_ach"};
         int[]    to   = {R.id.ach_alert_name, R.id.ach_alert_type, R.id.price_ach_msg,
                 R.id.ach_thresh_val, R.id.ach_threshold_brk, R.id.ach_time_stamp};
 
-        ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), PriceAchievedList,
+        ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), AchievedList,
                 R.layout.achieved_list_item, from, to) {
 
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -239,8 +302,9 @@ public class AllAlertsActivity extends BaseActivity {
                 ImageView checkIcon   = view.findViewById(R.id.ach_icon_specifier);
                 ImageButton delButton = view.findViewById(R.id.del_ach_btn);
 
-                final Map<String, String> currentRow = PriceAchievedList.get(position);
+                final Map<String, String> currentRow = AchievedList.get(position);
                 String check     = currentRow.get("check");
+                final String type      = currentRow.get("type");
                 long tStamp      = Long.parseLong(currentRow.get("min_ach"));
                 Date date        = new java.util.Date(tStamp*60*1000L);
 
@@ -250,12 +314,12 @@ public class AllAlertsActivity extends BaseActivity {
                 String achTime   = reqDay + " " + reqTime;
                 Time2.setText(achTime);
                 double threshVal        = Double.parseDouble(currentRow.get("thresh"));
-                String valThr = "$"  + frmt.format(threshVal);
+                String valThr           = "$"  + frmt.format(threshVal);
                 valT.setText(valThr);
 
                 if (!check.equals("100")) {
                     double breakVal         = Double.parseDouble(currentRow.get("breaker"));
-                    String valBrk = "$"  + frmt.format(breakVal);
+                    String valBrk           = "$"  + frmt.format(breakVal);
                     valB.setText(valBrk);
 
                     if(check.equals("1")) {
@@ -265,7 +329,6 @@ public class AllAlertsActivity extends BaseActivity {
                         checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
                         valB.setTextColor(RED);
                     }
-
                 } else {
                     checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));
                     CS_sel.setEnabled(false);
@@ -309,7 +372,10 @@ public class AllAlertsActivity extends BaseActivity {
                 delButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dbPAchHandler.removePAAlert(currentRow.get("id"));
+                        if(type.equals("Price"))
+                            dbPAchHandler.removePriceAchAlert(currentRow.get("id"));
+                        else if(type.equals("24h Volume"))
+                            dbVAchHandler.removeVolAchAlert(currentRow.get("id"));
                         restart();
                     }
                 });
@@ -329,7 +395,7 @@ public class AllAlertsActivity extends BaseActivity {
                 return view;
             }
         };
-        priceAch_lv.setAdapter(listAdapter);
+        achLV.setAdapter(listAdapter);
     }
 
     @Override

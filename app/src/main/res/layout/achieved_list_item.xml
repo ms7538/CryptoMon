@@ -87,8 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:text="@string/x"
-            android:textColor="@color/l4col"
-            android:textSize="14sp" />
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/price_ach_msg"
@@ -96,7 +96,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/xx"
-            android:textColor="@color/l4col" />
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
         <TextView
             android:id="@+id/ach_time_stamp"
             android:layout_width="match_parent"

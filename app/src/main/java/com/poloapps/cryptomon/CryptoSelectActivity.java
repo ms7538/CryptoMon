@@ -451,7 +451,6 @@ public class CryptoSelectActivity extends BaseActivity {
                             if (!volInput.getText().toString().equals("")) {
 
                                 alertVol = true;
-                                //if (dbVHandler.Exists(Symbol)) dbVHandler.deleteAlert(Symbol);
                                 String fmtRemoved = volInput.getText().toString().replace(
                                                                         ",", "");
                                 double thVol = Double.parseDouble(fmtRemoved);

@@ -41,13 +41,16 @@ public class serviceCM extends Service {
 
     String idUnique            = Integer.toString(uniqueID);
     Integer overwritten        = 0;
+    Integer deleteTimeHrs      = 2;
     private boolean hasStarted = false;
     final Handler   handler    = new Handler();
     Timer           timer      = new Timer();
 
     dbPriceHandler        dbPHandler;
+    dbVolumeHandler       dbVHandler;
     dbCurrentValsHandler  dbCVHandler;
     dbPriceAlertsAchieved dbPAchHandler;
+    dbVolAlertsAchieved   dbVAchHandler;
 
     TimerTask task = new TimerTask() {
         @Override
@@ -58,7 +61,7 @@ public class serviceCM extends Service {
                         hasStarted = true;
                         Log.i("CM22","service running");
                         updateCurrentVals();
-                        checkPriceAchieved();
+                        checkAchieved();
 
                         int achievedAlerts  = returnNumberAlerts();
                         overwritten = 0;
@@ -163,8 +166,10 @@ public class serviceCM extends Service {
         cmNotification.setAutoCancel(true);
 
         dbPHandler     = new dbPriceHandler(this, null);
+        dbVHandler    = new dbVolumeHandler(this, null);
         dbCVHandler    = new dbCurrentValsHandler(this, null);
         dbPAchHandler  = new dbPriceAlertsAchieved(this, null);
+        dbVAchHandler  = new dbVolAlertsAchieved(this, null);
 
         if (Build.VERSION.SDK_INT >= 26) {
             String CHANNEL_ID = "my_channel_01";
@@ -227,7 +232,7 @@ public class serviceCM extends Service {
     }
 
     int returnNumberAlerts(){
-        String priceAchieved   = dbPAchHandler.dbToString();
+        String priceAchieved   = dbPAchHandler.dbEntries();
         String[] splitPAAlerts = priceAchieved.split("[\n]");
 
         int len2               = splitPAAlerts.length;
@@ -240,7 +245,7 @@ public class serviceCM extends Service {
         return len2 - dispAlerts + overwritten;
     }
 
-    void checkPriceAchieved(){
+    void checkAchieved(){
 
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
@@ -262,19 +267,57 @@ public class serviceCM extends Service {
             int    cur_mins = (int) (millis/1000/60);
 
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
-                dbHelperMethod(splitPAlerts[i]);
+                dbPHelperMethod(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,check,cur_mins);
-            } else if (cur_hrs - set_hrs > 2) {
-                dbHelperMethod(splitPAlerts[i]);
+            } else if (cur_hrs - set_hrs > deleteTimeHrs) {
+                dbPHelperMethod(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,100,cur_mins);
+            }
+        }
+
+        String   volAlerts    = dbVHandler.listEntries();
+        String[] splitVAlerts = volAlerts.split("[\n]");
+        int len3              = numberVAlerts();
+
+        for (int j = 0; j < len3; j++) {
+
+            double vol    = Double.parseDouble(dbCVHandler.currentVol(splitVAlerts[j]));
+            double thVol  = Double.parseDouble(dbVHandler.getVol_Val(splitVAlerts[j]));
+            int check2    = Integer.parseInt(dbVHandler.getThresh_Check(splitVAlerts[j]));
+            int cur_mins2 = (int) ((System.currentTimeMillis())/1000/60);
+            int cur_hrs2  = (int) (System.currentTimeMillis()/1000/60/60);
+            int set_hrs2  = Integer.parseInt(dbCVHandler.currentHour(splitVAlerts[j]));
+            
+            if ((thVol < vol && check2 == 1) || (thVol > vol && check2 == -1)){
+                dbVHelperMethod(splitVAlerts[j]);
+                dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol, check2, cur_mins2);
+            }else if (cur_hrs2 - set_hrs2 > deleteTimeHrs){
+                dbVHelperMethod(splitVAlerts[j]);
+                dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol, 100, cur_mins2);
             }
         }
     }
 
-    void dbHelperMethod(String in){
+    int numberVAlerts(){
+        String   volAlerts    = dbVHandler.listEntries();
+        String[] splitVAlerts = volAlerts.split("[\n]");
+        int lenVArray         = splitVAlerts.length;
+        if (splitVAlerts[0].equals("")) lenVArray = 0;
+        return lenVArray;
+    }
+
+    void dbPHelperMethod(String in){
         dbPHandler.deleteAlert(in);
         if(dbPAchHandler.alertExists(in)){
-            dbPAchHandler.removePAAlert(in);
+            dbPAchHandler.removePriceAchAlert(in);
+            overwritten++;
+        }
+    }
+
+    void dbVHelperMethod(String in){
+        dbVHandler.deleteAlert(in);
+        if(dbVAchHandler.alertExists(in)){
+            dbVAchHandler.removeVolAchAlert(in);
             overwritten++;
         }
     }
