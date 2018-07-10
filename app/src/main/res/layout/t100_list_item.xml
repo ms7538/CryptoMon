@@ -138,13 +138,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:background="@color/white">
+        android:background="@android:color/black">
 
         <TextView
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:text="@string/expand"
-            android:textColor="@android:color/black"
+            android:textColor="@color/l3col"
             android:textSize="13sp" />
 
         <RelativeLayout
