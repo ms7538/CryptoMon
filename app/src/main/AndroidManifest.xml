@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.poloapps.cryptomon">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Top_100_Activity"
+            android:name=".T100Activity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,10 +34,27 @@
         </activity>
         <activity
             android:name=".CryptoSelectActivity"
-            android:parentActivityName=".Top_100_Activity"
+            android:parentActivityName=".T100Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".All_AlertsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AllAlertsActivity"
+            android:screenOrientation="portrait" />
+        <receiver
+            android:enabled="true"
+            android:name=".BootUpReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".serviceCM"
+            android:enabled="true"
+            android:exported="true"
+            android:permission=""
+            tools:ignore="ExportedService" />
     </application>
 
 </manifest>

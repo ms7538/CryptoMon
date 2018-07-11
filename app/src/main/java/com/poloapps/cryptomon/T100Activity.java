@@ -1,7 +1,5 @@
 package com.poloapps.cryptomon;
 
-
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,40 +15,38 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
 import java.util.Map;
 import java.util.Objects;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 //v1.1    created
-public class Top_100_Activity extends BaseActivity {
+public class T100Activity extends BaseActivity {
+
     long createdTime = System.currentTimeMillis() / 1000L;
     ArrayList<HashMap<String, String>> rankList;
-    ProgressDialog dialog;
-    dbCurrentValsHandler dbCVHandler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading....");
+        dialog.show();
+
         setContentView(R.layout.activity_top_100);
         final TextView Time2 = findViewById(R.id.t100_request_time);
         android.support.v7.app.ActionBar bar = getSupportActionBar();
@@ -62,9 +58,8 @@ public class Top_100_Activity extends BaseActivity {
         String reqCurrentTime =
                 DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
-        String LC_url = "https://api.coinmarketcap.com/v1/ticker/";
-        dbCVHandler = new dbCurrentValsHandler(this, null);
-        AdView mAdView = findViewById(R.id.adView);
+        String LC_url       = "https://api.coinmarketcap.com/v1/ticker/";
+        AdView mAdView      = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
@@ -80,10 +75,6 @@ public class Top_100_Activity extends BaseActivity {
         final DecimalFormat form2 = new DecimalFormat("#.######");
         final DecimalFormat form3 = new DecimalFormat("#,###,###,###");
 
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading....");
-        dialog.show();
-
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
 
@@ -95,6 +86,8 @@ public class Top_100_Activity extends BaseActivity {
                     String price_key      = "price_usd";
                     String curr_symbol    = "$";
                     String volume_24h_key = "24h_volume_usd";
+                    String us_price_key   = price_key;
+                    String us_vol_key     = volume_24h_key;
 
                     if(!Dollar){
                         price_key      = "price_" + Curr;
@@ -102,17 +95,21 @@ public class Top_100_Activity extends BaseActivity {
                         volume_24h_key = "24h_volume_" + Curr;
                     }
                     rankList = new ArrayList<>();
-                    ListView lv = findViewById(R.id.list);
+                    ListView lv = findViewById(R.id.t100_listView);
 
                     JSONArray T100_Array = new JSONArray(string);
 
                     for (int i = 0; i < T100_Array.length(); i++) {
 
                         JSONObject obj1 = T100_Array.getJSONObject(i);
+
                         String rate       = obj1.getString(price_key);
                         Double d_rate     = Double.parseDouble(rate);
                         Double curr_vol   = Double.parseDouble(obj1.getString(volume_24h_key));
                         String volume_24h = curr_symbol + form3.format(curr_vol);
+
+                        Double usPrice   = Double.parseDouble(obj1.getString(us_price_key));
+                        Double usVolume  = Double.parseDouble(obj1.getString(us_vol_key));
 
                         if (d_rate < .01) rate  = curr_symbol + form2.format(d_rate);
                         else              rate  = curr_symbol + form.format(d_rate);
@@ -127,8 +124,11 @@ public class Top_100_Activity extends BaseActivity {
                         String delta_1d   = obj1.getString("percent_change_24h");
                         String delta_7d   = obj1.getString("percent_change_7d");
                         String link_id    = obj1.getString("id");
+                        long millis       = System.currentTimeMillis();
+                        Integer hours     = (int) (millis/1000/60/60);
+
                         dbCVHandler.deleteEntry(link_id);
-                        dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol);
+                        dbCVHandler.addCurrentVals(link_id,usPrice,usVolume, hours);
 
                         HashMap<String, String> item = new HashMap<>();
                         item.put("rank",    rank);
@@ -140,7 +140,6 @@ public class Top_100_Activity extends BaseActivity {
                         item.put("24h_vol", volume_24h);
                         item.put("id_link", link_id);
                         rankList.add(item);
-
                     }
 
                     String[] from = {"rank","name","rate","d1h",
@@ -149,7 +148,7 @@ public class Top_100_Activity extends BaseActivity {
                                 R.id.delta7_d,R.id.list_24h_volume,R.id.id_link};
 
                     ListAdapter listAdapter = new SimpleAdapter(getApplicationContext(), rankList,
-                                              R.layout.list_item, from, to) {
+                                              R.layout.t100_list_item, from, to) {
 
                         @Override
                         public View getView(int position, View cnvrtView, ViewGroup parent){
@@ -159,7 +158,7 @@ public class Top_100_Activity extends BaseActivity {
                             TextView delta_1h = view.findViewById(R.id.h1);
                             TextView delta_1d = view.findViewById(R.id.d1);
                             TextView delta_7d = view.findViewById(R.id.delta7_d);
-                            final TextView nameSymb = view.findViewById(R.id.list_name);
+
 
                             final TextView link_id = view.findViewById(R.id.id_link);
                             link_id.setPaintFlags(link_id.getPaintFlags()
@@ -192,24 +191,23 @@ public class Top_100_Activity extends BaseActivity {
                                        @Override
                                        public void onClick(View v) {
                                            Intent intent = new Intent(
-                                                   Top_100_Activity.this,
+                                                   T100Activity.this,
                                                    CryptoSelectActivity.class);
                                            intent.putExtra("crypto_id",  link_id.getText());
-                                           intent.putExtra("crypto_name",nameSymb.getText());
-                                           Top_100_Activity.this.startActivity(intent);
+                                           intent.putExtra("restart", false);
+                                           T100Activity.this.startActivity(intent);
                                        }
                                    });
 
-                            dialog.dismiss();
                             return view;
                         }
                     };
                     lv.setAdapter(listAdapter);
+                    dialog.dismiss();
                 } catch (JSONException e) {
                     dialog.dismiss();
                     e.printStackTrace();
                 }
-
             }
             }, new Response.ErrorListener() {
 
@@ -219,21 +217,47 @@ public class Top_100_Activity extends BaseActivity {
                        Toast.LENGTH_SHORT).show();
                dialog.dismiss();
            }
-
        });
-        RequestQueue rQueue = Volley.newRequestQueue(Top_100_Activity.this);
+        RequestQueue rQueue = Volley.newRequestQueue(T100Activity.this);
         rQueue.add(crypto100_request);
         createdTime = System.currentTimeMillis() / 1000L;
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+
+        Boolean csActive   = mSettings.getBoolean("cs_active", false);
+        Boolean aaActive   = mSettings.getBoolean("aa_active", false);
+        Boolean t100Active = mSettings.getBoolean("t100_active", true);
+        Boolean restart    = getIntent().getBooleanExtra("restart", false);
+        getIntent().removeExtra("restart");
+
+        if(!csActive && !aaActive && !t100Active && !restart) checkStartService();
+        editor.putBoolean("t100_active", false);
+        editor.apply();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final SharedPreferences.Editor editor = mSettings.edit();
+        editor.putBoolean("t100_active", true);
+        editor.apply();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
         SharedPreferences.Editor editor = mSettings.edit();
         Boolean Dollar = mSettings.getBoolean("Dollar", true);
         String  Curr   = mSettings.getString("Curr_code","eur");
 
+        editor.putBoolean("t100_active", false);
         String T100_currency = "usd";
         if(!Dollar) T100_currency = Curr;
         editor.putString("t100_curr",T100_currency);
@@ -243,15 +267,22 @@ public class Top_100_Activity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        Boolean Dollar = mSettings.getBoolean("Dollar", true);
-        String  Curr   = mSettings.getString("Curr_code","eur");
-        String  T100   = mSettings.getString("t100_curr","usd");
-        Long resumeTime  = System.currentTimeMillis() / 1000L;
+        SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
+        SharedPreferences.Editor editor = mSettings.edit();
+        getIntent().removeExtra("restart");
+        Boolean Dollar                  = mSettings.getBoolean("Dollar", true);
+        String  Curr                    = mSettings.getString("Curr_code","eur");
+        String  T100                    = mSettings.getString("t100_curr","usd");
+        stopRunningService();
+        editor.putBoolean("t100_active", true);
+        editor.apply();
+
+        Long resumeTime             = System.currentTimeMillis() / 1000L;
         if (resumeTime - createdTime > 299) restart();
         String currency_check = "usd";
         if(!Dollar) currency_check = Curr;
         if (!Objects.equals(T100, currency_check)) restart();
     }
+
 
 }

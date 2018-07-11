@@ -2,16 +2,22 @@
   <dictionary name="Marko">
     <words>
       <w>aeternity</w>
+      <w>alrts</w>
       <w>binance</w>
       <w>binanceexchange</w>
       <w>bitcoingoldhq</w>
       <w>bitshares</w>
       <w>bytecoin</w>
+      <w>chck</w>
       <w>cnvrt</w>
       <w>coindesk</w>
+      <w>cryptocurr</w>
       <w>cryptomarkets</w>
       <w>cryptosymb</w>
+      <w>csel</w>
       <w>currentprice</w>
+      <w>currsymb</w>
+      <w>cvals</w>
       <w>decred</w>
       <w>diag</w>
       <w>digix</w>
@@ -36,8 +42,10 @@
       <w>statusim</w>
       <w>steem</w>
       <w>veritaseum</w>
+      <w>vers</w>
       <w>waltonchain</w>
       <w>wavesplatform</w>
+      <w>xdel</w>
       <w>zcash</w>
       <w>zclassic</w>
       <w>zealand</w>

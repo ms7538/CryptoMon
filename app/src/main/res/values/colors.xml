@@ -12,6 +12,7 @@
     <color name="l4col"         >#ffc63d</color>
     <color name="l5col"         >#1d1337</color>
     <color name="red"           >#ff0000</color>
+    <color name="dk_red"        >#800000</color>
     <color name="dark_gray"     >#333333</color>
     <color name="navy_blue"     >#017ed5</color>
     <color name="bright_yellow" >#fff400</color>

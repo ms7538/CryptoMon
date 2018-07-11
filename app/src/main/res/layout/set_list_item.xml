@@ -1,0 +1,156 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="95dp"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/set_alert_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/delta_col"
+            android:gravity="center"
+            android:text="@string/xx"
+            android:textAllCaps="true"
+            android:textColor="@color/l4col"
+            android:textSize="15sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/black"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/del_set_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/delete"
+                    android:foreground="@drawable/ic_action_del"
+                    android:text="@string/xdel"
+                    android:textColor="@color/red" />
+
+                <ImageButton
+                    android:id="@+id/set_cs_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/delete"
+                    android:foreground="@drawable/ic_action_csel"
+                    android:text="@string/xdel"
+                    android:textColor="@color/red" />
+            </LinearLayout>
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:background="@android:color/black">
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="@string/_set"
+                        android:textColor="@color/bright_yellow"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/set_alert_type"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:text="@string/xx"
+                        android:textColor="@color/l3col"
+                        android:textSize="13sp" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:text="@string/threshold"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/set_threshold_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:text="@string/xx"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:background="@color/dark_gray"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/set_current_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/current"
+                            android:textColor="@color/green2"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/set_updated_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/xx"
+                            android:textColor="@color/green2"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/set_current_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:text="@string/xx"
+                        android:textColor="@color/l3col"
+                        android:textSize="14sp" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

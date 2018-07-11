@@ -1,18 +1,35 @@
 package com.poloapps.cryptomon;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -24,9 +41,48 @@ import java.util.Objects;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    String                LC_url         = "https://api.coinmarketcap.com/v1/ticker/";
+    ProgressDialog        dialog;
+    dbPriceHandler        dbPHandler;
+    dbVolumeHandler       dbVHandler;
+    dbCurrentValsHandler  dbCVHandler;
+    dbPriceAlertsAchieved dbPAchHandler;
+    dbVolAlertsAchieved   dbVAchHandler;
+
+    Integer overwritten   = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        dbPHandler    = new dbPriceHandler(this, null);
+        dbVHandler    = new dbVolumeHandler(this, null);
+        dbCVHandler   = new dbCurrentValsHandler(this, null);
+        dbPAchHandler = new dbPriceAlertsAchieved(this, null);
+        dbVAchHandler = new dbVolAlertsAchieved(this, null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        stopRunningService();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.settings_menu, menu);
+
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+
+        int lenAch             = numberPAchAlerts() + numberVAchAlerts();
+        int dispAlerts         = mSettings.getInt("disp_alerts",0);
+        int newAlerts          = lenAch - dispAlerts + overwritten;
+        MenuItem alertsIcon    = menu.findItem(R.id.action_alerts);
+        int setAlerts          = numberPAlerts() + numberVAlerts();
+
+        if      (newAlerts > 0) alertsIcon.setIcon(R.drawable.ic_action_red2);
+        else if (setAlerts > 0 )alertsIcon.setIcon(R.drawable.ic_action_yellow);
+        else                    alertsIcon.setIcon(R.drawable.no_alerts_logo);
         return true;
     }
 
@@ -38,20 +94,21 @@ public abstract class BaseActivity extends AppCompatActivity {
         final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
 
-
         switch (item.getItemId()) {
 
             case R.id.action_t100:
                 Intent intent2 = new Intent(
                         BaseActivity.this,
-                        Top_100_Activity.class);
+                        T100Activity.class);
+                intent2.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent2);
                 return true;
 
             case R.id.action_alerts:
                 Intent intent = new Intent(
                         BaseActivity.this,
-                        All_AlertsActivity.class);
+                        AllAlertsActivity.class);
+                intent.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent);
                 return true;
 
@@ -109,7 +166,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                         "AElfTrader","PolymathNetwork","BytomBlockchain","Bytomchain","monacoin",
                         "QASH","ReddCoin","AionNetwork","AionTrader","GolemProject","GolemTrader"};
 
-
                 for(int i = 0; i < TV_IDs.length ;i++) {
                     final int j = i;
                     TextView TV_name = mView.findViewById(TV_IDs[i]);
@@ -124,7 +180,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                         }});
                 }
-
                 Dismiss_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
@@ -287,7 +342,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 dialog2.show();
                 return true;
 
-
             case R.id.action_about:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
@@ -351,10 +405,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     dialog4.dismiss();
                 }});
 
-
                 return true;
-
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -364,8 +415,174 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     void restart(){
         Intent intent = getIntent();
+        intent.putExtra("restart", true);
         finish();
         startActivity(intent);
     }
-//http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt
+
+    void updateCurrentVals(){
+        StringRequest crypto100_request = new StringRequest(LC_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String string) {
+                        try {
+                            JSONArray T100_Array = new JSONArray(string);
+                            for (int i = 0; i < T100_Array.length(); i++) {
+
+                                JSONObject obj1   = T100_Array.getJSONObject(i);
+
+                                String rate       = obj1.getString("price_usd");
+                                Double d_rate     = Double.parseDouble(rate);
+                                Double curr_vol   = Double.parseDouble(
+                                                            obj1.getString("24h_volume_usd"));
+                                String link_id    = obj1.getString("id");
+                                long millis       = System.currentTimeMillis();
+                                Integer hours     = (int)(millis/1000/60/60);
+
+                                dbCVHandler.deleteEntry(link_id);
+                                dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
+                            }
+
+                            String priceAlerts    = dbPHandler.dbToString();
+                            String[] splitPAlerts = priceAlerts.split("[\n]");
+
+                            int len1 = numberPAlerts();
+
+                            for (int i = 0; i < len1; i++) {
+                                double price   = Double.parseDouble(
+                                        dbCVHandler.currentPrice(splitPAlerts[i]));
+                                double thPrice = Double.parseDouble(
+                                        dbPHandler.getPrice_Val(splitPAlerts[i]));
+                                int    check   = Integer.parseInt(
+                                        dbPHandler.getThresh_Check(splitPAlerts[i]));
+
+                                if ((thPrice < price && check == 1) ||
+                                                                (thPrice > price && check == -1)) {
+
+                                    dbPHandler.deleteAlert(splitPAlerts[i]);
+                                    if(dbPAchHandler.alertExists(splitPAlerts[i])){
+                                        dbPAchHandler.removePriceAchAlert(splitPAlerts[i]);
+                                        overwritten++;
+                                    }
+                                    int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
+                                    dbPAchHandler.addPriceAchAlert(
+                                            splitPAlerts[i], price, thPrice, check, cur_mins);
+                                }
+                            }
+
+                            String   volAlerts    = dbVHandler.listEntries();
+                            String[] splitVAlerts = volAlerts.split("[\n]");
+                            int len3              = numberVAlerts();
+
+                            for (int j = 0; j < len3; j++) {
+                                double vol    = Double.parseDouble(
+                                                        dbCVHandler.currentVol(splitVAlerts[j]));
+                                double thVol  = Double.parseDouble(
+                                                            dbVHandler.getVol_Val(splitVAlerts[j]));
+                                int check2 = Integer.parseInt(
+                                                       dbVHandler.getThresh_Check(splitVAlerts[j]));
+                                if ((thVol < vol && check2 == 1) ||
+                                                                    (thVol > vol && check2 == -1)){
+
+                                    dbVHandler.deleteAlert(splitVAlerts[j]);
+
+                                    if(dbVAchHandler.alertExists(splitVAlerts[j])){
+                                        dbVAchHandler.removeVolAchAlert(splitVAlerts[j]);
+                                        overwritten++;
+                                    }
+                                    int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
+                                    dbVAchHandler.addVolAchAlert(
+                                            splitVAlerts[j], vol, thVol, check2, cur_mins);
+                                }
+
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getApplicationContext(), "Some error occurred!!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue rQueue = Volley.newRequestQueue(BaseActivity.this);
+        rQueue.add(crypto100_request);
+    }
+
+    void checkStartService(){
+        String priceAlerts    = dbPHandler.dbToString();
+        String[] splitPAlerts = priceAlerts.split("[\n]");
+        String   volAlerts    = dbVHandler.listEntries();
+        String[] splitVAlerts = volAlerts.split("[\n]");
+
+        if (!splitPAlerts[0].equals("") || !splitVAlerts[0].equals("")){
+            startServiceCM();
+        }
+    }
+
+    void startServiceCM(){
+        Intent intent = new Intent(this,serviceCM.class);
+        startService(intent);
+    }
+
+    void stopServiceCM(){
+        Intent intent = new Intent(this,serviceCM.class);
+        stopService(intent);
+    }
+
+    int numberPAlerts(){
+        String priceAlerts    = dbPHandler.dbToString();
+        String[] splitPAlerts = priceAlerts.split("[\n]");
+        int lenPArray         = splitPAlerts.length;
+        if (splitPAlerts[0].equals("")) lenPArray = 0;
+        return lenPArray;
+    }
+
+    int numberVAlerts(){
+        String   volAlerts    = dbVHandler.listEntries();
+        String[] splitVAlerts = volAlerts.split("[\n]");
+        int lenVArray         = splitVAlerts.length;
+        if (splitVAlerts[0].equals("")) lenVArray = 0;
+        return lenVArray;
+    }
+
+    int numberPAchAlerts(){
+        String priceAchieved   = dbPAchHandler.dbEntries();
+        String[] splitPAAlerts = priceAchieved.split("[\n]");
+        int lenPAchArray       = splitPAAlerts.length;
+        if (splitPAAlerts[0].equals("")) lenPAchArray = 0;
+        return lenPAchArray;
+    }
+
+    int numberVAchAlerts(){
+        String volAchieved     = dbVAchHandler.dbEntries();
+        String[] splitVAAlerts = volAchieved.split("[\n]");
+        int lenVAchArray       = splitVAAlerts.length;
+        if (splitVAAlerts[0].equals("")) lenVAchArray = 0;
+        return lenVAchArray;
+    }
+
+    void stopRunningService(){
+        if( isMyServiceRunning(serviceCM.class)){
+            Log.i("CM22","service stopping");
+            stopServiceCM();
+        }
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
+        for (ActivityManager.RunningServiceInfo service :
+                manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
