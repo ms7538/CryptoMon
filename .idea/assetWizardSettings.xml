@@ -97,7 +97,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="color" value="171eff" />
+                                                <entry key="color" value="ffff26" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -120,7 +120,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffff26" />
+                                      <entry key="backgroundColor" value="000000" />
                                       <entry key="backgroundImage" value="C:\Users\Marko\Desktop\PoloApps\vulkan-basic-samples-master\CryptoMon\app\src\main\res\values\ic_launcher_background.xml" />
                                       <entry key="foregroundAssetType" value="TEXT" />
                                       <entry key="foregroundImage" value="C:\Program Files\Android\Android Studio\plugins\android\lib\templates\gradle-projects\NewAndroidModule\root\res\mipmap-xxxhdpi\ic_launcher.png" />
@@ -151,11 +151,6 @@
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

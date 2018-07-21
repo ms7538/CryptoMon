@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -433,9 +431,7 @@ public class AllAlertsActivity extends BaseActivity {
         editor.apply();
     }
     public void startCSActivity(String in){
-        Intent intent = new Intent(
-                AllAlertsActivity.this,
-                CryptoSelectActivity.class);
+        Intent intent = new Intent(AllAlertsActivity.this,CryptoSelectActivity.class);
         intent.putExtra("crypto_id", in);
         intent.putExtra("restart", false);
         AllAlertsActivity.this.startActivity(intent);
