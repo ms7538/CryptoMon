@@ -283,6 +283,4 @@ public class T100Activity extends BaseActivity {
         if(!Dollar) currency_check = Curr;
         if (!Objects.equals(T100, currency_check)) restart();
     }
-
-
 }

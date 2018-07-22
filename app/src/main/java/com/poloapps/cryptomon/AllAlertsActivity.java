@@ -72,7 +72,7 @@ public class AllAlertsActivity extends BaseActivity {
         String   priceAlerts  = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int      lenPArray    = splitPAlerts.length;
-        String   volAlerts    = dbVHandler.listEntries();
+        String   volAlerts    = dbVHandler.dbToString();
         String[] splitVAlerts = volAlerts.split("[\n]");
         int      lenVArray    = splitVAlerts.length;
 

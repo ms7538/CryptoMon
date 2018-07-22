@@ -470,7 +470,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 }
                             }
 
-                            String   volAlerts    = dbVHandler.listEntries();
+                            String   volAlerts    = dbVHandler.dbToString();
                             String[] splitVAlerts = volAlerts.split("[\n]");
                             int len3              = numberVAlerts();
 
@@ -517,7 +517,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     void checkStartService(){
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
-        String   volAlerts    = dbVHandler.listEntries();
+        String   volAlerts    = dbVHandler.dbToString();
         String[] splitVAlerts = volAlerts.split("[\n]");
 
         if (!splitPAlerts[0].equals("") || !splitVAlerts[0].equals("")){
@@ -544,7 +544,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     int numberVAlerts(){
-        String   volAlerts    = dbVHandler.listEntries();
+        String   volAlerts    = dbVHandler.dbToString();
         String[] splitVAlerts = volAlerts.split("[\n]");
         int lenVArray         = splitVAlerts.length;
         if (splitVAlerts[0].equals("")) lenVArray = 0;

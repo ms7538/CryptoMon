@@ -271,7 +271,7 @@ public class serviceCM extends Service {
             }
         }
 
-        String   volAlerts    = dbVHandler.listEntries();
+        String   volAlerts    = dbVHandler.dbToString();
         String[] splitVAlerts = volAlerts.split("[\n]");
         int len3              = numberVAlerts();
 
@@ -297,7 +297,7 @@ public class serviceCM extends Service {
     }
 
     int numberVAlerts(){
-        String   volAlerts    = dbVHandler.listEntries();
+        String   volAlerts    = dbVHandler.dbToString();
         String[] splitVAlerts = volAlerts.split("[\n]");
         int lenVArray         = splitVAlerts.length;
         if (splitVAlerts[0].equals("")) lenVArray = 0;
