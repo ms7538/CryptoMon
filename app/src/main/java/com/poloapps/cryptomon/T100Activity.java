@@ -33,7 +33,7 @@ import java.util.Objects;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-//v1.2    created
+//v1.21    created
 public class T100Activity extends BaseActivity {
 
     long createdTime = System.currentTimeMillis() / 1000L;
