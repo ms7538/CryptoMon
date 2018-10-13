@@ -22,8 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,9 +60,10 @@ public class CryptoSelectActivity extends BaseActivity {
         dbPHandler = new dbPriceHandler(this, null);
         dbVHandler = new dbVolumeHandler(this, null);
 
-        AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mPublisherAdView = findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        mPublisherAdView.loadAd(adRequest);
+
     }
     @Override
     protected void onStart() {

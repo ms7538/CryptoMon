@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     dbCurrentValsHandler  dbCVHandler;
     dbPriceAlertsAchieved dbPAchHandler;
     dbVolAlertsAchieved   dbVAchHandler;
-
+    PublisherAdView       mPublisherAdView;
     Integer overwritten   = 0;
 
     @Override

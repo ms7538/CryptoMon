@@ -18,9 +18,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -47,9 +45,9 @@ public class AllAlertsActivity extends BaseActivity {
         bar.setDisplayShowTitleEnabled(false);
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
-        AdView mAdView      = findViewById(R.id.all_alerts_adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mPublisherAdView = findViewById(R.id.all_alerts_adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        mPublisherAdView.loadAd(adRequest);
         updateCurrentVals();
     }
 
@@ -160,11 +158,10 @@ public class AllAlertsActivity extends BaseActivity {
 
                 if      (valTh < .01)  thresh = frmt2;
                 else if (valTh >= 100) thresh = frmt0;
-                else                   thresh = frmt;
+
 
                 if      (valCr < .01)  curr = frmt2;
                 else if (valCr >= 100) curr = frmt0;
-                else                   curr = frmt;
 
                 String dispThr = "$"  + thresh.format(valTh);
                 String dispCur = "$"  + curr.format(valCr);

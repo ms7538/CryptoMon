@@ -30,8 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
 //v1.21    created
 public class T100Activity extends BaseActivity {
@@ -59,9 +58,10 @@ public class T100Activity extends BaseActivity {
                 DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
         String LC_url       = "https://api.coinmarketcap.com/v1/ticker/";
-        AdView mAdView      = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+
+        mPublisherAdView = findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        mPublisherAdView.loadAd(adRequest);
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
 
