@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@android:color/background_dark"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/notice"
+        android:layout_marginBottom="15sp"
+        android:textColor="@color/red"
+        android:textSize="19sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/delete_switch_notice"
+        android:textColor="@color/light_blue"
+        android:textSize="15sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/l5col"
+        android:layout_marginTop="15dp">
+
+        <Button
+            android:id="@+id/scda_OK_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/ok" />
+
+        <Button
+            android:id="@+id/scda1_NO_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/back"
+            tools:ignore="RelativeOverlap" />
+
+    </RelativeLayout>
+</LinearLayout>

@@ -36,6 +36,7 @@ import java.util.Objects;
 
 /**
  * Created by Marko on 2/25/2018.
+ * Updated on 10/14/2018
  * Base Class
  *
  */
@@ -332,9 +333,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                             nonUSD_symb = "₹";
                         }
 
-                        editor.putString("Curr_code",nonUSD_code);
-                        editor.putString("Curr_symb",nonUSD_symb);
-                        editor.putBoolean("Dollar", Dollar_Sel);
+                        editor.putString ("Curr_code",nonUSD_code);
+                        editor.putString ("Curr_symb",nonUSD_symb);
+                        editor.putBoolean("Dollar"   ,Dollar_Sel );
                         editor.apply();
 
                         dialog2.dismiss();
@@ -495,10 +496,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     dbVAchHandler.addVolAchAlert(
                                             splitVAlerts[j], vol, thVol, check2, cur_mins);
                                 }
-
-
                             }
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();

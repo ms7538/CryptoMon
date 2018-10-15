@@ -224,4 +224,10 @@
     <string name="coinmarketcap_link">CoinMarketCap Link</string>
     <string name="delete_achieved_alert">Delete Achieved Alert</string>
     <string name="hhmma">hh:mm a</string>
+    <string name="notice">NOTICE</string>
+    <string name="delete_switch_notice">Switching the selected monetary currency will result in
+                                        deletion of all set automatic alerts. You can reset the
+                                        automatic again using the selected monetary currency.
+                                                                                           </string>
+
 </resources>
