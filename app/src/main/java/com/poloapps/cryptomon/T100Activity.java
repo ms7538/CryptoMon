@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
-//v1.21    created
+//v1.215    created
 public class T100Activity extends BaseActivity {
 
     long createdTime = System.currentTimeMillis() / 1000L;
