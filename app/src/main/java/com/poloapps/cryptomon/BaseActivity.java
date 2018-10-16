@@ -355,6 +355,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                         dialog2.dismiss();
                         restart();
                     }});
+                final Button CurrSel_Dismiss_btn = mView2.findViewById(R.id.Units_NO_btn);
+                CurrSel_Dismiss_btn.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        dialog2.dismiss();
+                    }
+                });
                 dialog2.show();
                 return true;
 
