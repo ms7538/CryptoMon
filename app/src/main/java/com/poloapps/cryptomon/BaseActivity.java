@@ -218,58 +218,72 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (Dollar) {
                     RadioUSD.getParent().requestChildFocus(RadioUSD, RadioUSD);
                     RadioUSD.setChecked(true);
+                    RadioUSD.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "eur")) {
                     RadioEUR.getParent().requestChildFocus(RadioEUR, RadioEUR);
                     RadioEUR.setChecked(true);
+                    RadioEUR.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "jpy")) {
                     RadioJPY.getParent().requestChildFocus(RadioJPY, RadioJPY);
                     RadioJPY.setChecked(true);
+                    RadioJPY.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "gbp")) {
                     RadioGBP.getParent().requestChildFocus(RadioGBP, RadioGBP);
                     RadioGBP.setChecked(true);
+                    RadioGBP.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "aud")) {
                     RadioAUD.getParent().requestChildFocus(RadioAUD, RadioAUD);
                     RadioAUD.setChecked(true);
+                    RadioAUD.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "cad")) {
                     RadioCAD.getParent().requestChildFocus(RadioCAD, RadioCAD);
                     RadioCAD.setChecked(true);
+                    RadioCAD.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "chf")) {
                     RadioCHF.getParent().requestChildFocus(RadioCHF, RadioCHF);
                     RadioCHF.setChecked(true);
+                    RadioCHF.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "cny")) {
                     RadioCNY.getParent().requestChildFocus(RadioCNY, RadioCNY);
                     RadioCNY.setChecked(true);
+                    RadioCNY.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "sek")) {
                     RadioSEK.getParent().requestChildFocus(RadioSEK, RadioSEK);
                     RadioSEK.setChecked(true);
+                    RadioSEK.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "nzd")) {
                     RadioNZD.getParent().requestChildFocus(RadioNZD, RadioNZD);
                     RadioNZD.setChecked(true);
+                    RadioNZD.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "krw")) {
                     RadioKRW.getParent().requestChildFocus(RadioKRW, RadioKRW);
                     RadioKRW.setChecked(true);
+                    RadioKRW.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "try")) {
                     RadioTRY.getParent().requestChildFocus(RadioTRY, RadioTRY);
                     RadioTRY.setChecked(true);
+                    RadioTRY.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "rub")) {
                     RadioRUB.getParent().requestChildFocus(RadioRUB, RadioRUB);
                     RadioRUB.setChecked(true);
+                    RadioRUB.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "inr")) {
                     RadioINR.getParent().requestChildFocus(RadioINR, RadioINR);
                     RadioINR.setChecked(true);
+                    RadioINR.setEnabled(false);
                 }
 
                 Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
