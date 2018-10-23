@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ import java.util.Objects;
 
 /**
  * Created by Marko on 2/25/2018.
- * Updated on 10/14/2018
+ * Updated on 10/22/2018
  * Base Class
  *
  */
@@ -194,10 +195,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             case R.id.action_currency_sel:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
-
                 @SuppressLint("InflateParams")
                 View mView2 = getLayoutInflater().inflate(R.layout.currency_diag, null);
                 builder.setView(mView2);
+                RadioGroup rg = mView2.findViewById(R.id.curr_rg);
+                final Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
+                Unit_OK.setEnabled(false);
 
                 final AlertDialog dialog2  = builder.create();
                 final RadioButton RadioUSD = mView2.findViewById(R.id.radio_currency_usd);
@@ -285,8 +288,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                     RadioINR.setChecked(true);
                     RadioINR.setEnabled(false);
                 }
+                rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        Unit_OK.setEnabled(true);
+                    }
+                });
 
-                Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
                 Unit_OK.setOnClickListener(new View.OnClickListener() {
 
                     @Override
