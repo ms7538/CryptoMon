@@ -16,9 +16,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -195,8 +197,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             case R.id.action_currency_sel:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
-                @SuppressLint("InflateParams")
-                View mView2 = getLayoutInflater().inflate(R.layout.currency_diag, null);
+                @SuppressLint("InflateParams") final View mView2 = getLayoutInflater()
+                        .inflate(R.layout.currency_diag, null);
                 builder.setView(mView2);
                 RadioGroup rg = mView2.findViewById(R.id.curr_rg);
                 final Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
@@ -217,6 +219,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 final RadioButton RadioTRY = mView2.findViewById(R.id.radio_currency_try);
                 final RadioButton RadioRUB = mView2.findViewById(R.id.radio_currency_rub);
                 final RadioButton RadioINR = mView2.findViewById(R.id.radio_currency_inr);
+                final RelativeLayout RL    = mView2.findViewById(R.id.curr_diag_relLayout);
                 
                 if (Dollar) {
                     RadioUSD.getParent().requestChildFocus(RadioUSD, RadioUSD);
@@ -305,12 +308,15 @@ public abstract class BaseActivity extends AppCompatActivity {
                         String nonUSD_symb = "€";
 
                         if(numberPAlerts() != 0 || numberVAlerts() != 0){
-                            AlertDialog.Builder builder2;
-                            builder2 = new AlertDialog.Builder(BaseActivity.this);
+
+                            AlertDialog.Builder builder;
+                            builder = new AlertDialog.Builder(BaseActivity.this);
                             @SuppressLint("InflateParams")
                             View mView5 = getLayoutInflater()
-                                    .inflate(R.layout.switch_curr_delete_alerts, null);
-                            builder2.setView(mView5);
+                                    .inflate(R.layout.switch_curr_delete_alerts,(ViewGroup) mView2);
+                            builder.setView(mView5);
+                            RL.setVisibility(mView2.GONE);
+                            //TODO Ok Dismiss functionality
                         }
 
                         if (RadioUSD.isChecked()) Dollar_Sel = true;
@@ -373,7 +379,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     }});
                 final Button CurrSel_Dismiss_btn = mView2.findViewById(R.id.Units_NO_btn);
                 CurrSel_Dismiss_btn.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View arg0) {
                         dialog2.dismiss();
