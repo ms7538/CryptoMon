@@ -304,6 +304,15 @@ public abstract class BaseActivity extends AppCompatActivity {
                         String nonUSD_code = "eur";
                         String nonUSD_symb = "€";
 
+                        if(numberPAlerts() != 0 || numberVAlerts() != 0){
+                            AlertDialog.Builder builder2;
+                            builder2 = new AlertDialog.Builder(BaseActivity.this);
+                            @SuppressLint("InflateParams")
+                            View mView5 = getLayoutInflater()
+                                    .inflate(R.layout.switch_curr_delete_alerts, null);
+                            builder2.setView(mView5);
+                        }
+
                         if (RadioUSD.isChecked()) Dollar_Sel = true;
 
                         else if (RadioJPY.isChecked()) {
@@ -354,7 +363,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                             nonUSD_code = "inr";
                             nonUSD_symb = "₹";
                         }
-
                         editor.putString ("Curr_code",nonUSD_code);
                         editor.putString ("Curr_symb",nonUSD_symb);
                         editor.putBoolean("Dollar"   ,Dollar_Sel );
@@ -377,7 +385,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             case R.id.action_about:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
-
                 @SuppressLint("InflateParams")
                 View mView3 = getLayoutInflater().inflate(R.layout.about_diag, null);
                 builder.setView(mView3);
@@ -391,10 +398,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Privacy_Policy_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Uri uri = Uri.parse(
-                                "http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
+                    Uri uri = Uri.parse("http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
                     }
                 });
 
@@ -404,13 +410,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                         dialog3.dismiss();
                     }
                 });
-
                 return true;
 
             case R.id.action_disclaimer:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
-
                 @SuppressLint("InflateParams")
                 View mView4 = getLayoutInflater().inflate(R.layout.disclaimer_diag, null);
                 builder.setView(mView4);
@@ -423,11 +427,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Disc_CMC_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Uri uri = Uri.parse(
-                                "https://coinmarketcap.com/");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        dialog4.dismiss();
-                        startActivity(intent);
+                    Uri uri = Uri.parse("https://coinmarketcap.com/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    dialog4.dismiss();
+                    startActivity(intent);
                     }
                 });
 
