@@ -42,7 +42,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addPriceAchAlert(
+    void addPriceAchAlert(
             String cryptoSymb, double breaker, double threshold, int check, int sysMins) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB,   cryptoSymb);
@@ -57,13 +57,13 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void removePriceAchAlert(String cryptoSymb) {
+    void removePriceAchAlert(String cryptoSymb) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CM_ACH_ALERTS + " WHERE " + COLUMN_CRYPTOSYMB + "=\""
                 + cryptoSymb + "\";");
     }
 
-    public String dbEntries(){
+    String dbEntries(){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
@@ -81,7 +81,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getThresh_Val(String in){
+    String getThresh_Val(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -100,7 +100,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getThresh_Brk(String in){
+    String getThresh_Brk(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -119,7 +119,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getColumnBreakerChck(String in){
+    String getColumnBreakerChck(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -136,7 +136,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
-    public String getAchievedTimeStamp(String in){
+    String getAchievedTimeStamp(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -153,7 +153,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
-    public Boolean alertExists(String in){
+    Boolean alertExists(String in){
 
         Boolean exists = false;
         SQLiteDatabase db      = getWritableDatabase();

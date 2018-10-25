@@ -40,7 +40,7 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addVolAchAlert(
+    void addVolAchAlert(
             String cryptoSymb, double breaker, double threshold, int check, int sysMins) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB,   cryptoSymb);
@@ -55,13 +55,13 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void removeVolAchAlert(String cryptoSymb) {
+    void removeVolAchAlert(String cryptoSymb) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE " + COLUMN_CRYPTOSYMB + "=\""
                 + cryptoSymb + "\";");
     }
 
-    public String dbEntries(){
+    String dbEntries(){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1";
@@ -79,7 +79,7 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getThreshVal(String in){
+    String getThreshVal(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -98,7 +98,7 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getThreshBrk(String in){
+    String getThreshBrk(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -117,7 +117,7 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getColumnBreakerChck(String in){
+    String getColumnBreakerChck(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -134,7 +134,7 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
-    public String getAchievedTimeStamp(String in){
+    String getAchievedTimeStamp(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -151,7 +151,7 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
-    public Boolean alertExists(String in){
+    Boolean alertExists(String in){
 
         Boolean exists = false;
         SQLiteDatabase db      = getWritableDatabase();

@@ -200,8 +200,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                         .inflate(R.layout.currency_diag, null);
                 builder.setView(mView2);
                 RadioGroup rg = mView2.findViewById(R.id.curr_rg);
-                final Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
-                Unit_OK.setEnabled(false);
+                final Button CurrOkBtn = mView2.findViewById(R.id.Units_OK_btn);
+                CurrOkBtn.setEnabled(false);
 
                 final AlertDialog dialog2  = builder.create();
                 final RadioButton RadioUSD = mView2.findViewById(R.id.radio_currency_usd);
@@ -299,7 +299,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         if(numberPAlerts() != 0 || numberVAlerts() != 0) {
                             DelWarn.setVisibility(View.VISIBLE);
                         }
-                        Unit_OK.setEnabled(true);
+                        CurrOkBtn.setEnabled(true);
                         Boolean Dollar_Sel = false;
                         String nonUSD_code = "eur";
                         String nonUSD_symb = "€";
@@ -365,7 +365,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     }
                 });
 
-                Unit_OK.setOnClickListener(new View.OnClickListener() {
+                CurrOkBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
 
@@ -373,7 +373,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 mSettings.getString("Curr_code_tmp","eur"));
                         editor.putString ("Curr_symb",
                                 mSettings.getString("Curr_symb_tmp","€"));
-                        editor.putBoolean("Dollar"   ,
+                        editor.putBoolean("Dollar",
                                 mSettings.getBoolean("Dollar_tmp", true));
                         editor.apply();
 

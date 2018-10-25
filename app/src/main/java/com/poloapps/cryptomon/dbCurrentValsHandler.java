@@ -37,7 +37,7 @@ public class dbCurrentValsHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addCurrentVals(String cryptoSymb, double pr_value, double vol_value, int day) {
+    void addCurrentVals(String cryptoSymb, double pr_value, double vol_value, int day) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
         values.put(COLUMN_CURR_PRICE, pr_value);
@@ -48,13 +48,13 @@ public class dbCurrentValsHandler extends SQLiteOpenHelper {
         db.insert(TABLE_CM_CVALS, null, values);
         db.close();
     }
-    public void deleteEntry(String cryptoSymb) {
+    void deleteEntry(String cryptoSymb) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CM_CVALS + " WHERE " + COLUMN_CRYPTOSYMB + "=\""
                 + cryptoSymb + "\";");
     }
 
-    public String currentPrice(String cryptoId){
+    String currentPrice(String cryptoId){
         StringBuilder dbCurrPrice = new StringBuilder();
         SQLiteDatabase db         = getWritableDatabase();
         String query              = "SELECT * FROM " + TABLE_CM_CVALS + " WHERE 1";
@@ -71,7 +71,7 @@ public class dbCurrentValsHandler extends SQLiteOpenHelper {
         db.close();
         return dbCurrPrice.toString();
     }
-    public String currentVol(String cryptoId){
+    String currentVol(String cryptoId){
         StringBuilder dbCurrVol = new StringBuilder();
         SQLiteDatabase db       = getWritableDatabase();
         String query            = "SELECT * FROM " + TABLE_CM_CVALS + " WHERE 1";
@@ -104,7 +104,7 @@ public class dbCurrentValsHandler extends SQLiteOpenHelper {
         db.close();
         return exists;
     }
-    public String currentHour(String cryptoId){
+    String currentHour(String cryptoId){
         StringBuilder dbCurrVol = new StringBuilder();
         SQLiteDatabase db       = getWritableDatabase();
         String query            = "SELECT * FROM " + TABLE_CM_CVALS + " WHERE 1";
@@ -120,6 +120,4 @@ public class dbCurrentValsHandler extends SQLiteOpenHelper {
         db.close();
         return dbCurrVol.toString();
     }
-
-
 }

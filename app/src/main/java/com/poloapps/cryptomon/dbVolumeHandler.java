@@ -37,7 +37,7 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addVolAlert(String cryptoSymb, int threshold_check, double vol_value) {
+    void addVolAlert(String cryptoSymb, int threshold_check, double vol_value) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
         values.put(COLUMN_CURRSYMB,   "$");
@@ -48,13 +48,13 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteAlert(String cryptoSymb) {
+    void deleteAlert(String cryptoSymb) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CM_ALERTS2 + " WHERE " + COLUMN_CRYPTOSYMB + "=\""
                 + cryptoSymb + "\";");
     }
 
-    public String dbToString(){
+    String dbToString(){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ALERTS2 + " WHERE 1";
@@ -72,7 +72,7 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getThresh_Check(String in){
+    String getThresh_Check(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -90,7 +90,7 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
 
         return dbString.toString();
     }
-    public String getVol_Val(String in){
+    String getVol_Val(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();

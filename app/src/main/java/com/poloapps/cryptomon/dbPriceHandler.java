@@ -38,7 +38,7 @@ public class dbPriceHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addPriceAlert(String cryptoSymb, int threshold_check, double price_value) {
+    void addPriceAlert(String cryptoSymb, int threshold_check, double price_value) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB, cryptoSymb);
         values.put(COLUMN_CURRSYMB,   "$");
@@ -49,13 +49,13 @@ public class dbPriceHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteAlert(String cryptoSymb) {
+    void deleteAlert(String cryptoSymb) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CM_ALERTS + " WHERE " + COLUMN_CRYPTOSYMB + "=\""
                 + cryptoSymb + "\";");
     }
 
-    public String dbToString(){
+    String dbToString(){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ALERTS + " WHERE 1";
@@ -72,7 +72,7 @@ public class dbPriceHandler extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
-    public String getThresh_Check(String in){
+    String getThresh_Check(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
@@ -91,7 +91,7 @@ public class dbPriceHandler extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getPrice_Val(String in){
+    String getPrice_Val(String in){
 
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
