@@ -128,16 +128,40 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/indian_rupee" />
-
     </RadioGroup>
-
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/curr_diag_delLayout"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:background="@android:color/background_dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/notice"
+            android:layout_marginBottom="5sp"
+            android:textColor="@color/red"
+            android:textSize="19sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/delete_switch_notice"
+            android:textColor="@color/light_blue"
+            android:textSize="15sp" />
+    </LinearLayout>
+
     <RelativeLayout
-        android:id="@+id/curr_diag_relLayout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/black"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="1dp">
 
         <Button
             android:id="@+id/Units_OK_btn"

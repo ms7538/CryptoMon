@@ -16,11 +16,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -219,8 +218,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 final RadioButton RadioTRY = mView2.findViewById(R.id.radio_currency_try);
                 final RadioButton RadioRUB = mView2.findViewById(R.id.radio_currency_rub);
                 final RadioButton RadioINR = mView2.findViewById(R.id.radio_currency_inr);
-                final RelativeLayout RL    = mView2.findViewById(R.id.curr_diag_relLayout);
-                
+
+                final LinearLayout DelWarn = mView2.findViewById(R.id.curr_diag_delLayout);
+                DelWarn.setVisibility(View.GONE);
+
                 if (Dollar) {
                     RadioUSD.getParent().requestChildFocus(RadioUSD, RadioUSD);
                     RadioUSD.setChecked(true);
@@ -294,84 +295,86 @@ public abstract class BaseActivity extends AppCompatActivity {
                 rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                        if(numberPAlerts() != 0 || numberVAlerts() != 0) {
+                            DelWarn.setVisibility(View.VISIBLE);
+                        }
                         Unit_OK.setEnabled(true);
-                    }
-                });
-
-                Unit_OK.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View arg0) {
-
                         Boolean Dollar_Sel = false;
                         String nonUSD_code = "eur";
                         String nonUSD_symb = "€";
 
-                        if(numberPAlerts() != 0 || numberVAlerts() != 0){
+                        switch (checkedId){
+                            case R.id.radio_currency_usd:
+                                Dollar_Sel = true;
+                                break;
+                            case R.id.radio_currency_jpy:
+                                nonUSD_code = "jpy";
+                                nonUSD_symb = "¥";
+                                break;
+                            case R.id.radio_currency_gbp:
+                                nonUSD_code = "gbp";
+                                nonUSD_symb = "£";
+                                break;
+                            case R.id.radio_currency_aud:
+                                nonUSD_code = "aud";
+                                nonUSD_symb = "A$";
+                                break;
+                            case R.id.radio_currency_cad:
+                                nonUSD_code = "cad";
+                                nonUSD_symb = "C$";
+                                break;
+                            case R.id.radio_currency_chf:
+                                nonUSD_code = "chf";
+                                nonUSD_symb = "Fr";
+                                break;
+                            case R.id.radio_currency_cny:
+                                nonUSD_code = "cny";
+                                nonUSD_symb = "元";
+                                break;
+                            case R.id.radio_currency_sek:
+                                nonUSD_code = "sek";
+                                nonUSD_symb = "kr";
+                                break;
+                            case R.id.radio_currency_nzd:
+                                nonUSD_code = "nzd";
+                                nonUSD_symb = "NZ$";
+                                break;
+                            case R.id.radio_currency_krw:
+                                nonUSD_code = "krw";
+                                nonUSD_symb = "₩";
+                                break;
+                            case R.id.radio_currency_try:
+                                nonUSD_code = "try";
+                                nonUSD_symb = "₺";
+                                break;
+                            case R.id.radio_currency_rub:
+                                nonUSD_code = "rub";
+                                nonUSD_symb = "\u20BD";
+                                break;
+                            case R.id.radio_currency_inr:
+                                nonUSD_code = "inr";
+                                nonUSD_symb = "₹";
+                                break;
+                        }
+                        editor.putString ("Curr_code_tmp",nonUSD_code);
+                        editor.putString ("Curr_symb_tmp",nonUSD_symb);
+                        editor.putBoolean("Dollar_tmp"   ,Dollar_Sel );
+                        editor.apply();
 
-                            AlertDialog.Builder builder;
-                            builder = new AlertDialog.Builder(BaseActivity.this);
-                            @SuppressLint("InflateParams")
-                            View mView5 = getLayoutInflater()
-                                    .inflate(R.layout.switch_curr_delete_alerts,(ViewGroup) mView2);
-                            builder.setView(mView5);
-                            RL.setVisibility(mView2.GONE);
-                            //TODO Ok Dismiss functionality
-                        }
+                    }
+                });
 
-                        if (RadioUSD.isChecked()) Dollar_Sel = true;
+                Unit_OK.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
 
-                        else if (RadioJPY.isChecked()) {
-                            nonUSD_code = "jpy";
-                            nonUSD_symb = "¥";
-                        }
-                        else if (RadioGBP.isChecked()) {
-                            nonUSD_code = "gbp";
-                            nonUSD_symb = "£";
-                        }
-                        else if (RadioAUD.isChecked()) {
-                            nonUSD_code = "aud";
-                            nonUSD_symb = "A$";
-                        }
-                        else if (RadioCAD.isChecked()) {
-                            nonUSD_code = "cad";
-                            nonUSD_symb = "C$";
-                        }
-                        else if (RadioCHF.isChecked()) {
-                            nonUSD_code = "chf";
-                            nonUSD_symb = "Fr";
-                        }
-                        else if (RadioCNY.isChecked()) {
-                            nonUSD_code = "cny";
-                            nonUSD_symb = "元";
-                        }
-                        else if (RadioSEK.isChecked()) {
-                            nonUSD_code = "sek";
-                            nonUSD_symb = "kr";
-                        }
-                        else if (RadioNZD.isChecked()) {
-                            nonUSD_code = "nzd";
-                            nonUSD_symb = "NZ$";
-                        }
-                        else if (RadioKRW.isChecked()) {
-                            nonUSD_code = "krw";
-                            nonUSD_symb = "₩";
-                        }
-                        else if (RadioTRY.isChecked()) {
-                            nonUSD_code = "try";
-                            nonUSD_symb = "₺";
-                        }
-                        else if (RadioRUB.isChecked()) {
-                            nonUSD_code = "rub";
-                            nonUSD_symb = "\u20BD";
-                        }
-                        else if (RadioINR.isChecked()) {
-                            nonUSD_code = "inr";
-                            nonUSD_symb = "₹";
-                        }
-                        editor.putString ("Curr_code",nonUSD_code);
-                        editor.putString ("Curr_symb",nonUSD_symb);
-                        editor.putBoolean("Dollar"   ,Dollar_Sel );
+                        editor.putString ("Curr_code",
+                                mSettings.getString("Curr_code_tmp","eur"));
+                        editor.putString ("Curr_symb",
+                                mSettings.getString("Curr_symb_tmp","€"));
+                        editor.putBoolean("Dollar"   ,
+                                mSettings.getBoolean("Dollar_tmp", true));
                         editor.apply();
 
                         dialog2.dismiss();
