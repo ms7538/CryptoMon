@@ -80,7 +80,6 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
     }
 
     String getThreshVal(String in){
-
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1";
@@ -99,7 +98,6 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
     }
 
     String getThreshBrk(String in){
-
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1";
@@ -118,7 +116,6 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
     }
 
     String getColumnBreakerChck(String in){
-
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1";
@@ -136,7 +133,6 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
     }
 
     String getAchievedTimeStamp(String in){
-
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1";
@@ -154,7 +150,6 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
     }
 
     Boolean alertExists(String in){
-
         Boolean exists = false;
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1";

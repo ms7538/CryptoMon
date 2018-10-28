@@ -73,7 +73,6 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
     }
 
     String getThresh_Check(String in){
-
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ALERTS2 + " WHERE 1";
@@ -97,7 +96,6 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
     }
 
     String getVol_Val(String in){
-
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ALERTS2 + " WHERE 1";

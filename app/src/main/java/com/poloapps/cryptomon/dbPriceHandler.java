@@ -78,7 +78,6 @@ public class dbPriceHandler extends SQLiteOpenHelper {
         return dbString.toString();
     }
     String getThresh_Check(String in){
-
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ALERTS + " WHERE 1";
@@ -97,7 +96,6 @@ public class dbPriceHandler extends SQLiteOpenHelper {
     }
 
     String getPrice_Val(String in){
-
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ALERTS + " WHERE 1";
