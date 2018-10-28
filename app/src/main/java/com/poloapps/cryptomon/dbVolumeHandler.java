@@ -90,6 +90,12 @@ public class dbVolumeHandler extends SQLiteOpenHelper {
 
         return dbString.toString();
     }
+
+    void deleteAll(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_CM_ALERTS2 + " WHERE 1");
+    }
+
     String getVol_Val(String in){
 
         StringBuilder dbString = new StringBuilder();

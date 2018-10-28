@@ -377,6 +377,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 mSettings.getBoolean("Dollar_tmp", true));
                         editor.apply();
 
+                        if(numberPAlerts() != 0) {
+                            dbPHandler.deleteAll();
+                        }
+
                         dialog2.dismiss();
                         restart();
                     }});

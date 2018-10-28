@@ -55,6 +55,11 @@ public class dbPriceHandler extends SQLiteOpenHelper {
                 + cryptoSymb + "\";");
     }
 
+    void deleteAll(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_CM_ALERTS + " WHERE 1");
+    }
+
     String dbToString(){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();

@@ -171,4 +171,8 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         return exists;
     }
 
+    void deleteAll(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1");
+    }
 }

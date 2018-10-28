@@ -134,6 +134,7 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
+
     String getAchievedTimeStamp(String in){
 
         StringBuilder dbString = new StringBuilder();
@@ -151,6 +152,7 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
+
     Boolean alertExists(String in){
 
         Boolean exists = false;
@@ -167,5 +169,10 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         c.close();
         db.close();
         return exists;
+    }
+
+    void deleteAll(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1");
     }
 }
