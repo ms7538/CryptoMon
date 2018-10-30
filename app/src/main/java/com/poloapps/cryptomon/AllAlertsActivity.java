@@ -159,7 +159,6 @@ public class AllAlertsActivity extends BaseActivity {
                 if      (valTh < .01)  thresh = frmt2;
                 else if (valTh >= 100) thresh = frmt0;
 
-
                 if      (valCr < .01)  curr = frmt2;
                 else if (valCr >= 100) curr = frmt0;
 

@@ -19,8 +19,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@color/l5col">
+            android:background="@android:color/black">
 
             <TextView
                 android:id="@+id/achieved_top_msg"
@@ -37,10 +36,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/delete_achieved_alert"
-                android:foreground="@drawable/ic_action_del"
+                android:foreground="@drawable/ic_action_del_all"
                 android:text="@string/xdel"
                 android:textColor="@color/red" />
-
         </RelativeLayout>
 
         <ListView
@@ -67,15 +65,31 @@
         android:orientation="vertical"
         android:background="@color/light_blue">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black">
         <TextView
             android:id="@+id/set_top_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:text="@string/no_alerts_set" />
 
+            <ImageButton
+                android:id="@+id/del_set_all_btn"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/delete_achieved_alert"
+                android:foreground="@drawable/ic_action_del_all"
+                android:text="@string/xdel"
+                android:textColor="@color/red" />
+
+
+        </RelativeLayout>
     <ListView
         android:id="@+id/alertSet_listView"
         android:layout_width="fill_parent"
