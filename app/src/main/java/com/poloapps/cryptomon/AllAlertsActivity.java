@@ -216,7 +216,7 @@ public class AllAlertsActivity extends BaseActivity {
         String[] splitVAchAlerts  = volAchAlerts.split("[\n]");
         int len3                  = splitVAchAlerts.length;
         String topMsg             = getString(R.string.achieved);
-        
+
         if(splitPAchAlrts[0].equals("")) len2 = 0;
         if(splitVAchAlerts[0].equals("")) len3 = 0;
         if(len2 == 0 && len3 == 0) {
