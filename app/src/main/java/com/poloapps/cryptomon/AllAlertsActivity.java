@@ -62,10 +62,12 @@ public class AllAlertsActivity extends BaseActivity {
         final int YELLOW  = ContextCompat.getColor(getApplicationContext(),(R.color.bright_yellow));
         final int RED     = ContextCompat.getColor(getApplicationContext(),(R.color.red));
         final int GREEN   = ContextCompat.getColor(getApplicationContext(),(R.color.green2));
-        final LayoutInflater li    = LayoutInflater.from(getApplicationContext());
 
-        TextView     achievedTopMsg = findViewById(R.id.achieved_top_msg);
-        TextView     setTopMsg      = findViewById(R.id.set_top_msg);
+        final LayoutInflater li    = LayoutInflater.from(getApplicationContext());
+        ImageButton DelAchAll      = findViewById(R.id.del_ach_all_btn);
+        ImageButton DelSetAll      = findViewById(R.id.del_set_all_btn);
+        TextView    achievedTopMsg = findViewById(R.id.achieved_top_msg);
+        TextView    setTopMsg      = findViewById(R.id.set_top_msg);
 
         String   priceAlerts  = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
@@ -80,9 +82,12 @@ public class AllAlertsActivity extends BaseActivity {
         if (splitPAlerts[0].equals("")) lenPArray = 0;
         if (splitVAlerts[0].equals("")) lenVArray = 0;
 
-        if(lenPArray == 0 && lenVArray == 0) setTopMsg.setText(getString(R.string.no_alerts_set));
-
+        if(lenPArray == 0 && lenVArray == 0){
+            setTopMsg.setText(getString(R.string.no_alerts_set));
+            DelSetAll.setEnabled(false);
+        }
         else {
+            DelSetAll.setEnabled(true);
             String topMsg = getString(R.string.running);
             if(lenPArray+lenVArray == 1){
                 topMsg = getString(R.string.running1);
@@ -204,20 +209,21 @@ public class AllAlertsActivity extends BaseActivity {
         };
         Set_lv.setAdapter(setAdapter);
 
-        String priceAchAlrts    = dbPAchHandler.dbEntries();
-        String[] splitPAchAlrts = priceAchAlrts.split("[\n]");
-        int len2                = splitPAchAlrts.length;
-
+        String priceAchAlrts      = dbPAchHandler.dbEntries();
+        String[] splitPAchAlrts   = priceAchAlrts.split("[\n]");
+        int len2                  = splitPAchAlrts.length;
         String   volAchAlerts     = dbVAchHandler.dbEntries();
         String[] splitVAchAlerts  = volAchAlerts.split("[\n]");
         int len3                  = splitVAchAlerts.length;
         String topMsg             = getString(R.string.achieved);
+        
         if(splitPAchAlrts[0].equals("")) len2 = 0;
         if(splitVAchAlerts[0].equals("")) len3 = 0;
-
         if(len2 == 0 && len3 == 0) {
             achievedTopMsg.setText(getString(R.string.no_achieved_alerts));
+            DelAchAll.setEnabled(false);
         }else {
+            DelAchAll.setEnabled(true);
             if(len2 + len3 == 1) topMsg = getString(R.string.achieved1);
             String msg = String.format(Locale.US, "%d", len2 + len3) + " " + topMsg;
             achievedTopMsg.setText(msg);
@@ -230,7 +236,6 @@ public class AllAlertsActivity extends BaseActivity {
         ListView achLV       = findViewById(R.id.alertAch_listView);
 
         for (int i = 0;i < len2;i++) {
-
             String threshVal = dbPAchHandler.getThresh_Val(splitPAchAlrts[i]);
             String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[i]);
             String check     = dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[i]);
