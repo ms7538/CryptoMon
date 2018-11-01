@@ -84,10 +84,10 @@ public class AllAlertsActivity extends BaseActivity {
 
         if(lenPArray == 0 && lenVArray == 0){
             setTopMsg.setText(getString(R.string.no_alerts_set));
-            DelSetAll.setEnabled(false);
+            DelSetAll.setVisibility(View.INVISIBLE);
         }
         else {
-            DelSetAll.setEnabled(true);
+            DelSetAll.setVisibility(View.VISIBLE);
             String topMsg = getString(R.string.running);
             if(lenPArray+lenVArray == 1){
                 topMsg = getString(R.string.running1);
@@ -193,7 +193,7 @@ public class AllAlertsActivity extends BaseActivity {
                         startCSActivity(currentRow.get("id_set"));
                     }
                 });
-                dispStale.append( "h");
+                dispStale.append("h");
                 delButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -221,9 +221,9 @@ public class AllAlertsActivity extends BaseActivity {
         if(splitVAchAlerts[0].equals("")) len3 = 0;
         if(len2 == 0 && len3 == 0) {
             achievedTopMsg.setText(getString(R.string.no_achieved_alerts));
-            DelAchAll.setEnabled(false);
+            DelAchAll.setVisibility(View.INVISIBLE);
         }else {
-            DelAchAll.setEnabled(true);
+            DelAchAll.setVisibility(View.VISIBLE);
             if(len2 + len3 == 1) topMsg = getString(R.string.achieved1);
             String msg = String.format(Locale.US, "%d", len2 + len3) + " " + topMsg;
             achievedTopMsg.setText(msg);
@@ -394,6 +394,66 @@ public class AllAlertsActivity extends BaseActivity {
                 }
             };
             achLV.setAdapter(listAdapter2);
+
+        DelSetAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(AllAlertsActivity.this);
+                @SuppressLint("InflateParams")
+                View mView = getLayoutInflater()
+                        .inflate(R.layout.confirm_del_set_alerts_menu,null);
+                builder.setView(mView);
+
+                final AlertDialog dialog = builder.create();
+                final Button cancel_btn = mView.findViewById(R.id.del_set_alerts_NO_btn);
+                final Button ok_btn = mView.findViewById(R.id.del_set_alerts_OK_btn);
+
+                cancel_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }});
+                ok_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dbPHandler.deleteAll();
+                        dbVHandler.deleteAll();
+                        restart();
+                    }});
+                dialog.show();
+            }
+        });
+
+        DelAchAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(AllAlertsActivity.this);
+                @SuppressLint("InflateParams")
+                View mView = getLayoutInflater()
+                        .inflate(R.layout.confirm_del_ach_alerts_menu,null);
+                builder.setView(mView);
+
+                final AlertDialog dialog = builder.create();
+                final Button cancel_btn = mView.findViewById(R.id.del_ach_alerts_NO_btn);
+                final Button ok_btn = mView.findViewById(R.id.del_ach_alerts_OK_btn);
+
+                cancel_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }});
+                ok_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dbPAchHandler.deleteAll();
+                        dbVAchHandler.deleteAll();
+                        restart();
+                    }});
+                dialog.show();
+            }
+        });
     }
 
     @Override

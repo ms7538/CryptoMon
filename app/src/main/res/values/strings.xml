@@ -229,5 +229,8 @@
                                         deletion of all set automatic alerts! You may reset the
                                         automatic again using the selected monetary currency.
                                                                                            </string>
+    <string name="this_will_stop_running">This will stop running all services and  \n delete all set alerts</string>
+    <string name="cancel">Cancel</string>
+    <string name="this_action_will_clear_all_achieved_alerts">This action will clear all achieved alerts</string>
 
 </resources>
