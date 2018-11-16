@@ -54,10 +54,8 @@ public class T100Activity extends BaseActivity {
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
 
-        String reqCurrentTime =
-                DateFormat.getDateTimeInstance().format(new Date());
+        String reqCurrentTime = DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
-        String LC_url       = "https://api.coinmarketcap.com/v1/ticker/";
 
         mPublisherAdView = findViewById(R.id.adView);
         PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
@@ -69,6 +67,7 @@ public class T100Activity extends BaseActivity {
         final String  Curr   = mSettings.getString("Curr_code","eur");
         final Integer RED    = ContextCompat.getColor(getApplicationContext(), (R.color.red));
 
+        LC_url = "https://api.coinmarketcap.com/v1/ticker/";
         if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
 
         final DecimalFormat form  = new DecimalFormat("#,###,###,###.##");

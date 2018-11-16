@@ -101,17 +101,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.action_t100:
-                Intent intent2 = new Intent(
-                        BaseActivity.this,
-                        T100Activity.class);
+                Intent intent2 = new Intent(BaseActivity.this, T100Activity.class);
                 intent2.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent2);
                 return true;
 
             case R.id.action_alerts:
-                Intent intent = new Intent(
-                        BaseActivity.this,
-                        AllAlertsActivity.class);
+                Intent intent = new Intent(BaseActivity.this,AllAlertsActivity.class);
                 intent.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent);
                 return true;
@@ -181,7 +177,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     + Link_Strings[j]+"/");
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
-
                         }});
                 }
                 Dismiss_btn.setOnClickListener(new View.OnClickListener() {
@@ -468,20 +463,33 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void updateCurrentVals(){
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Curr   = mSettings.getString("Curr_code","eur");
+        LC_url = "https://api.coinmarketcap.com/v1/ticker/";
+        if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
+
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String string) {
                         try {
+                            String price_key      = "price_usd";
+                            String v24h_key       = "24h_volume_usd";
+
+                            if(!Dollar){
+                                price_key      = "price_" + Curr;
+                                v24h_key       = "24h_volume_" + Curr;
+                            }
+
                             JSONArray T100_Array = new JSONArray(string);
                             for (int i = 0; i < T100_Array.length(); i++) {
 
                                 JSONObject obj1   = T100_Array.getJSONObject(i);
 
-                                String rate       = obj1.getString("price_usd");
+                                String rate       = obj1.getString(price_key);
                                 Double d_rate     = Double.parseDouble(rate);
-                                Double curr_vol   = Double.parseDouble(
-                                                            obj1.getString("24h_volume_usd"));
+                                Double curr_vol   = Double.parseDouble(obj1.getString(v24h_key));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
                                 Integer hours     = (int)(millis/1000/60/60);

@@ -82,7 +82,6 @@ public class CryptoSelectActivity extends BaseActivity {
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
-        //final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         getIntent().removeExtra("restart");
         editor.putBoolean("cs_active", true);
         editor.apply();
@@ -91,7 +90,7 @@ public class CryptoSelectActivity extends BaseActivity {
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();
         final String Curr_symbol   = mSettings.getString("Curr_symb","€");
-
+        final Boolean Dollar       = mSettings.getBoolean("Dollar", true);
         String Select_url1         = "https://api.coinmarketcap.com/v1/ticker/";
         String Select_url2         = "/?convert=" + Curr;
 
@@ -135,12 +134,9 @@ public class CryptoSelectActivity extends BaseActivity {
 
         final Button alertsBtn             = findViewById(R.id.sel_alerts_link);
 
-        String TV_price_text  = getString(R.string.price_) + " " +
-                                CAP_curr + getString(R.string.colon);
-        String TV_volume_text = getString(R.string.vol24h_) + " " + CAP_curr  +
-                                getString(R.string.colon);
-        String TV_cap_text    = getString(R.string.market_cap_) + " " + CAP_curr  +
-                                getString(R.string.colon);
+        String TV_price_text  = getString(R.string.price_)      + " " + CAP_curr  + getString(R.string.colon);
+        String TV_volume_text = getString(R.string.vol24h_) + " " + CAP_curr  + getString(R.string.colon);
+        String TV_cap_text    = getString(R.string.market_cap_) + " " + CAP_curr  + getString(R.string.colon);
 
         price_NUSD_TV.setText(TV_price_text);
         volume_NUSD_TV.setText(TV_volume_text);
@@ -176,10 +172,11 @@ public class CryptoSelectActivity extends BaseActivity {
                                                                 object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
-//                            double currPrice = usdP;
-//                            if(!Dollar){
-//                               currPrice = not_usdP;
-//                            }
+                            double currPrice = usdP;
+
+                            if(!Dollar){
+                               currPrice = not_usdP;
+                            }
 
                             if      (usdP     < 0.01) USD_frmt = frmt2;
                             else if (usdP     > 99)   USD_frmt = frmt0;
@@ -262,17 +259,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             VolumeUSD.setText(USD_Volume);
 
-                            editor.putFloat ("price_init_f",  (float) usdP);
+                            editor.putFloat ("price_init_f",  (float) currPrice);
 
-                            String priceInit = frmt.format((usdP));
-                            if (usdP >= 100)
-                                   priceInit = frmt0.format((usdP));
-
+                            String priceInit = frmt.format((currPrice));
+                            if (currPrice >= 100)
+                                   priceInit = frmt0.format((currPrice));
                             editor.putString("price_initial", priceInit);
-                            editor.putFloat("vol_init_i", Float.parseFloat(USD_Volume_val));
-                            editor.putString("vol_initial", frmt3.format(
-                                                                 Float.parseFloat(USD_Volume_val)));
-                            editor.apply();
 
                             String EUR_Volume     = getString(R.string.not_avail);
                             String EUR_Volume_val = object.getString(volume_key_nonUSD);
@@ -281,6 +273,13 @@ public class CryptoSelectActivity extends BaseActivity {
                                              frmt3.format(Double.parseDouble(EUR_Volume_val));
                             }
                             VolumeEUR.setText(EUR_Volume);
+
+                            String CurrVol = USD_Volume_val;
+                            if(!Dollar) CurrVol = EUR_Volume_val;
+
+                            editor.putFloat("vol_init_i", Float.parseFloat(CurrVol));
+                            editor.putString("vol_initial",frmt3.format(Float.parseFloat(CurrVol)));
+                            editor.apply();
 
                             String USD_MarketCap     = getString(R.string.not_avail);
                             String USD_MarketCap_val = object.getString("market_cap_usd");
@@ -366,14 +365,14 @@ public class CryptoSelectActivity extends BaseActivity {
                 builder3.setView(alertsMenu);
                 final String  Symbol      = getIntent().getStringExtra("crypto_id");
                 TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
-                //TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
+                TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
+                TextView alertsVSym       = alertsMenu.findViewById(R.id.alerts_volume_currency);
                 final EditText priceInput = alertsMenu.findViewById(R.id.price_input);
                 final EditText volInput   = alertsMenu.findViewById(R.id.volume_input);
                 final Button setPriceBtn  = alertsMenu.findViewById(R.id.price_setBtn);
                 final Button setVolBtn    = alertsMenu.findViewById(R.id.vol_setBtn);
 
                 alertName.setText(Symbol);
-
                 final String initPrice    = mSettings.getString("price_initial","0");
                 final double currentPrice = mSettings.getFloat("price_init_f",0);
 
@@ -401,11 +400,12 @@ public class CryptoSelectActivity extends BaseActivity {
                     volInput.setHint(initVolume);
                     alertVol         = false;
                 }
-                //String symbolCurrent = "$";
-//                if(!Dollar){
-//                    symbolCurrent = mSettings.getString("Curr_symb","€");
-//                    alertsSym.setText(symbolCurrent);
-//                }
+                String symbolCurrent = "$";
+                if(!Dollar){
+                    symbolCurrent = mSettings.getString("Curr_symb","€");
+                    alertsSym.setText(symbolCurrent);
+                    alertsVSym.setText(symbolCurrent);
+                }
 
                 setPriceBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -413,7 +413,6 @@ public class CryptoSelectActivity extends BaseActivity {
                         if (!alertPrice) {
                             if(!priceInput.getText().toString().equals("")) {
                                 alertPrice = true;
-                                //if (dbPHandler.Exists(Symbol)) dbPHandler.deleteAlert(Symbol);
                                 String fmtRemoved = priceInput.getText().toString().replace(
                                                                         ",", "");
                                 double thPrice = Double.parseDouble(fmtRemoved);
