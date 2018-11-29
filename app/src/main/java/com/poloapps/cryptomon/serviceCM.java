@@ -213,22 +213,19 @@ public class serviceCM extends Service {
 
                                 JSONObject obj1 = T100_Array.getJSONObject(i);
 
-                                String rate       = obj1.getString("price_usd");
+                                String rate       = obj1.getString(price_key);
                                 Double d_rate     = Double.parseDouble(rate);
                                 Double curr_vol   = Double.parseDouble(
-                                                           obj1.getString("24h_volume_usd"));
+                                                           obj1.getString(v24h_key));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
                                 Integer hours     = (int) (millis/1000/60/60);
 
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
-
                             }
-                        } catch (JSONException e) {
 
-                            e.printStackTrace();
-                        }
+                        } catch (JSONException e) {  e.printStackTrace();    }
                     }
                 }, new Response.ErrorListener() {
             @Override
