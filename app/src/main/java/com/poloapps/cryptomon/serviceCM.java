@@ -35,6 +35,10 @@ public class serviceCM extends Service {
     String strTicker = "CM ALERTS:";
     String strCTp1   = "New Alerts: ";
 
+    final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+    final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+    final String  Curr   = mSettings.getString("Curr_code","eur");
+
     NotificationCompat.Builder cmNotification;
     private  static  final int uniqueID = 243823;
     private  static  final int uID      = 527354;
@@ -190,11 +194,20 @@ public class serviceCM extends Service {
     @Override public IBinder onBind(Intent intent) { return null; }
 
     void updateCurrentVals(){
+        if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String string) {
                         try {
+
+                            String price_key      = "price_usd";
+                            String v24h_key       = "24h_volume_usd";
+
+                            if(!Dollar){
+                                price_key      = "price_" + Curr;
+                                v24h_key       = "24h_volume_" + Curr;
+                            }
                             JSONArray T100_Array = new JSONArray(string);
                             for (int i = 0; i < T100_Array.length(); i++) {
 
@@ -246,7 +259,6 @@ public class serviceCM extends Service {
     }
 
     void checkAchieved(){
-
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int len1              = splitPAlerts.length;
@@ -332,5 +344,4 @@ public class serviceCM extends Service {
             notificationManager.createNotificationChannel(channel);
         }
     }
-
 }
