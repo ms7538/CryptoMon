@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
-//v1.215    created
+//v1.216    created
 public class T100Activity extends BaseActivity {
 
     long createdTime = System.currentTimeMillis() / 1000L;
@@ -62,8 +62,8 @@ public class T100Activity extends BaseActivity {
         mPublisherAdView.loadAd(adRequest);
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        Boolean Dollar = mSettings.getBoolean("Dollar", true);
 
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
         final Integer RED    = ContextCompat.getColor(getApplicationContext(), (R.color.red));
 
@@ -85,7 +85,7 @@ public class T100Activity extends BaseActivity {
                     String price_key      = "price_usd";
                     String curr_symbol    = "$";
                     String Vol24h_key     = "24h_volume_usd";
-
+                    Boolean Dollar = mSettings.getBoolean("Dollar", true);
                     if(!Dollar){
                         price_key      = "price_" + Curr;
                         curr_symbol    = mSettings.getString("Curr_symb","€");

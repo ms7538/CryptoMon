@@ -35,10 +35,6 @@ public class serviceCM extends Service {
     String strTicker = "CM ALERTS:";
     String strCTp1   = "New Alerts: ";
 
-    final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-    final Boolean Dollar = mSettings.getBoolean("Dollar", true);
-    final String  Curr   = mSettings.getString("Curr_code","eur");
-
     NotificationCompat.Builder cmNotification;
     private  static  final int uniqueID = 243823;
     private  static  final int uID      = 527354;
@@ -194,6 +190,9 @@ public class serviceCM extends Service {
     @Override public IBinder onBind(Intent intent) { return null; }
 
     void updateCurrentVals(){
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Curr   = mSettings.getString("Curr_code","eur");
         if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
