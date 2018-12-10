@@ -63,6 +63,9 @@ public class AllAlertsActivity extends BaseActivity {
         final int RED     = ContextCompat.getColor(getApplicationContext(),(R.color.red));
         final int GREEN   = ContextCompat.getColor(getApplicationContext(),(R.color.green2));
 
+        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Symb   = mSettings.getString("Curr_symb","€");
+
         final LayoutInflater li    = LayoutInflater.from(getApplicationContext());
         ImageButton DelAchAll      = findViewById(R.id.del_ach_all_btn);
         ImageButton DelSetAll      = findViewById(R.id.del_set_all_btn);
@@ -167,8 +170,10 @@ public class AllAlertsActivity extends BaseActivity {
                 if      (valCr < .01)  curr = frmt2;
                 else if (valCr >= 100) curr = frmt0;
 
-                String dispThr = "$"  + thresh.format(valTh);
-                String dispCur = "$"  + curr.format(valCr);
+                String disp_curr_symb = "$";
+                if (!Dollar) disp_curr_symb = Symb;
+                String dispThr = disp_curr_symb + thresh.format(valTh);
+                String dispCur = disp_curr_symb + curr.format(valCr);
                 setThreshVal.setText(dispThr);
                 setCurrVal.setText(dispCur);
 
