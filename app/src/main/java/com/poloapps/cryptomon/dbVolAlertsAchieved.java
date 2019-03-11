@@ -41,13 +41,13 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
     }
 
     void addVolAchAlert(
-            String cryptoSymb, double breaker, double threshold, int check, int sysMins) {
+            String cryptoSymb, double breaker, double threshold, int check, int sysMins, String MC){
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB,   cryptoSymb);
         values.put(COLUMN_THRESH_BRK,   breaker);
         values.put(COLUMN_THRESH_VAL,   threshold);
         values.put(COLUMN_BREAKER_CHCK, check);
-        values.put(COLUMN_CURRSYMB,     "$");
+        values.put(COLUMN_CURRSYMB,     MC);
         values.put(COLUMN_ACH_MIN,      sysMins);
 
         SQLiteDatabase db = getWritableDatabase();
@@ -149,8 +149,25 @@ public class dbVolAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
+    String getAchievedMonCurrency(String in){
+        StringBuilder dbString = new StringBuilder();
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+                dbString.append(c.getString(c.getColumnIndex("currsymbol")));
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return dbString.toString();
+    }
+
     Boolean alertExists(String in){
-        Boolean exists = false;
+        boolean exists = false;
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS2 + " WHERE 1";
         Cursor c               = db.rawQuery(query, null);

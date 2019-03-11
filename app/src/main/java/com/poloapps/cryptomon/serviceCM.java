@@ -191,7 +191,7 @@ public class serviceCM extends Service {
 
     void updateCurrentVals(){
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
         if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
         StringRequest crypto100_request = new StringRequest(LC_url,
@@ -213,12 +213,12 @@ public class serviceCM extends Service {
                                 JSONObject obj1 = T100_Array.getJSONObject(i);
 
                                 String rate       = obj1.getString(price_key);
-                                Double d_rate     = Double.parseDouble(rate);
-                                Double curr_vol   = Double.parseDouble(
+                                double d_rate     = Double.parseDouble(rate);
+                                double curr_vol   = Double.parseDouble(
                                                            obj1.getString(v24h_key));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
-                                Integer hours     = (int) (millis/1000/60/60);
+                                int hours     = (int) (millis/1000/60/60);
 
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
@@ -257,6 +257,7 @@ public class serviceCM extends Service {
     void checkAchieved(){
         String priceAlerts    = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
+        String currency_code  = retMonCurr();
         int len1              = splitPAlerts.length;
         if (splitPAlerts[0].equals("")) len1 = 0;
 
@@ -272,10 +273,12 @@ public class serviceCM extends Service {
 
             if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
                 dbPHelperMethod(splitPAlerts[i]);
-                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,check,cur_mins);
+                dbPAchHandler.addPriceAchAlert(
+                        splitPAlerts[i],price,thPrice,check,cur_mins, currency_code);
             } else if (cur_hrs - set_hrs > deleteTimeHrs) {
                 dbPHelperMethod(splitPAlerts[i]);
-                dbPAchHandler.addPriceAchAlert(splitPAlerts[i],price,thPrice,100,cur_mins);
+                dbPAchHandler.addPriceAchAlert(
+                        splitPAlerts[i],price,thPrice,100,cur_mins, currency_code);
             }
         }
 
@@ -296,10 +299,12 @@ public class serviceCM extends Service {
 
             if ((thVol < vol && check2 == 1) || (thVol > vol && check2 == -1)){
                 dbVHelperMethod(splitVAlerts[j]);
-                dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol, check2, cur_mins2);
+                dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol,
+                        check2, cur_mins2, currency_code);
             }else if (cur_hrs2 - set_hrs2 > deleteTimeHrs){
                 dbVHelperMethod(splitVAlerts[j]);
-                dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol, 100, cur_mins2);
+                dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol,
+                        100, cur_mins2, currency_code);
             }
         }
     }
@@ -326,6 +331,14 @@ public class serviceCM extends Service {
             dbVAchHandler.removeVolAchAlert(in);
             overwritten++;
         }
+    }
+    String retMonCurr(){
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        String curr_code = "$";
+        final boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Curr   = mSettings.getString("Curr_symb","€");
+        if(!Dollar) curr_code = Curr;
+        return curr_code;
     }
 
     private void createNotificationChannel() {

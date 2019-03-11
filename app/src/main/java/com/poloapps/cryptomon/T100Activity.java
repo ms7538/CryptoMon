@@ -62,7 +62,7 @@ public class T100Activity extends BaseActivity {
         mPublisherAdView.loadAd(adRequest);
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        boolean Dollar = mSettings.getBoolean("Dollar", true);
 
         final String  Curr   = mSettings.getString("Curr_code","eur");
         final Integer RED    = ContextCompat.getColor(getApplicationContext(), (R.color.red));
@@ -85,7 +85,7 @@ public class T100Activity extends BaseActivity {
                     String price_key      = "price_usd";
                     String curr_symbol    = "$";
                     String Vol24h_key     = "24h_volume_usd";
-                    Boolean Dollar = mSettings.getBoolean("Dollar", true);
+                    boolean Dollar = mSettings.getBoolean("Dollar", true);
                     if(!Dollar){
                         price_key      = "price_" + Curr;
                         curr_symbol    = mSettings.getString("Curr_symb","€");
@@ -105,8 +105,8 @@ public class T100Activity extends BaseActivity {
                         Double curr_vol   = Double.parseDouble(obj1.getString(Vol24h_key));
                         String volume_24h = curr_symbol + form3.format(curr_vol);
 
-                        Double PriceVal  = Double.parseDouble(obj1.getString(price_key));
-                        Double VolVal    = Double.parseDouble(obj1.getString(Vol24h_key));
+                        double PriceVal  = Double.parseDouble(obj1.getString(price_key));
+                        double VolVal    = Double.parseDouble(obj1.getString(Vol24h_key));
 
                         if (d_rate < .01) rate  = curr_symbol + form2.format(d_rate);
                         else              rate  = curr_symbol + form.format(d_rate);
@@ -121,7 +121,7 @@ public class T100Activity extends BaseActivity {
                         String delta_7d   = obj1.getString("percent_change_7d");
                         String link_id    = obj1.getString("id");
                         long millis       = System.currentTimeMillis();
-                        Integer hours     = (int) (millis/1000/60/60);
+                        int hours         = (int) (millis/1000/60/60);
 
                         dbCVHandler.deleteEntry(link_id);
                         dbCVHandler.addCurrentVals(link_id, PriceVal, VolVal, hours);
@@ -225,10 +225,10 @@ public class T100Activity extends BaseActivity {
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
 
-        Boolean csActive   = mSettings.getBoolean("cs_active", false);
-        Boolean aaActive   = mSettings.getBoolean("aa_active", false);
-        Boolean t100Active = mSettings.getBoolean("t100_active", true);
-        Boolean restart    = getIntent().getBooleanExtra("restart", false);
+        boolean csActive   = mSettings.getBoolean("cs_active", false);
+        boolean aaActive   = mSettings.getBoolean("aa_active", false);
+        boolean t100Active = mSettings.getBoolean("t100_active", true);
+        boolean restart    = getIntent().getBooleanExtra("restart", false);
         getIntent().removeExtra("restart");
 
         if(!csActive && !aaActive && !t100Active && !restart) checkStartService();
@@ -250,7 +250,7 @@ public class T100Activity extends BaseActivity {
         super.onPause();
         SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
         SharedPreferences.Editor editor = mSettings.edit();
-        Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        boolean Dollar = mSettings.getBoolean("Dollar", true);
         String  Curr   = mSettings.getString("Curr_code","eur");
 
         editor.putBoolean("t100_active", false);
@@ -266,14 +266,14 @@ public class T100Activity extends BaseActivity {
         SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
         SharedPreferences.Editor editor = mSettings.edit();
         getIntent().removeExtra("restart");
-        Boolean Dollar                  = mSettings.getBoolean("Dollar", true);
+        boolean Dollar                  = mSettings.getBoolean("Dollar", true);
         String  Curr                    = mSettings.getString("Curr_code","eur");
         String  T100                    = mSettings.getString("t100_curr","usd");
         stopRunningService();
         editor.putBoolean("t100_active", true);
         editor.apply();
 
-        Long resumeTime             = System.currentTimeMillis() / 1000L;
+        long resumeTime             = System.currentTimeMillis() / 1000L;
         if (resumeTime - createdTime > 299) restart();
         String currency_check = "usd";
         if(!Dollar) currency_check = Curr;

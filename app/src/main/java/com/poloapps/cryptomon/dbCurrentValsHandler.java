@@ -88,22 +88,22 @@ public class dbCurrentValsHandler extends SQLiteOpenHelper {
         return dbCurrVol.toString();
     }
 
-    public Boolean Exists(String in){
-        Boolean exists         = false;
-        SQLiteDatabase db      = getWritableDatabase();
-        String query           = "SELECT * FROM " + TABLE_CM_CVALS + " WHERE 1";
-        Cursor c               = db.rawQuery(query, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
-                exists = true;
-            }
-            c.moveToNext();
-        }
-        c.close();
-        db.close();
-        return exists;
-    }
+//    public Boolean Exists(String in){
+//        boolean exists         = false;
+//        SQLiteDatabase db      = getWritableDatabase();
+//        String query           = "SELECT * FROM " + TABLE_CM_CVALS + " WHERE 1";
+//        Cursor c               = db.rawQuery(query, null);
+//        c.moveToFirst();
+//        while(!c.isAfterLast()){
+//            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+//                exists = true;
+//            }
+//            c.moveToNext();
+//        }
+//        c.close();
+//        db.close();
+//        return exists;
+//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             }
     String currentHour(String cryptoId){
         StringBuilder dbCurrVol = new StringBuilder();
         SQLiteDatabase db       = getWritableDatabase();

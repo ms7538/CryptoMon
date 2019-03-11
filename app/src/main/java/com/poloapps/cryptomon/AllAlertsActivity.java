@@ -245,6 +245,7 @@ public class AllAlertsActivity extends BaseActivity {
             String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[i]);
             String check     = dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[i]);
             String min_ach   = dbPAchHandler.getAchievedTimeStamp(splitPAchAlrts[i]);
+            String ach_symb  = dbPAchHandler.getAchievedMonCurrency(splitPAchAlrts[i]);
             String type1     = "Price";
             String top_msg   = getString(R.string.alert_achieved);
 
@@ -255,13 +256,14 @@ public class AllAlertsActivity extends BaseActivity {
             }
 
             HashMap<String, String> item = new HashMap<>();
-            item.put("id",      splitPAchAlrts[i]);
-            item.put("msg",     top_msg);
-            item.put("check",   check);
-            item.put("type",    type1);
-            item.put("thresh",  threshVal);
-            item.put("min_ach", min_ach);
-            item.put("breaker", threshBrk);
+            item.put("id",       splitPAchAlrts[i]);
+            item.put("msg",      top_msg);
+            item.put("check",    check);
+            item.put("type",     type1);
+            item.put("thresh",   threshVal);
+            item.put("min_ach",  min_ach);
+            item.put("breaker",  threshBrk);
+            item.put("mon_curr", ach_symb);
 
             AchievedList.add(item);
         }
@@ -272,6 +274,7 @@ public class AllAlertsActivity extends BaseActivity {
             String threshBrk = dbVAchHandler.getThreshBrk(splitVAchAlerts[ij]);
             String check     = dbVAchHandler.getColumnBreakerChck(splitVAchAlerts[ij]);
             String min_ach   = dbVAchHandler.getAchievedTimeStamp(splitVAchAlerts[ij]);
+            String ach_symb  = dbVAchHandler.getAchievedMonCurrency(splitVAchAlerts[ij]);
             String type1     = "24h Volume";
             String top_msg   = getString(R.string.alert_achieved);
 
@@ -281,13 +284,14 @@ public class AllAlertsActivity extends BaseActivity {
                 threshBrk = "N/A";
             }
             HashMap<String, String> item = new HashMap<>();
-            item.put("id" ,    id);
-            item.put("msg",    top_msg);
-            item.put("check",  check);
-            item.put("type",   type1);
-            item.put("thresh", threshVal);
-            item.put("min_ach",min_ach);
-            item.put("breaker",threshBrk);
+            item.put("id" ,      id);
+            item.put("msg",      top_msg);
+            item.put("check",    check);
+            item.put("type",     type1);
+            item.put("thresh",   threshVal);
+            item.put("min_ach",  min_ach);
+            item.put("breaker",  threshBrk);
+            item.put("mon_curr", ach_symb);
 
             AchievedList.add(item);
         }
@@ -324,12 +328,12 @@ public class AllAlertsActivity extends BaseActivity {
                     Time2.setText(achTime);
 
                     double threshVal = Double.parseDouble(currentRow.get("thresh"));
-                    String valThr = "$" + frmt.format(threshVal);
+                    String valThr = currentRow.get("mon_curr") + frmt.format(threshVal);
                     valT.setText(valThr);
 
                     if (!check.equals("100")) {
                         double breakVal = Double.parseDouble(currentRow.get("breaker"));
-                        String valBrk = "$" + frmt.format(breakVal);
+                        String valBrk = currentRow.get("mon_curr") + frmt.format(breakVal);
                         valB.setText(valBrk);
 
                         if (check.equals("1")) {
@@ -470,9 +474,9 @@ public class AllAlertsActivity extends BaseActivity {
         editor.putBoolean("aa_active", false);
         editor.apply();
 
-        Boolean csActive   = mSettings.getBoolean("cs_active", false);
-        Boolean t100Active = mSettings.getBoolean("t100_active", false);
-        Boolean restart    = getIntent().getBooleanExtra("restart", false);
+        boolean csActive   = mSettings.getBoolean("cs_active", false);
+        boolean t100Active = mSettings.getBoolean("t100_active", false);
+        boolean restart    = getIntent().getBooleanExtra("restart", false);
         getIntent().removeExtra("restart");
 
         if(!csActive && !t100Active && !restart ) checkStartService();

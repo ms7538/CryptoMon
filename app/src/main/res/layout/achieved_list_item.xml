@@ -19,7 +19,8 @@
             android:foreground="@drawable/ic_action_del"
             android:text="@string/xdel"
             android:textColor="@color/red"
-            android:contentDescription="@string/delete_achieved_alert"/>
+            android:contentDescription="@string/delete_achieved_alert"
+            tools:targetApi="m" />
 
         <TextView
             android:id="@+id/ach_alert_name"

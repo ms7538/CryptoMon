@@ -95,7 +95,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
 
         switch (item.getItemId()) {
@@ -295,7 +295,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                             DelWarn.setVisibility(View.VISIBLE);
                         }
                         CurrOkBtn.setEnabled(true);
-                        Boolean Dollar_Sel = false;
+                        boolean Dollar_Sel = false;
                         String nonUSD_code = "eur";
                         String nonUSD_symb = "€";
 
@@ -463,8 +463,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     void updateCurrentVals(){
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
+
         LC_url = "https://api.coinmarketcap.com/v1/ticker/";
         if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
 
@@ -487,11 +488,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 JSONObject obj1   = T100_Array.getJSONObject(i);
 
                                 String rate       = obj1.getString(price_key);
-                                Double d_rate     = Double.parseDouble(rate);
-                                Double curr_vol   = Double.parseDouble(obj1.getString(v24h_key));
+                                double d_rate     = Double.parseDouble(rate);
+                                double curr_vol   = Double.parseDouble(obj1.getString(v24h_key));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
-                                Integer hours     = (int)(millis/1000/60/60);
+                                int hours     = (int)(millis/1000/60/60);
 
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
@@ -501,6 +502,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                             String[] splitPAlerts = priceAlerts.split("[\n]");
 
                             int len1 = numberPAlerts();
+
+                            String currency_code = "$";
+                            if(!Dollar) currency_code =  mSettings.getString("Curr_symb",
+                                    "€");
 
                             for (int i = 0; i < len1; i++) {
                                 double price   = Double.parseDouble(
@@ -520,7 +525,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     }
                                     int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
                                     dbPAchHandler.addPriceAchAlert(
-                                            splitPAlerts[i], price, thPrice, check, cur_mins);
+                                            splitPAlerts[i], price, thPrice,
+                                            check, cur_mins, currency_code);
                                 }
                             }
 
@@ -546,7 +552,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     }
                                     int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
                                     dbVAchHandler.addVolAchAlert(
-                                            splitVAlerts[j], vol, thVol, check2, cur_mins);
+                                            splitVAlerts[j], vol, thVol,
+                                            check2, cur_mins, currency_code);
                                 }
                             }
 

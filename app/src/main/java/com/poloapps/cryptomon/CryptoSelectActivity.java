@@ -90,7 +90,7 @@ public class CryptoSelectActivity extends BaseActivity {
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();
         final String Curr_symbol   = mSettings.getString("Curr_symb","€");
-        final Boolean Dollar       = mSettings.getBoolean("Dollar", true);
+        final boolean Dollar       = mSettings.getBoolean("Dollar", true);
         String Select_url1         = "https://api.coinmarketcap.com/v1/ticker/";
         String Select_url2         = "/?convert=" + Curr;
 
@@ -197,10 +197,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             if (!Objects.equals(Delta_1h_val, "null")) {
                                 Delta_1h = Delta_1h_val + "%";
                                 if( Double.parseDouble(Delta_1h_val) < 0 ) {
-                                    Delta1h.setTextColor(getResources().getColor(R.color.red));
+                                    Delta1h.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.red));
                                 }else if ( Double.parseDouble(Delta_1h_val) > 0 ){
                                     Delta_1h = "+" + Delta_1h;
-                                    Delta1h.setTextColor(getResources().getColor(R.color.green2));
+                                    Delta1h.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.green2));
                                 }
                             }
                             Delta1h.setText(Delta_1h);
@@ -210,10 +212,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             if (!Objects.equals(Delta_1d_val, "null")) {
                                 Delta_1d = Delta_1d_val + "%";
                                 if( Double.parseDouble(Delta_1d_val) < 0 ) {
-                                    Delta1d.setTextColor(getResources().getColor(R.color.red));
+                                    Delta1d.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.red));
                                 }else if ( Double.parseDouble(Delta_1d_val) > 0 ){
                                     Delta_1d = "+" + Delta_1d;
-                                    Delta1d.setTextColor(getResources().getColor(R.color.green2));
+                                    Delta1d.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.green2));
                                 }
                             }
                             Delta1d.setText(Delta_1d);
@@ -223,10 +227,11 @@ public class CryptoSelectActivity extends BaseActivity {
                             if (!Objects.equals(Delta_7d_val, "null")) {
                                 Delta_7d = Delta_7d_val + "%";
                                 if( Double.parseDouble(Delta_7d_val) < 0 ) {
-                                    Delta7d.setTextColor(getResources().getColor(R.color.red));
+                                    Delta7d.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.red));
                                 }else if ( Double.parseDouble(Delta_7d_val) > 0 ){
                                     Delta_7d = "+" + Delta_7d;
-                                    Delta7d.setTextColor(getResources().getColor(R.color.green2));
+                                    Delta7d.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.green2));
                                 }
                             }
                             Delta7d.setText(Delta_7d);
@@ -508,9 +513,9 @@ public class CryptoSelectActivity extends BaseActivity {
         editor.putBoolean("cs_active", false);
         editor.apply();
 
-        Boolean aaActive   = mSettings.getBoolean("aa_active", false);
-        Boolean t100Active = mSettings.getBoolean("t100_active", false);
-        Boolean restart    = getIntent().getBooleanExtra("restart", false);
+        boolean aaActive   = mSettings.getBoolean("aa_active", false);
+        boolean t100Active = mSettings.getBoolean("t100_active", false);
+        boolean restart    = getIntent().getBooleanExtra("restart", false);
         getIntent().removeExtra("restart");
 
         if(!aaActive && !t100Active && !restart) checkStartService();
