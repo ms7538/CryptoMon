@@ -38,8 +38,8 @@ import java.util.Objects;
 
 /**
  * Created by Marko on 2/25/2018.
- * Updated on 10/22/2018
- * Base Class v1.217
+ * Updated on 03/12/2019
+ * Base Class v1.218
  *
  */
 
