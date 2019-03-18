@@ -378,7 +378,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         if(numberVAlerts() != 0) {
                             dbVHandler.deleteAll();
                         }
-                        
+
                         dialog2.dismiss();
                         restart();
                     }});
