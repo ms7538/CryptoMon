@@ -46,7 +46,9 @@ public class AllAlertsActivity extends BaseActivity {
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
         mPublisherAdView = findViewById(R.id.all_alerts_adView);
-        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice("A530388CACF455CECC92502035BB36DC")
+                .build();
         mPublisherAdView.loadAd(adRequest);
         updateCurrentVals();
     }

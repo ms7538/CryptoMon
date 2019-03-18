@@ -58,7 +58,9 @@ public class T100Activity extends BaseActivity {
         Time2.setText(reqCurrentTime);
 
         mPublisherAdView = findViewById(R.id.adView);
-        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice("A530388CACF455CECC92502035BB36DC")
+                .build();
         mPublisherAdView.loadAd(adRequest);
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);

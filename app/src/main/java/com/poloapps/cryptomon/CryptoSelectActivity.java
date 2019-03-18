@@ -61,7 +61,9 @@ public class CryptoSelectActivity extends BaseActivity {
         dbVHandler = new dbVolumeHandler(this, null);
 
         mPublisherAdView = findViewById(R.id.adView);
-        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice("A530388CACF455CECC92502035BB36DC")
+                .build();
         mPublisherAdView.loadAd(adRequest);
 
     }

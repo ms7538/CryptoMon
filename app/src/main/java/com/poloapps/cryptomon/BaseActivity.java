@@ -375,6 +375,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                         if(numberPAlerts() != 0) {
                             dbPHandler.deleteAll();
                         }
+                        if(numberVAlerts() != 0) {
+                            dbVHandler.deleteAll();
+                        }
+                        
                         dialog2.dismiss();
                         restart();
                     }});
@@ -486,13 +490,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                             for (int i = 0; i < T100_Array.length(); i++) {
 
                                 JSONObject obj1   = T100_Array.getJSONObject(i);
-
                                 String rate       = obj1.getString(price_key);
                                 double d_rate     = Double.parseDouble(rate);
                                 double curr_vol   = Double.parseDouble(obj1.getString(v24h_key));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
-                                int hours     = (int)(millis/1000/60/60);
+                                int hours         = (int)(millis/1000/60/60);
 
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
