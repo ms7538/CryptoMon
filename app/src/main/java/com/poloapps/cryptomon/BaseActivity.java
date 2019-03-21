@@ -518,8 +518,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 int    check   = Integer.parseInt(
                                         dbPHandler.getThresh_Check(splitPAlerts[i]));
 
-                                if ((thPrice < price && check == 1) ||
-                                                                (thPrice > price && check == -1)) {
+                                if ((thPrice <= price && check == 1) ||
+                                                                (thPrice >= price && check == -1)){
 
                                     dbPHandler.deleteAlert(splitPAlerts[i]);
                                     if(dbPAchHandler.alertExists(splitPAlerts[i])){

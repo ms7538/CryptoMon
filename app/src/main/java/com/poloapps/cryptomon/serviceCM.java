@@ -34,6 +34,7 @@ public class serviceCM extends Service {
     String LC_url    = "https://api.coinmarketcap.com/v1/ticker/";
     String strTicker = "CM ALERTS:";
     String strCTp1   = "New Alerts: ";
+    private static final String TAG = "ServiceCM";
 
     NotificationCompat.Builder cmNotification;
     private  static  final int uniqueID = 243823;
@@ -218,7 +219,7 @@ public class serviceCM extends Service {
                                                            obj1.getString(v24h_key));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
-                                int hours     = (int) (millis/1000/60/60);
+                                int hours         = (int) (millis/1000/60/60);
 
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
@@ -247,7 +248,7 @@ public class serviceCM extends Service {
         String volAchieved     = dbVAchHandler.dbEntries();
         String[] splitVAAlerts = volAchieved.split("[\n]");
         int len3               = splitVAAlerts.length;
-        if (splitPAAlerts[0].equals(""))len3 = 0;
+        if (splitVAAlerts[0].equals(""))len3 = 0;
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         int dispAlerts = mSettings.getInt("disp_alerts",0);
@@ -271,7 +272,7 @@ public class serviceCM extends Service {
             int    cur_hrs  = (int) (millis/1000/60/60);
             int    cur_mins = (int) (millis/1000/60);
 
-            if ((thPrice < price && check == 1) || (thPrice > price && check == -1)) {
+            if ((thPrice <= price && check == 1) || (thPrice >= price && check == -1)) {
                 dbPHelperMethod(splitPAlerts[i]);
                 dbPAchHandler.addPriceAchAlert(
                         splitPAlerts[i],price,thPrice,check,cur_mins, currency_code);
