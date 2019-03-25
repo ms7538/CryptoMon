@@ -58,9 +58,7 @@ public class AllAlertsActivity extends BaseActivity {
         super.onResume();
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
-        getIntent().removeExtra("restart");
         overwritten = 0;
-        stopRunningService();
         final int YELLOW  = ContextCompat.getColor(getApplicationContext(),(R.color.bright_yellow));
         final int RED     = ContextCompat.getColor(getApplicationContext(),(R.color.red));
         final int GREEN   = ContextCompat.getColor(getApplicationContext(),(R.color.green2));
@@ -236,7 +234,6 @@ public class AllAlertsActivity extends BaseActivity {
             achievedTopMsg.setText(msg);
         }
         editor.putInt("disp_alerts",   len2+len3);
-        editor.putBoolean("aa_active", true);
         editor.apply();
 
         AchievedList         = new ArrayList<>();
@@ -467,45 +464,9 @@ public class AllAlertsActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        editor.putBoolean("aa_active", false);
-        editor.apply();
-
-        boolean csActive   = mSettings.getBoolean("cs_active", false);
-        boolean t100Active = mSettings.getBoolean("t100_active", false);
-        boolean restart    = getIntent().getBooleanExtra("restart", false);
-        getIntent().removeExtra("restart");
-
-        if(!csActive && !t100Active && !restart ) checkStartService();
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        stopRunningService();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        editor.putBoolean("aa_active", true);
-        editor.apply();
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-        editor.putBoolean("aa_active", false);
-        editor.apply();
-    }
     public void startCSActivity(String in){
         Intent intent = new Intent(AllAlertsActivity.this,CryptoSelectActivity.class);
         intent.putExtra("crypto_id", in);
-        intent.putExtra("restart", false);
         AllAlertsActivity.this.startActivity(intent);
     }
 }

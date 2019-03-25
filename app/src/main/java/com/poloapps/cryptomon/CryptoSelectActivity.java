@@ -67,25 +67,14 @@ public class CryptoSelectActivity extends BaseActivity {
         mPublisherAdView.loadAd(adRequest);
 
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        editor.putBoolean("cs_active", true);
-        editor.apply();
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        stopRunningService();
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
         getIntent().removeExtra("restart");
-        editor.putBoolean("cs_active", true);
         editor.apply();
 
         final LayoutInflater li    = LayoutInflater.from(CryptoSelectActivity.this);
@@ -504,31 +493,6 @@ public class CryptoSelectActivity extends BaseActivity {
 
             }
         });
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        editor.putBoolean("cs_active", false);
-        editor.apply();
-
-        boolean aaActive   = mSettings.getBoolean("aa_active", false);
-        boolean t100Active = mSettings.getBoolean("t100_active", false);
-        boolean restart    = getIntent().getBooleanExtra("restart", false);
-        getIntent().removeExtra("restart");
-
-        if(!aaActive && !t100Active && !restart) checkStartService();
-    }
-    @Override
-    public void onPause(){
-        super.onPause();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-        editor.putBoolean("cs_active", false);
-        editor.apply();
     }
 }
 

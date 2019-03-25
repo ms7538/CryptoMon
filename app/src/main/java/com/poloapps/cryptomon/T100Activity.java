@@ -222,32 +222,6 @@ public class T100Activity extends BaseActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        boolean csActive   = mSettings.getBoolean("cs_active", false);
-        boolean aaActive   = mSettings.getBoolean("aa_active", false);
-        boolean t100Active = mSettings.getBoolean("t100_active", true);
-        boolean restart    = getIntent().getBooleanExtra("restart", false);
-        getIntent().removeExtra("restart");
-
-        if(!csActive && !aaActive && !t100Active && !restart) checkStartService();
-        editor.putBoolean("t100_active", false);
-        editor.apply();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-        editor.putBoolean("t100_active", true);
-        editor.apply();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
@@ -255,7 +229,6 @@ public class T100Activity extends BaseActivity {
         boolean Dollar = mSettings.getBoolean("Dollar", true);
         String  Curr   = mSettings.getString("Curr_code","eur");
 
-        editor.putBoolean("t100_active", false);
         String T100_currency = "usd";
         if(!Dollar) T100_currency = Curr;
         editor.putString("t100_curr",T100_currency);
@@ -266,14 +239,9 @@ public class T100Activity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
-        SharedPreferences.Editor editor = mSettings.edit();
-        getIntent().removeExtra("restart");
         boolean Dollar                  = mSettings.getBoolean("Dollar", true);
         String  Curr                    = mSettings.getString("Curr_code","eur");
         String  T100                    = mSettings.getString("t100_curr","usd");
-        stopRunningService();
-        editor.putBoolean("t100_active", true);
-        editor.apply();
 
         long resumeTime             = System.currentTimeMillis() / 1000L;
         if (resumeTime - createdTime > 299) restart();

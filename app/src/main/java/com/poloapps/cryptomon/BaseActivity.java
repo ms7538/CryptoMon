@@ -67,12 +67,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        stopRunningService();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.settings_menu, menu);
 
@@ -102,13 +96,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             case R.id.action_t100:
                 Intent intent2 = new Intent(BaseActivity.this, T100Activity.class);
-                intent2.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent2);
                 return true;
 
             case R.id.action_alerts:
                 Intent intent = new Intent(BaseActivity.this,AllAlertsActivity.class);
-                intent.putExtra("restart", true);
                 BaseActivity.this.startActivity(intent);
                 return true;
 
@@ -460,7 +452,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     void restart(){
         Intent intent = getIntent();
-        intent.putExtra("restart", true);
         finish();
         startActivity(intent);
     }
@@ -628,22 +619,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         return lenVAchArray;
     }
 
-    void stopRunningService(){
-        if( isMyServiceRunning(serviceCM.class)){
-            Log.i("CM22","service stopping");
-            stopServiceCM();
-        }
-    }
-
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        assert manager != null;
-        for (ActivityManager.RunningServiceInfo service :
-                manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
