@@ -39,8 +39,9 @@ public class CryptoSelectActivity extends BaseActivity {
     ProgressDialog  dialog;
     dbPriceHandler  dbPHandler;
     dbVolumeHandler dbVHandler;
-    Boolean alertPrice = false;
-    Boolean alertVol   = false;
+    Boolean alertPrice    = false;
+    Boolean alertVol      = false;
+    Boolean buttonClicked;
 
     final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
     final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
@@ -358,6 +359,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 final View alertsMenu = li.inflate(R.layout.alerts_select_menu, null);
                 final AlertDialog.Builder builder3 = new AlertDialog.Builder(
                                                                  CryptoSelectActivity.this);
+                builder3.setCancelable(false);
                 builder3.setView(alertsMenu);
                 final String  Symbol      = getIntent().getStringExtra("crypto_id");
                 TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
@@ -367,6 +369,7 @@ public class CryptoSelectActivity extends BaseActivity {
                 final EditText volInput   = alertsMenu.findViewById(R.id.volume_input);
                 final Button setPriceBtn  = alertsMenu.findViewById(R.id.price_setBtn);
                 final Button setVolBtn    = alertsMenu.findViewById(R.id.vol_setBtn);
+                buttonClicked             = false;
 
                 alertName.setText(Symbol);
                 final String initPrice    = mSettings.getString("price_initial","0");
@@ -436,7 +439,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             alertPrice = false;
                             dbPHandler.deleteAlert(Symbol);
                         }
-
+                        buttonClicked = true;
                     }
                 });
                 setVolBtn.setOnClickListener(new View.OnClickListener() {
@@ -488,9 +491,9 @@ public class CryptoSelectActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         dialog3.dismiss();
+                        if (buttonClicked){ restart();}
                     }
                 });
-
             }
         });
     }
