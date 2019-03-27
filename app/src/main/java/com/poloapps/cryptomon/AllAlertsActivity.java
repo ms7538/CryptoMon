@@ -206,6 +206,7 @@ public class AllAlertsActivity extends BaseActivity {
                             dbPHandler.deleteAlert(currentRow.get("id_set"));
                         else if(type.equals("24h Volume"))
                             dbVHandler.deleteAlert(currentRow.get("id_set"));
+                        checkService();
                         restart();
                     }
                 });
@@ -427,6 +428,7 @@ public class AllAlertsActivity extends BaseActivity {
                     public void onClick(View v) {
                         dbPHandler.deleteAll();
                         dbVHandler.deleteAll();
+                        stopServiceCM();
                         restart();
                     }});
                 dialog.show();

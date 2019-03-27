@@ -474,7 +474,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             alertVol = false;
                             dbVHandler.deleteAlert(Symbol);
                         }
-
+                        buttonClicked = true;
                     }
                 });
 
@@ -491,7 +491,9 @@ public class CryptoSelectActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         dialog3.dismiss();
-                        if (buttonClicked){ restart();}
+                        if (buttonClicked){
+                            checkService();
+                            restart();}
                     }
                 });
             }

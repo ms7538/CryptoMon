@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +53,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     dbVolAlertsAchieved   dbVAchHandler;
     PublisherAdView       mPublisherAdView;
     Integer overwritten   = 0;
+    // private static final String TAG = "CM22 BaseActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -566,15 +567,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         rQueue.add(crypto100_request);
     }
 
-    void checkStartService(){
-        String priceAlerts    = dbPHandler.dbToString();
-        String[] splitPAlerts = priceAlerts.split("[\n]");
-        String   volAlerts    = dbVHandler.dbToString();
-        String[] splitVAlerts = volAlerts.split("[\n]");
-
-        if (!splitPAlerts[0].equals("") || !splitVAlerts[0].equals("")){
-            startServiceCM();
-        }
+    void checkService(){
+        if (numberPAlerts() == 0 && numberVAlerts() == 0){
+            stopServiceCM();
+        }else if (!isMyServiceRunning(serviceCM.class)){startServiceCM();}
     }
 
     void startServiceCM(){
@@ -617,6 +613,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         int lenVAchArray       = splitVAAlerts.length;
         if (splitVAAlerts[0].equals("")) lenVAchArray = 0;
         return lenVAchArray;
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
+        for (ActivityManager.RunningServiceInfo service :
+                manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
