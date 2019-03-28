@@ -568,9 +568,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     void checkService(){
-        if (numberPAlerts() == 0 && numberVAlerts() == 0){
-            stopServiceCM();
-        }else if (!isMyServiceRunning(serviceCM.class)){startServiceCM();}
+        if (numberPAlerts() == 0 && numberVAlerts() == 0){stopServiceCM();}
+        else if (!isMyServiceRunning(serviceCM.class)){startServiceCM();}
+        else { Toast.makeText(getApplicationContext(), "Service Already Running",
+                Toast.LENGTH_LONG).show();
+        }
+
     }
 
     void startServiceCM(){
