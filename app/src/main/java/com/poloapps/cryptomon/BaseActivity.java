@@ -1,8 +1,10 @@
 package com.poloapps.cryptomon;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +56,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     dbVolAlertsAchieved   dbVAchHandler;
     PublisherAdView       mPublisherAdView;
     Integer overwritten   = 0;
-    // private static final String TAG = "CM22 BaseActivity";
+    private static final int JS_ID = 943292346;
+    private static final String TAG = "CM22 BaseActivity";
 
 
     @Override
@@ -567,23 +571,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         rQueue.add(crypto100_request);
     }
 
-    void checkService(){
-        if (numberPAlerts() == 0 && numberVAlerts() == 0){stopServiceCM();}
-        else if (!isMyServiceRunning(serviceCM.class)){startServiceCM();}
-        else { Toast.makeText(getApplicationContext(), "Service Already Running",
-                Toast.LENGTH_LONG).show();
+    void checkJobScheduler(){
+        Log.d(TAG, "check Job Scheduler called");
+        Toast.makeText(getApplicationContext(), "check Job Scheduler called",
+                Toast.LENGTH_SHORT).show();
+
+        if (numberPAlerts() == 0 && numberVAlerts() == 0){
+            if(isJobServiceOn(getApplicationContext())){ cancelJob();}
         }
-
-    }
-
-    void startServiceCM(){
-        Intent intent = new Intent(this,serviceCM.class);
-        startService(intent);
-    }
-
-    void stopServiceCM(){
-        Intent intent = new Intent(this,serviceCM.class);
-        stopService(intent);
+        else if (!isJobServiceOn(getApplicationContext())){scheduleJob();}
+        else {
+            Log.d(TAG, "Job Already Running");
+            Toast.makeText(getApplicationContext(), "Job Already Running",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     int numberPAlerts(){
@@ -618,16 +619,57 @@ public abstract class BaseActivity extends AppCompatActivity {
         return lenVAchArray;
     }
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        assert manager != null;
-        for (ActivityManager.RunningServiceInfo service :
-                manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
+    public void scheduleJob() {
+        if (!isJobServiceOn(getApplicationContext())) {
+            Log.d(TAG, "JobScheduler not running");
+            Toast.makeText(getApplicationContext(), "JobScheduler not running",
+                    Toast.LENGTH_SHORT).show();
+
+            ComponentName componentName = new ComponentName(this, CM_JobScheduler.class);
+            JobInfo info = new JobInfo.Builder(JS_ID, componentName)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .setPeriodic(15 * 60 * 1000)
+                    .build();
+
+            JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            assert scheduler != null;
+            int resultCode = scheduler.schedule(info);
+            if (resultCode == JobScheduler.RESULT_SUCCESS) {
+                Toast.makeText(getApplicationContext(), "Job Scheduled",
+                        Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Job scheduled");
+            } else {
+                Log.d(TAG, "Job scheduling failed");
             }
+
+        } else{
+            Toast.makeText(getApplicationContext(), "JobScheduler is already running",
+                    Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "JobScheduler is already running");
         }
-        return false;
+    }
+    public void cancelJob(){
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        assert scheduler != null;
+        scheduler.cancel(JS_ID);
+        Log.d(TAG, "Job canceled");
+        Toast.makeText(getApplicationContext(), "Job Canceled",
+                Toast.LENGTH_SHORT).show();
     }
 
+    public static boolean isJobServiceOn( Context context ) {
+        JobScheduler scheduler = (JobScheduler) context.getSystemService(
+                Context.JOB_SCHEDULER_SERVICE ) ;
+        boolean hasBeenScheduled = false ;
+
+        assert scheduler != null;
+        for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
+            if ( jobInfo.getId() == JS_ID ) {
+                hasBeenScheduled = true ;
+                break ;
+            }
+        }
+        return hasBeenScheduled ;
+    }
 }

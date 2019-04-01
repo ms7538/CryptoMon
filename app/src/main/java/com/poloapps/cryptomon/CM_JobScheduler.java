@@ -4,18 +4,12 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Handler;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,14 +21,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
+import android.app.job.JobParameters;
+import android.app.job.JobScheduler;
+import android.app.job.JobService;
+import android.util.Log;
 
-public class serviceCM extends Service {
+public class CM_JobScheduler extends JobService {
+    private static final String TAG = "CM22";
+    private boolean jobCancelled = false;
+    private static final int JS_ID = 943292346;
     String LC_url    = "https://api.coinmarketcap.com/v1/ticker/";
     String strTicker = "CM ALERTS:";
     String strCTp1   = "New Alerts: ";
-    private static final String TAG = "ServiceCM";
 
     NotificationCompat.Builder cmNotification;
     private  static  final int uniqueID = 243823;
@@ -43,9 +41,6 @@ public class serviceCM extends Service {
     String idUnique            = Integer.toString(uniqueID);
     Integer overwritten        = 0;
     Integer deleteTimeHrs      = 12;
-    private boolean hasStarted = false;
-    final Handler   handler    = new Handler();
-    Timer           timer      = new Timer();
 
     dbPriceHandler        dbPHandler;
     dbVolumeHandler       dbVHandler;
@@ -53,114 +48,8 @@ public class serviceCM extends Service {
     dbPriceAlertsAchieved dbPAchHandler;
     dbVolAlertsAchieved   dbVAchHandler;
 
-    TimerTask task = new TimerTask() {
-        @Override
-        public void run() {
-            handler.post(new Runnable() {
-                public void run() {
-                    try {
-                        hasStarted = true;
-                        Log.i("CM22","service running");
-                        updateCurrentVals();
-                        checkAchieved();
-
-                        int achievedAlerts  = returnNumberAlerts();
-                        overwritten = 0;
-
-                        if (achievedAlerts > 0 ){
-                            Intent intent =
-                                    new Intent(getApplication(), AllAlertsActivity.class);
-
-                            if (Build.VERSION.SDK_INT >= 26) {
-
-                                NotificationChannel channel = new NotificationChannel(idUnique,
-                                        strTicker, NotificationManager.IMPORTANCE_HIGH);
-
-                                ((NotificationManager) Objects.requireNonNull(getSystemService
-                                        (Context.NOTIFICATION_SERVICE)))
-                                        .createNotificationChannel(channel);
-
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                PendingIntent pendingIntent =
-                                        PendingIntent.getActivity(getApplication(),
-                                                0, intent, 0);
-
-                                Notification notification = new
-                                        NotificationCompat.Builder(getApplication(),idUnique)
-                                        .setContentTitle(strTicker)
-                                        .setTicker(strTicker)
-                                        .setOngoing(false)
-                                        .setPriority(NotificationManager.IMPORTANCE_MAX)
-                                        .setSmallIcon(R.drawable.ic_action_alert_red)
-                                        .setContentIntent(pendingIntent)
-                                        .setAutoCancel(true)
-                                        .setContentText(
-                                                strCTp1 + Integer.toString(achievedAlerts)).build();
-
-                                notification.flags |= Notification.FLAG_AUTO_CANCEL;
-                                createNotificationChannel();
-                                NotificationManagerCompat notificationManager
-                                        = NotificationManagerCompat.from(getApplicationContext());
-                                notificationManager.notify(uID, notification);
-
-                            } else {
-                                cmNotification.setSmallIcon(R.drawable.ic_action_alert_red);
-                                cmNotification.setTicker(strTicker);
-                                cmNotification.setWhen(System.currentTimeMillis());
-                                cmNotification.setContentTitle(strTicker);
-                                cmNotification.setContentText(
-                                        strCTp1 + Integer.toString(achievedAlerts));
-
-                                PendingIntent pendingIntent =
-                                        PendingIntent.getActivity(
-                                                getApplicationContext(), 0,
-                                                intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                                cmNotification.setContentIntent(pendingIntent);
-
-                                NotificationManager nm =
-                                        (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-                                assert nm != null;
-                                nm.notify(uniqueID, cmNotification.build());
-
-                            }
-                            Log.i("CM22","Number of Alerts: " +
-                                                                Integer.toString(achievedAlerts));
-                        }
-                    } catch (Exception e) {
-                        // error, do something
-                    }
-                }
-            });
-        }
-    };
-    public serviceCM() {}
-
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("CM22","service started");
-        if (!hasStarted) {
-            timer.schedule(task, 15000 , 600000);  // interval of 10 min
-            Log.i("CM22","service scheduled");
-            hasStarted  = true;
-            overwritten = 0;
-        }
-        return  Service.START_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        task.cancel();
-        hasStarted = false;
-        Toast.makeText(getApplicationContext(), "Service has stopped",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
+    public boolean onStartJob(JobParameters params) {
         cmNotification = new NotificationCompat.Builder(this, Integer.toString(uniqueID));
         cmNotification.setAutoCancel(true);
 
@@ -186,10 +75,106 @@ public class serviceCM extends Service {
 
             startForeground(1, notification);
         }
+        Log.d(TAG,"Job started");
+        doBackgroundWork(params);
+        return true;
     }
 
-    @Override public IBinder onBind(Intent intent) { return null; }
+    private void doBackgroundWork(final JobParameters params){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (jobCancelled) return; else
+                try {
+                    Log.d(TAG,"Job Service Background instance");
+                    updateCurrentVals();
+                    checkAchieved();
 
+                    int achievedAlerts  = returnNumberAlerts();
+                    overwritten = 0;
+                    Log.d(TAG, "achieved Alerts: " + Integer.toString(achievedAlerts));
+
+                    if (achievedAlerts > 0 ){
+                        Intent intent =
+                                new Intent(getApplication(), AllAlertsActivity.class);
+
+                        if (Build.VERSION.SDK_INT >= 26) {
+
+                            NotificationChannel channel = new NotificationChannel(idUnique,
+                                    strTicker, NotificationManager.IMPORTANCE_HIGH);
+
+                            ((NotificationManager) Objects.requireNonNull(getSystemService
+                                    (Context.NOTIFICATION_SERVICE)))
+                                    .createNotificationChannel(channel);
+
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            PendingIntent pendingIntent =
+                                    PendingIntent.getActivity(getApplication(),
+                                            0, intent, 0);
+
+                            Notification notification = new
+                                    NotificationCompat.Builder(getApplication(),idUnique)
+                                    .setContentTitle(strTicker)
+                                    .setTicker(strTicker)
+                                    .setOngoing(false)
+                                    .setPriority(NotificationManager.IMPORTANCE_MAX)
+                                    .setSmallIcon(R.drawable.ic_action_alert_red)
+                                    .setContentIntent(pendingIntent)
+                                    .setAutoCancel(true)
+                                    .setContentText(
+                                            strCTp1 + Integer.toString(achievedAlerts)).build();
+
+                            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+                            createNotificationChannel();
+                            NotificationManagerCompat notificationManager
+                                    = NotificationManagerCompat.from(getApplicationContext());
+                            notificationManager.notify(uID, notification);
+
+                        } else {
+                            cmNotification.setSmallIcon(R.drawable.ic_action_alert_red);
+                            cmNotification.setTicker(strTicker);
+                            cmNotification.setWhen(System.currentTimeMillis());
+                            cmNotification.setContentTitle(strTicker);
+                            cmNotification.setContentText(
+                                    strCTp1 + Integer.toString(achievedAlerts));
+
+                            PendingIntent pendingIntent =
+                                    PendingIntent.getActivity(
+                                            getApplicationContext(), 0,
+                                            intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                            cmNotification.setContentIntent(pendingIntent);
+
+                            NotificationManager nm =
+                                    (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                            assert nm != null;
+                            nm.notify(uniqueID, cmNotification.build());
+
+                        }
+                        Log.d(TAG,"Number of Alerts: " +
+                                Integer.toString(achievedAlerts));
+                    }
+                } catch (Exception e) {
+                    // error, do something
+                }
+                Log.d(TAG, "Job Finished");
+                jobFinished(params, false);
+            }
+        }).start();
+    }
+
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        Log.d(TAG, "Job cancelled before completion");
+        jobCancelled = true;
+        return true;
+    }
+    public void cancelJob(){
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        assert scheduler != null;
+        scheduler.cancel(JS_ID);
+        Log.d(TAG, "Job stopped from within");
+    }
     void updateCurrentVals(){
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final boolean Dollar = mSettings.getBoolean("Dollar", true);
@@ -216,7 +201,7 @@ public class serviceCM extends Service {
                                 String rate       = obj1.getString(price_key);
                                 double d_rate     = Double.parseDouble(rate);
                                 double curr_vol   = Double.parseDouble(
-                                                           obj1.getString(v24h_key));
+                                        obj1.getString(v24h_key));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
                                 int hours         = (int) (millis/1000/60/60);
@@ -230,15 +215,13 @@ public class serviceCM extends Service {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getApplicationContext(), "Some error occurred!!",
-                        Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Some error occurred!!");
 
             }
         });
-        RequestQueue rQueue = Volley.newRequestQueue(serviceCM.this);
+        RequestQueue rQueue = Volley.newRequestQueue(CM_JobScheduler.this);
         rQueue.add(crypto100_request);
     }
-
     int returnNumberAlerts(){
         String priceAchieved   = dbPAchHandler.dbEntries();
         String[] splitPAAlerts = priceAchieved.split("[\n]");
@@ -252,6 +235,9 @@ public class serviceCM extends Service {
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         int dispAlerts = mSettings.getInt("disp_alerts",0);
+        Log.d(TAG, "returnNumberAlerts PAch VAch Displayed overwritten "
+                + Integer.toString(len2) + " "   + Integer.toString(len3) + " "
+                + Integer.toString(dispAlerts) + " "  + Integer.toString(overwritten));
         return len2 + len3 - dispAlerts + overwritten;
     }
 
@@ -271,6 +257,8 @@ public class serviceCM extends Service {
             long   millis   = System.currentTimeMillis();
             int    cur_hrs  = (int) (millis/1000/60/60);
             int    cur_mins = (int) (millis/1000/60);
+            Log.d(TAG, "checkAchieved " + Double.toString(price) + " threshold " +
+                    Double.toString(thPrice));
 
             if ((thPrice <= price && check == 1) || (thPrice >= price && check == -1)) {
                 dbPHelperMethod(splitPAlerts[i]);
@@ -287,7 +275,7 @@ public class serviceCM extends Service {
         String[] splitVAlerts = volAlerts.split("[\n]");
         int len3              = numberVAlerts();
 
-        if(len1 + len3 == 0) stopSelf();
+        if(len1 + len3 == 0) cancelJob();
 
         for (int j = 0; j < len3; j++) {
 
@@ -300,8 +288,8 @@ public class serviceCM extends Service {
 
             if ((thVol < vol && check2 == 1) || (thVol > vol && check2 == -1)){
                 dbVHelperMethod(splitVAlerts[j]);
-                dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol,
-                        check2, cur_mins2, currency_code);
+                dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol, check2, cur_mins2,
+                        currency_code);
             }else if (cur_hrs2 - set_hrs2 > deleteTimeHrs){
                 dbVHelperMethod(splitVAlerts[j]);
                 dbVAchHandler.addVolAchAlert(splitVAlerts[j], vol, thVol,

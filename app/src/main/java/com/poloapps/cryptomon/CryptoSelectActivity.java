@@ -492,7 +492,7 @@ public class CryptoSelectActivity extends BaseActivity {
                     public void onClick(View v) {
                         dialog3.dismiss();
                         if (buttonClicked){
-                            checkService();
+                            checkJobScheduler();
                             restart();}
                     }
                 });
