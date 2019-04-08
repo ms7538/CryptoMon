@@ -573,17 +573,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     void checkJobScheduler(){
         Log.d(TAG, "check Job Scheduler called");
-        Toast.makeText(getApplicationContext(), "check Job Scheduler called",
-                Toast.LENGTH_SHORT).show();
-
         if (numberPAlerts() == 0 && numberVAlerts() == 0){
             if(isJobServiceOn(getApplicationContext())){ cancelJob();}
         }
         else if (!isJobServiceOn(getApplicationContext())){scheduleJob();}
         else {
             Log.d(TAG, "Job Already Running");
-            Toast.makeText(getApplicationContext(), "Job Already Running",
-                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -622,9 +617,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void scheduleJob() {
         if (!isJobServiceOn(getApplicationContext())) {
             Log.d(TAG, "JobScheduler not running");
-            Toast.makeText(getApplicationContext(), "JobScheduler not running",
-                    Toast.LENGTH_SHORT).show();
-
             ComponentName componentName = new ComponentName(this, CM_JobScheduler.class);
             JobInfo info = new JobInfo.Builder(JS_ID, componentName)
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
@@ -635,27 +627,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
             assert scheduler != null;
             int resultCode = scheduler.schedule(info);
-            if (resultCode == JobScheduler.RESULT_SUCCESS) {
-                Toast.makeText(getApplicationContext(), "Job Scheduled",
-                        Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "Job scheduled");
-            } else {
-                Log.d(TAG, "Job scheduling failed");
-            }
-
-        } else{
-            Toast.makeText(getApplicationContext(), "JobScheduler is already running",
-                    Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "JobScheduler is already running");
+            if (resultCode == JobScheduler.RESULT_SUCCESS) { Log.d(TAG, "Job scheduled");}
+            else { Log.d(TAG, "Job scheduling failed"); }
         }
+        else{ Log.d(TAG, "JobScheduler is already running"); }
     }
     public void cancelJob(){
         JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
         assert scheduler != null;
         scheduler.cancel(JS_ID);
         Log.d(TAG, "Job canceled");
-        Toast.makeText(getApplicationContext(), "Job Canceled",
-                Toast.LENGTH_SHORT).show();
     }
 
     public static boolean isJobServiceOn( Context context ) {
