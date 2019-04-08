@@ -66,7 +66,6 @@ public class CryptoSelectActivity extends BaseActivity {
                 .addTestDevice("A530388CACF455CECC92502035BB36DC")
                 .build();
         mPublisherAdView.loadAd(adRequest);
-
     }
 
     @Override
@@ -219,7 +218,8 @@ public class CryptoSelectActivity extends BaseActivity {
                             if (!Objects.equals(Delta_7d_val, "null")) {
                                 Delta_7d = Delta_7d_val + "%";
                                 if( Double.parseDouble(Delta_7d_val) < 0 ) {
-                                    Delta7d.setTextColor(ContextCompat.getColor(getBaseContext(),R.color.red));
+                                    Delta7d.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.red));
                                 }else if ( Double.parseDouble(Delta_7d_val) > 0 ){
                                     Delta_7d = "+" + Delta_7d;
                                     Delta7d.setTextColor(ContextCompat.getColor(getBaseContext(),

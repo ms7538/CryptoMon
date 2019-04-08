@@ -33,7 +33,6 @@ public class AllAlertsActivity extends BaseActivity {
     ArrayList<HashMap<String, String>> AchievedList;
     ArrayList<HashMap<String, String>> AlertSetList;
     final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
-    final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###,###");
     final DecimalFormat frmt2 = new DecimalFormat("#.########");
 
     @Override
@@ -104,6 +103,7 @@ public class AllAlertsActivity extends BaseActivity {
             String id_set    = splitPAlerts[i];
             String cur_val   = dbCVHandler.currentPrice(splitPAlerts[i]);
             String thr_val   = dbPHandler.getPrice_Val(splitPAlerts[i]);
+            String th_check  = dbPHandler.getThresh_Check(splitPAlerts[i]);
             String type       = "Price";
             int    set_hrs   = Integer.parseInt(dbCVHandler.currentHour(splitPAlerts[i]));
             long   millis    = System.currentTimeMillis();
@@ -116,6 +116,7 @@ public class AllAlertsActivity extends BaseActivity {
             s_item.put("cur_val", cur_val);
             s_item.put("thr_val", thr_val);
             s_item.put("type"   , type);
+            s_item.put("th_check", th_check);
             s_item.put("set_hrs", setHrs);
 
             AlertSetList.add(s_item);
@@ -124,6 +125,7 @@ public class AllAlertsActivity extends BaseActivity {
             String id_set    = splitVAlerts[j];
             String cur_val   = dbCVHandler.currentVol(splitVAlerts[j]);
             String thr_val   = dbVHandler.getVol_Val(splitVAlerts[j]);
+            String th_check  =  dbVHandler.getThresh_Check(splitVAlerts[j]);
             String type      = "24h Volume";
             int    set_hrs   = Integer.parseInt(dbCVHandler.currentHour(splitVAlerts[j]));
             long   millis    = System.currentTimeMillis();
@@ -135,12 +137,13 @@ public class AllAlertsActivity extends BaseActivity {
             s_item.put("cur_val", cur_val);
             s_item.put("thr_val", thr_val);
             s_item.put("type"   , type);
+            s_item.put("th_check", th_check);
             s_item.put("set_hrs", setHrs);
             AlertSetList.add(s_item);
         }
 
         String[] fr1 = {"id_set", "cur_val", "thr_val", "type", "set_hrs" };
-        int[]    to1 = {R.id.set_alert_name, R.id.set_current_val, R.id.set_threshold_val,
+        int[] to1    = {R.id.set_alert_name, R.id.set_current_val, R.id.set_threshold_val,
                 R.id.set_alert_type, R.id.set_updated_val};
 
         ListAdapter setAdapter = new SimpleAdapter(getApplicationContext(), AlertSetList,
@@ -159,16 +162,23 @@ public class AllAlertsActivity extends BaseActivity {
                 TextView setThreshVal = view.findViewById(R.id.set_threshold_val);
                 TextView setCurrVal   = view.findViewById(R.id.set_current_val);
                 ImageButton CS_sel    = view.findViewById(R.id.set_cs_btn);
+                ImageView checkIcon   = view.findViewById(R.id.set_icon_specifier);
                 final String   type   = currentRow.get("type");
+
+                final int th_check    = Integer.parseInt(currentRow.get("th_check"));
+                if(th_check == 1){
+                    setThreshVal.setTextColor(GREEN);
+                    checkIcon.setBackground(getDrawable(R.drawable.ic_action_surpass));
+                }else if(th_check == -1){
+                    setThreshVal.setTextColor(RED);
+                    checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
+                }else {checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));}
 
                 double valTh   = Double.parseDouble(setThreshVal.getText().toString());
                 double valCr   = Double.parseDouble(setCurrVal.getText().toString());
 
                 if      (valTh < .01)  thresh = frmt2;
-                else if (valTh >= 100) thresh = frmt0;
-
                 if      (valCr < .01)  curr = frmt2;
-                else if (valCr >= 100) curr = frmt0;
 
                 String disp_curr_symb = "$";
                 if (!Dollar) disp_curr_symb = Symb;

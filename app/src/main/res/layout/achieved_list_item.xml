@@ -108,7 +108,6 @@
             android:textSize="12sp"
             android:text="@string/x"
             android:textColor="@color/bright_yellow" />
-
     </LinearLayout>
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -139,7 +138,6 @@
                 android:text="@string/xx"
                 android:textColor="@color/l4col"
                 android:textSize="13sp" />
-
         </TableRow>
 
         <TableRow
