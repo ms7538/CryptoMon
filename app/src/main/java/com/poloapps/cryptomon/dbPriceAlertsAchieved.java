@@ -42,14 +42,14 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addPriceAchAlert(
-            String cryptoSymb, double breaker, double threshold, int check, int sysMins) {
+    void addPriceAchAlert(
+            String cryptoSymb, double breaker, double threshold, int check, int sysMins, String MC){
         ContentValues values = new ContentValues();
         values.put(COLUMN_CRYPTOSYMB,   cryptoSymb);
         values.put(COLUMN_THRESH_BRK,   breaker);
         values.put(COLUMN_THRESH_VAL,   threshold);
         values.put(COLUMN_BREAKER_CHCK, check);
-        values.put(COLUMN_CURRSYMB,     "$");
+        values.put(COLUMN_CURRSYMB,     MC);
         values.put(COLUMN_ACH_MIN,      sysMins);
 
         SQLiteDatabase db = getWritableDatabase();
@@ -57,13 +57,13 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void removePriceAchAlert(String cryptoSymb) {
+    void removePriceAchAlert(String cryptoSymb) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_CM_ACH_ALERTS + " WHERE " + COLUMN_CRYPTOSYMB + "=\""
                 + cryptoSymb + "\";");
     }
 
-    public String dbEntries(){
+    String dbEntries(){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
@@ -81,8 +81,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getThresh_Val(String in){
-
+    String getThresh_Val(String in){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
@@ -100,8 +99,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getThresh_Brk(String in){
-
+    String getThresh_Brk(String in){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
@@ -119,8 +117,7 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         return dbString.toString();
     }
 
-    public String getColumnBreakerChck(String in){
-
+    String getColumnBreakerChck(String in){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
@@ -136,8 +133,8 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
-    public String getAchievedTimeStamp(String in){
 
+    String getAchievedTimeStamp(String in){
         StringBuilder dbString = new StringBuilder();
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
@@ -153,9 +150,26 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         db.close();
         return dbString.toString();
     }
-    public Boolean alertExists(String in){
 
-        Boolean exists = false;
+    String getAchievedMonCurrency(String in){
+        StringBuilder dbString = new StringBuilder();
+        SQLiteDatabase db      = getWritableDatabase();
+        String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
+        Cursor c               = db.rawQuery(query, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex("cryptosymb")).equals(in)){
+                dbString.append(c.getString(c.getColumnIndex("currsymbol")));
+            }
+            c.moveToNext();
+        }
+        c.close();
+        db.close();
+        return dbString.toString();
+    }
+
+    Boolean alertExists(String in){
+        boolean exists = false;
         SQLiteDatabase db      = getWritableDatabase();
         String query           = "SELECT * FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1";
         Cursor c               = db.rawQuery(query, null);
@@ -171,4 +185,8 @@ public class dbPriceAlertsAchieved extends SQLiteOpenHelper {
         return exists;
     }
 
+    void deleteAll(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_CM_ACH_ALERTS + " WHERE 1");
+    }
 }

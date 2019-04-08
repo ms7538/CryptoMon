@@ -13,25 +13,43 @@
         android:id="@+id/achieved_layout"
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:orientation="vertical"
-        android:background="@color/dark_gray">
-        <TextView
-            android:id="@+id/achieved_top_msg"
+        android:background="@color/dark_gray"
+        android:orientation="vertical">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="@color/light_blue"
-            android:text="@string/no_achieved_alerts" />
+            android:background="@android:color/black">
+
+            <TextView
+                android:id="@+id/achieved_top_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_achieved_alerts"
+                android:textColor="@color/light_blue"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/del_ach_all_btn"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/delete_achieved_alert"
+                android:foreground="@drawable/ic_action_del_all"
+                android:text="@string/xdel"
+                android:textColor="@color/red" />
+        </RelativeLayout>
+
         <ListView
             android:id="@+id/alertAch_listView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:scrollbarThumbVertical="@color/navy_blue"
-            android:fadeScrollbars="false"/>
+            android:fadeScrollbars="false"
+            android:scrollbarThumbVertical="@color/navy_blue" />
 
     </LinearLayout>
-    <com.google.android.gms.ads.AdView
+    <com.google.android.gms.ads.doubleclick.PublisherAdView
         android:id="@+id/all_alerts_adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,15 +65,31 @@
         android:orientation="vertical"
         android:background="@color/light_blue">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black">
         <TextView
             android:id="@+id/set_top_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:text="@string/no_alerts_set" />
 
+            <ImageButton
+                android:id="@+id/del_set_all_btn"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/delete_achieved_alert"
+                android:foreground="@drawable/ic_action_del_all"
+                android:text="@string/xdel"
+                android:textColor="@color/red" />
+
+
+        </RelativeLayout>
     <ListView
         android:id="@+id/alertSet_listView"
         android:layout_width="fill_parent"

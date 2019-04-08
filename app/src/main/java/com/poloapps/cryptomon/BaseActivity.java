@@ -1,8 +1,10 @@
 package com.poloapps.cryptomon;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +40,8 @@ import java.util.Objects;
 
 /**
  * Created by Marko on 2/25/2018.
- * Base Class
+ * Updated on 03/12/2019
+ * Base Class v1.218
  *
  */
 
@@ -48,8 +54,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     dbCurrentValsHandler  dbCVHandler;
     dbPriceAlertsAchieved dbPAchHandler;
     dbVolAlertsAchieved   dbVAchHandler;
-
+    PublisherAdView       mPublisherAdView;
     Integer overwritten   = 0;
+    private static final int JS_ID = 943292346;
+    private static final String TAG = "CM22 BaseActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +69,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         dbCVHandler   = new dbCurrentValsHandler(this, null);
         dbPAchHandler = new dbPriceAlertsAchieved(this, null);
         dbVAchHandler = new dbVolAlertsAchieved(this, null);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        stopRunningService();
     }
 
     @Override
@@ -91,24 +94,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
 
         switch (item.getItemId()) {
 
             case R.id.action_t100:
-                Intent intent2 = new Intent(
-                        BaseActivity.this,
-                        T100Activity.class);
-                intent2.putExtra("restart", true);
+                Intent intent2 = new Intent(BaseActivity.this, T100Activity.class);
                 BaseActivity.this.startActivity(intent2);
                 return true;
 
             case R.id.action_alerts:
-                Intent intent = new Intent(
-                        BaseActivity.this,
-                        AllAlertsActivity.class);
-                intent.putExtra("restart", true);
+                Intent intent = new Intent(BaseActivity.this,AllAlertsActivity.class);
                 BaseActivity.this.startActivity(intent);
                 return true;
 
@@ -177,7 +174,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     + Link_Strings[j]+"/");
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
-
                         }});
                 }
                 Dismiss_btn.setOnClickListener(new View.OnClickListener() {
@@ -192,10 +188,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             case R.id.action_currency_sel:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
-
-                @SuppressLint("InflateParams")
-                View mView2 = getLayoutInflater().inflate(R.layout.currency_diag, null);
+                @SuppressLint("InflateParams") final View mView2 = getLayoutInflater()
+                        .inflate(R.layout.currency_diag, null);
                 builder.setView(mView2);
+                RadioGroup rg = mView2.findViewById(R.id.curr_rg);
+                final Button CurrOkBtn = mView2.findViewById(R.id.Units_OK_btn);
+                CurrOkBtn.setEnabled(false);
 
                 final AlertDialog dialog2  = builder.create();
                 final RadioButton RadioUSD = mView2.findViewById(R.id.radio_currency_usd);
@@ -212,140 +210,188 @@ public abstract class BaseActivity extends AppCompatActivity {
                 final RadioButton RadioTRY = mView2.findViewById(R.id.radio_currency_try);
                 final RadioButton RadioRUB = mView2.findViewById(R.id.radio_currency_rub);
                 final RadioButton RadioINR = mView2.findViewById(R.id.radio_currency_inr);
-                
+
+                final LinearLayout DelWarn = mView2.findViewById(R.id.curr_diag_delLayout);
+                DelWarn.setVisibility(View.GONE);
+
                 if (Dollar) {
                     RadioUSD.getParent().requestChildFocus(RadioUSD, RadioUSD);
                     RadioUSD.setChecked(true);
+                    RadioUSD.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "eur")) {
                     RadioEUR.getParent().requestChildFocus(RadioEUR, RadioEUR);
                     RadioEUR.setChecked(true);
+                    RadioEUR.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "jpy")) {
                     RadioJPY.getParent().requestChildFocus(RadioJPY, RadioJPY);
                     RadioJPY.setChecked(true);
+                    RadioJPY.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "gbp")) {
                     RadioGBP.getParent().requestChildFocus(RadioGBP, RadioGBP);
                     RadioGBP.setChecked(true);
+                    RadioGBP.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "aud")) {
                     RadioAUD.getParent().requestChildFocus(RadioAUD, RadioAUD);
                     RadioAUD.setChecked(true);
+                    RadioAUD.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "cad")) {
                     RadioCAD.getParent().requestChildFocus(RadioCAD, RadioCAD);
                     RadioCAD.setChecked(true);
+                    RadioCAD.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "chf")) {
                     RadioCHF.getParent().requestChildFocus(RadioCHF, RadioCHF);
                     RadioCHF.setChecked(true);
+                    RadioCHF.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "cny")) {
                     RadioCNY.getParent().requestChildFocus(RadioCNY, RadioCNY);
                     RadioCNY.setChecked(true);
+                    RadioCNY.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "sek")) {
                     RadioSEK.getParent().requestChildFocus(RadioSEK, RadioSEK);
                     RadioSEK.setChecked(true);
+                    RadioSEK.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "nzd")) {
                     RadioNZD.getParent().requestChildFocus(RadioNZD, RadioNZD);
                     RadioNZD.setChecked(true);
+                    RadioNZD.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "krw")) {
                     RadioKRW.getParent().requestChildFocus(RadioKRW, RadioKRW);
                     RadioKRW.setChecked(true);
+                    RadioKRW.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "try")) {
                     RadioTRY.getParent().requestChildFocus(RadioTRY, RadioTRY);
                     RadioTRY.setChecked(true);
+                    RadioTRY.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "rub")) {
                     RadioRUB.getParent().requestChildFocus(RadioRUB, RadioRUB);
                     RadioRUB.setChecked(true);
+                    RadioRUB.setEnabled(false);
                 }
                 else if (Objects.equals(Curr, "inr")) {
                     RadioINR.getParent().requestChildFocus(RadioINR, RadioINR);
                     RadioINR.setChecked(true);
+                    RadioINR.setEnabled(false);
                 }
-
-                Button Unit_OK = mView2.findViewById(R.id.Units_OK_btn);
-                Unit_OK.setOnClickListener(new View.OnClickListener() {
-
+                rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
-                    public void onClick(View arg0) {
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                        Boolean Dollar_Sel = false;
+                        if(numberPAlerts() != 0 || numberVAlerts() != 0) {
+                            DelWarn.setVisibility(View.VISIBLE);
+                        }
+                        CurrOkBtn.setEnabled(true);
+                        boolean Dollar_Sel = false;
                         String nonUSD_code = "eur";
                         String nonUSD_symb = "€";
 
-                        if (RadioUSD.isChecked()) Dollar_Sel = true;
-
-                        else if (RadioJPY.isChecked()) {
-                            nonUSD_code = "jpy";
-                            nonUSD_symb = "¥";
+                        switch (checkedId){
+                            case R.id.radio_currency_usd:
+                                Dollar_Sel = true;
+                                break;
+                            case R.id.radio_currency_jpy:
+                                nonUSD_code = "jpy";
+                                nonUSD_symb = "¥";
+                                break;
+                            case R.id.radio_currency_gbp:
+                                nonUSD_code = "gbp";
+                                nonUSD_symb = "£";
+                                break;
+                            case R.id.radio_currency_aud:
+                                nonUSD_code = "aud";
+                                nonUSD_symb = "A$";
+                                break;
+                            case R.id.radio_currency_cad:
+                                nonUSD_code = "cad";
+                                nonUSD_symb = "C$";
+                                break;
+                            case R.id.radio_currency_chf:
+                                nonUSD_code = "chf";
+                                nonUSD_symb = "Fr";
+                                break;
+                            case R.id.radio_currency_cny:
+                                nonUSD_code = "cny";
+                                nonUSD_symb = "元";
+                                break;
+                            case R.id.radio_currency_sek:
+                                nonUSD_code = "sek";
+                                nonUSD_symb = "kr";
+                                break;
+                            case R.id.radio_currency_nzd:
+                                nonUSD_code = "nzd";
+                                nonUSD_symb = "NZ$";
+                                break;
+                            case R.id.radio_currency_krw:
+                                nonUSD_code = "krw";
+                                nonUSD_symb = "₩";
+                                break;
+                            case R.id.radio_currency_try:
+                                nonUSD_code = "try";
+                                nonUSD_symb = "₺";
+                                break;
+                            case R.id.radio_currency_rub:
+                                nonUSD_code = "rub";
+                                nonUSD_symb = "\u20BD";
+                                break;
+                            case R.id.radio_currency_inr:
+                                nonUSD_code = "inr";
+                                nonUSD_symb = "₹";
+                                break;
                         }
-                        else if (RadioGBP.isChecked()) {
-                            nonUSD_code = "gbp";
-                            nonUSD_symb = "£";
-                        }
-                        else if (RadioAUD.isChecked()) {
-                            nonUSD_code = "aud";
-                            nonUSD_symb = "A$";
-                        }
-                        else if (RadioCAD.isChecked()) {
-                            nonUSD_code = "cad";
-                            nonUSD_symb = "C$";
-                        }
-                        else if (RadioCHF.isChecked()) {
-                            nonUSD_code = "chf";
-                            nonUSD_symb = "Fr";
-                        }
-                        else if (RadioCNY.isChecked()) {
-                            nonUSD_code = "cny";
-                            nonUSD_symb = "元";
-                        }
-                        else if (RadioSEK.isChecked()) {
-                            nonUSD_code = "sek";
-                            nonUSD_symb = "kr";
-                        }
-                        else if (RadioNZD.isChecked()) {
-                            nonUSD_code = "nzd";
-                            nonUSD_symb = "NZ$";
-                        }
-                        else if (RadioKRW.isChecked()) {
-                            nonUSD_code = "krw";
-                            nonUSD_symb = "₩";
-                        }
-                        else if (RadioTRY.isChecked()) {
-                            nonUSD_code = "try";
-                            nonUSD_symb = "₺";
-                        }
-                        else if (RadioRUB.isChecked()) {
-                            nonUSD_code = "rub";
-                            nonUSD_symb = "\u20BD";
-                        }
-                        else if (RadioINR.isChecked()) {
-                            nonUSD_code = "inr";
-                            nonUSD_symb = "₹";
-                        }
-
-                        editor.putString("Curr_code",nonUSD_code);
-                        editor.putString("Curr_symb",nonUSD_symb);
-                        editor.putBoolean("Dollar", Dollar_Sel);
+                        editor.putString ("Curr_code_tmp",nonUSD_code);
+                        editor.putString ("Curr_symb_tmp",nonUSD_symb);
+                        editor.putBoolean("Dollar_tmp"   ,Dollar_Sel );
                         editor.apply();
+
+                    }
+                });
+
+                CurrOkBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+
+                        editor.putString ("Curr_code",
+                                mSettings.getString("Curr_code_tmp","eur"));
+                        editor.putString ("Curr_symb",
+                                mSettings.getString("Curr_symb_tmp","€"));
+                        editor.putBoolean("Dollar",
+                                mSettings.getBoolean("Dollar_tmp", true));
+                        editor.apply();
+
+                        if(numberPAlerts() != 0) {
+                            dbPHandler.deleteAll();
+                        }
+                        if(numberVAlerts() != 0) {
+                            dbVHandler.deleteAll();
+                        }
 
                         dialog2.dismiss();
                         restart();
                     }});
+                final Button CurrSel_Dismiss_btn = mView2.findViewById(R.id.Units_NO_btn);
+                CurrSel_Dismiss_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        dialog2.dismiss();
+                    }
+                });
                 dialog2.show();
                 return true;
 
             case R.id.action_about:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
-
                 @SuppressLint("InflateParams")
                 View mView3 = getLayoutInflater().inflate(R.layout.about_diag, null);
                 builder.setView(mView3);
@@ -359,10 +405,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Privacy_Policy_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Uri uri = Uri.parse(
-                                "http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
+                    Uri uri = Uri.parse("http://www.poloapps.com/Crypto_Mon_Privacy_Policy.txt");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
                     }
                 });
 
@@ -372,13 +417,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                         dialog3.dismiss();
                     }
                 });
-
                 return true;
 
             case R.id.action_disclaimer:
 
                 builder = new AlertDialog.Builder(BaseActivity.this);
-
                 @SuppressLint("InflateParams")
                 View mView4 = getLayoutInflater().inflate(R.layout.disclaimer_diag, null);
                 builder.setView(mView4);
@@ -391,11 +434,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Disc_CMC_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Uri uri = Uri.parse(
-                                "https://coinmarketcap.com/");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        dialog4.dismiss();
-                        startActivity(intent);
+                    Uri uri = Uri.parse("https://coinmarketcap.com/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    dialog4.dismiss();
+                    startActivity(intent);
                     }
                 });
 
@@ -415,29 +457,41 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     void restart(){
         Intent intent = getIntent();
-        intent.putExtra("restart", true);
         finish();
         startActivity(intent);
     }
 
     void updateCurrentVals(){
+        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        final boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Curr   = mSettings.getString("Curr_code","eur");
+
+        LC_url = "https://api.coinmarketcap.com/v1/ticker/";
+        if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
+
         StringRequest crypto100_request = new StringRequest(LC_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String string) {
                         try {
+                            String price_key      = "price_usd";
+                            String v24h_key       = "24h_volume_usd";
+
+                            if(!Dollar){
+                                price_key      = "price_" + Curr;
+                                v24h_key       = "24h_volume_" + Curr;
+                            }
+
                             JSONArray T100_Array = new JSONArray(string);
                             for (int i = 0; i < T100_Array.length(); i++) {
 
                                 JSONObject obj1   = T100_Array.getJSONObject(i);
-
-                                String rate       = obj1.getString("price_usd");
-                                Double d_rate     = Double.parseDouble(rate);
-                                Double curr_vol   = Double.parseDouble(
-                                                            obj1.getString("24h_volume_usd"));
+                                String rate       = obj1.getString(price_key);
+                                double d_rate     = Double.parseDouble(rate);
+                                double curr_vol   = Double.parseDouble(obj1.getString(v24h_key));
                                 String link_id    = obj1.getString("id");
                                 long millis       = System.currentTimeMillis();
-                                Integer hours     = (int)(millis/1000/60/60);
+                                int hours         = (int)(millis/1000/60/60);
 
                                 dbCVHandler.deleteEntry(link_id);
                                 dbCVHandler.addCurrentVals(link_id,d_rate,curr_vol,hours);
@@ -448,6 +502,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                             int len1 = numberPAlerts();
 
+                            String currency_code = "$";
+                            if(!Dollar) currency_code =  mSettings.getString("Curr_symb",
+                                    "€");
+
                             for (int i = 0; i < len1; i++) {
                                 double price   = Double.parseDouble(
                                         dbCVHandler.currentPrice(splitPAlerts[i]));
@@ -456,8 +514,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 int    check   = Integer.parseInt(
                                         dbPHandler.getThresh_Check(splitPAlerts[i]));
 
-                                if ((thPrice < price && check == 1) ||
-                                                                (thPrice > price && check == -1)) {
+                                if ((thPrice <= price && check == 1) ||
+                                                                (thPrice >= price && check == -1)){
 
                                     dbPHandler.deleteAlert(splitPAlerts[i]);
                                     if(dbPAchHandler.alertExists(splitPAlerts[i])){
@@ -466,11 +524,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     }
                                     int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
                                     dbPAchHandler.addPriceAchAlert(
-                                            splitPAlerts[i], price, thPrice, check, cur_mins);
+                                            splitPAlerts[i], price, thPrice,
+                                            check, cur_mins, currency_code);
                                 }
                             }
 
-                            String   volAlerts    = dbVHandler.listEntries();
+                            String   volAlerts    = dbVHandler.dbToString();
                             String[] splitVAlerts = volAlerts.split("[\n]");
                             int len3              = numberVAlerts();
 
@@ -492,12 +551,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                                     }
                                     int cur_mins  = (int) ((System.currentTimeMillis())/1000/60);
                                     dbVAchHandler.addVolAchAlert(
-                                            splitVAlerts[j], vol, thVol, check2, cur_mins);
+                                            splitVAlerts[j], vol, thVol,
+                                            check2, cur_mins, currency_code);
                                 }
-
-
                             }
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -514,25 +571,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         rQueue.add(crypto100_request);
     }
 
-    void checkStartService(){
-        String priceAlerts    = dbPHandler.dbToString();
-        String[] splitPAlerts = priceAlerts.split("[\n]");
-        String   volAlerts    = dbVHandler.listEntries();
-        String[] splitVAlerts = volAlerts.split("[\n]");
-
-        if (!splitPAlerts[0].equals("") || !splitVAlerts[0].equals("")){
-            startServiceCM();
+    void checkJobScheduler(){
+        Log.d(TAG, "check Job Scheduler called");
+        if (numberPAlerts() == 0 && numberVAlerts() == 0){
+            if(isJobServiceOn(getApplicationContext())){ cancelJob();}
         }
-    }
-
-    void startServiceCM(){
-        Intent intent = new Intent(this,serviceCM.class);
-        startService(intent);
-    }
-
-    void stopServiceCM(){
-        Intent intent = new Intent(this,serviceCM.class);
-        stopService(intent);
+        else if (!isJobServiceOn(getApplicationContext())){scheduleJob();}
+        else {
+            Log.d(TAG, "Job Already Running");
+        }
     }
 
     int numberPAlerts(){
@@ -544,7 +591,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     int numberVAlerts(){
-        String   volAlerts    = dbVHandler.listEntries();
+        String   volAlerts    = dbVHandler.dbToString();
         String[] splitVAlerts = volAlerts.split("[\n]");
         int lenVArray         = splitVAlerts.length;
         if (splitVAlerts[0].equals("")) lenVArray = 0;
@@ -567,22 +614,43 @@ public abstract class BaseActivity extends AppCompatActivity {
         return lenVAchArray;
     }
 
-    void stopRunningService(){
-        if( isMyServiceRunning(serviceCM.class)){
-            Log.i("CM22","service stopping");
-            stopServiceCM();
+    public void scheduleJob() {
+        if (!isJobServiceOn(getApplicationContext())) {
+            Log.d(TAG, "JobScheduler not running");
+            ComponentName componentName = new ComponentName(this, CM_JobScheduler.class);
+            JobInfo info = new JobInfo.Builder(JS_ID, componentName)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .setPeriodic(15 * 60 * 1000)
+                    .build();
+
+            JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            assert scheduler != null;
+            int resultCode = scheduler.schedule(info);
+            if (resultCode == JobScheduler.RESULT_SUCCESS) { Log.d(TAG, "Job scheduled");}
+            else { Log.d(TAG, "Job scheduling failed"); }
         }
+        else{ Log.d(TAG, "JobScheduler is already running"); }
+    }
+    public void cancelJob(){
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        assert scheduler != null;
+        scheduler.cancel(JS_ID);
+        Log.d(TAG, "Job canceled");
     }
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        assert manager != null;
-        for (ActivityManager.RunningServiceInfo service :
-                manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
+    public static boolean isJobServiceOn( Context context ) {
+        JobScheduler scheduler = (JobScheduler) context.getSystemService(
+                Context.JOB_SCHEDULER_SERVICE ) ;
+        boolean hasBeenScheduled = false ;
+
+        assert scheduler != null;
+        for ( JobInfo jobInfo : scheduler.getAllPendingJobs() ) {
+            if ( jobInfo.getId() == JS_ID ) {
+                hasBeenScheduled = true ;
+                break ;
             }
         }
-        return false;
+        return hasBeenScheduled ;
     }
 }

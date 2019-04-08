@@ -22,8 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,8 +39,9 @@ public class CryptoSelectActivity extends BaseActivity {
     ProgressDialog  dialog;
     dbPriceHandler  dbPHandler;
     dbVolumeHandler dbVHandler;
-    Boolean alertPrice = false;
-    Boolean alertVol   = false;
+    Boolean alertPrice    = false;
+    Boolean alertVol      = false;
+    Boolean buttonClicked;
 
     final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
     final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###");
@@ -61,37 +61,27 @@ public class CryptoSelectActivity extends BaseActivity {
         dbPHandler = new dbPriceHandler(this, null);
         dbVHandler = new dbVolumeHandler(this, null);
 
-        AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        editor.putBoolean("cs_active", true);
-        editor.apply();
+        mPublisherAdView = findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice("A530388CACF455CECC92502035BB36DC")
+                .build();
+        mPublisherAdView.loadAd(adRequest);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        stopRunningService();
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
-        //final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         getIntent().removeExtra("restart");
-        editor.putBoolean("cs_active", true);
         editor.apply();
 
         final LayoutInflater li    = LayoutInflater.from(CryptoSelectActivity.this);
         final String Curr          = mSettings.getString("Curr_code","eur");
         String CAP_curr            = Curr.toUpperCase();
         final String Curr_symbol   = mSettings.getString("Curr_symb","€");
-
+        final boolean Dollar       = mSettings.getBoolean("Dollar", true);
         String Select_url1         = "https://api.coinmarketcap.com/v1/ticker/";
         String Select_url2         = "/?convert=" + Curr;
 
@@ -135,12 +125,9 @@ public class CryptoSelectActivity extends BaseActivity {
 
         final Button alertsBtn             = findViewById(R.id.sel_alerts_link);
 
-        String TV_price_text  = getString(R.string.price_) + " " +
-                                CAP_curr + getString(R.string.colon);
-        String TV_volume_text = getString(R.string.vol24h_) + " " + CAP_curr  +
-                                getString(R.string.colon);
-        String TV_cap_text    = getString(R.string.market_cap_) + " " + CAP_curr  +
-                                getString(R.string.colon);
+        String TV_price_text  = getString(R.string.price_)      + " " + CAP_curr  + getString(R.string.colon);
+        String TV_volume_text = getString(R.string.vol24h_) + " " + CAP_curr  + getString(R.string.colon);
+        String TV_cap_text    = getString(R.string.market_cap_) + " " + CAP_curr  + getString(R.string.colon);
 
         price_NUSD_TV.setText(TV_price_text);
         volume_NUSD_TV.setText(TV_volume_text);
@@ -176,10 +163,11 @@ public class CryptoSelectActivity extends BaseActivity {
                                                                 object.getString(price_key_nonUSD));
                             double btcP = Double.parseDouble(object.getString("price_btc"));
 
-//                            double currPrice = usdP;
-//                            if(!Dollar){
-//                               currPrice = not_usdP;
-//                            }
+                            double currPrice = usdP;
+
+                            if(!Dollar){
+                               currPrice = not_usdP;
+                            }
 
                             if      (usdP     < 0.01) USD_frmt = frmt2;
                             else if (usdP     > 99)   USD_frmt = frmt0;
@@ -200,10 +188,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             if (!Objects.equals(Delta_1h_val, "null")) {
                                 Delta_1h = Delta_1h_val + "%";
                                 if( Double.parseDouble(Delta_1h_val) < 0 ) {
-                                    Delta1h.setTextColor(getResources().getColor(R.color.red));
+                                    Delta1h.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.red));
                                 }else if ( Double.parseDouble(Delta_1h_val) > 0 ){
                                     Delta_1h = "+" + Delta_1h;
-                                    Delta1h.setTextColor(getResources().getColor(R.color.green2));
+                                    Delta1h.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.green2));
                                 }
                             }
                             Delta1h.setText(Delta_1h);
@@ -213,10 +203,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             if (!Objects.equals(Delta_1d_val, "null")) {
                                 Delta_1d = Delta_1d_val + "%";
                                 if( Double.parseDouble(Delta_1d_val) < 0 ) {
-                                    Delta1d.setTextColor(getResources().getColor(R.color.red));
+                                    Delta1d.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.red));
                                 }else if ( Double.parseDouble(Delta_1d_val) > 0 ){
                                     Delta_1d = "+" + Delta_1d;
-                                    Delta1d.setTextColor(getResources().getColor(R.color.green2));
+                                    Delta1d.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.green2));
                                 }
                             }
                             Delta1d.setText(Delta_1d);
@@ -226,10 +218,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             if (!Objects.equals(Delta_7d_val, "null")) {
                                 Delta_7d = Delta_7d_val + "%";
                                 if( Double.parseDouble(Delta_7d_val) < 0 ) {
-                                    Delta7d.setTextColor(getResources().getColor(R.color.red));
+                                    Delta7d.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.red));
                                 }else if ( Double.parseDouble(Delta_7d_val) > 0 ){
                                     Delta_7d = "+" + Delta_7d;
-                                    Delta7d.setTextColor(getResources().getColor(R.color.green2));
+                                    Delta7d.setTextColor(ContextCompat.getColor(getBaseContext(),
+                                            R.color.green2));
                                 }
                             }
                             Delta7d.setText(Delta_7d);
@@ -262,17 +256,12 @@ public class CryptoSelectActivity extends BaseActivity {
                             }
                             VolumeUSD.setText(USD_Volume);
 
-                            editor.putFloat ("price_init_f",  (float) usdP);
+                            editor.putFloat ("price_init_f",  (float) currPrice);
 
-                            String priceInit = frmt.format((usdP));
-                            if (usdP >= 100)
-                                   priceInit = frmt0.format((usdP));
-
+                            String priceInit = frmt.format((currPrice));
+                            if (currPrice >= 100)
+                                   priceInit = frmt0.format((currPrice));
                             editor.putString("price_initial", priceInit);
-                            editor.putFloat("vol_init_i", Float.parseFloat(USD_Volume_val));
-                            editor.putString("vol_initial", frmt3.format(
-                                                                 Float.parseFloat(USD_Volume_val)));
-                            editor.apply();
 
                             String EUR_Volume     = getString(R.string.not_avail);
                             String EUR_Volume_val = object.getString(volume_key_nonUSD);
@@ -281,6 +270,13 @@ public class CryptoSelectActivity extends BaseActivity {
                                              frmt3.format(Double.parseDouble(EUR_Volume_val));
                             }
                             VolumeEUR.setText(EUR_Volume);
+
+                            String CurrVol = USD_Volume_val;
+                            if(!Dollar) CurrVol = EUR_Volume_val;
+
+                            editor.putFloat("vol_init_i", Float.parseFloat(CurrVol));
+                            editor.putString("vol_initial",frmt3.format(Float.parseFloat(CurrVol)));
+                            editor.apply();
 
                             String USD_MarketCap     = getString(R.string.not_avail);
                             String USD_MarketCap_val = object.getString("market_cap_usd");
@@ -363,17 +359,19 @@ public class CryptoSelectActivity extends BaseActivity {
                 final View alertsMenu = li.inflate(R.layout.alerts_select_menu, null);
                 final AlertDialog.Builder builder3 = new AlertDialog.Builder(
                                                                  CryptoSelectActivity.this);
+                builder3.setCancelable(false);
                 builder3.setView(alertsMenu);
                 final String  Symbol      = getIntent().getStringExtra("crypto_id");
                 TextView alertName        = alertsMenu.findViewById(R.id.alerts_crypto_name);
-                //TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
+                TextView alertsSym        = alertsMenu.findViewById(R.id.alerts_price_currency);
+                TextView alertsVSym       = alertsMenu.findViewById(R.id.alerts_volume_currency);
                 final EditText priceInput = alertsMenu.findViewById(R.id.price_input);
                 final EditText volInput   = alertsMenu.findViewById(R.id.volume_input);
                 final Button setPriceBtn  = alertsMenu.findViewById(R.id.price_setBtn);
                 final Button setVolBtn    = alertsMenu.findViewById(R.id.vol_setBtn);
+                buttonClicked             = false;
 
                 alertName.setText(Symbol);
-
                 final String initPrice    = mSettings.getString("price_initial","0");
                 final double currentPrice = mSettings.getFloat("price_init_f",0);
 
@@ -401,11 +399,12 @@ public class CryptoSelectActivity extends BaseActivity {
                     volInput.setHint(initVolume);
                     alertVol         = false;
                 }
-                //String symbolCurrent = "$";
-//                if(!Dollar){
-//                    symbolCurrent = mSettings.getString("Curr_symb","€");
-//                    alertsSym.setText(symbolCurrent);
-//                }
+                String symbolCurrent = "$";
+                if(!Dollar){
+                    symbolCurrent = mSettings.getString("Curr_symb","€");
+                    alertsSym.setText(symbolCurrent);
+                    alertsVSym.setText(symbolCurrent);
+                }
 
                 setPriceBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -413,7 +412,6 @@ public class CryptoSelectActivity extends BaseActivity {
                         if (!alertPrice) {
                             if(!priceInput.getText().toString().equals("")) {
                                 alertPrice = true;
-                                //if (dbPHandler.Exists(Symbol)) dbPHandler.deleteAlert(Symbol);
                                 String fmtRemoved = priceInput.getText().toString().replace(
                                                                         ",", "");
                                 double thPrice = Double.parseDouble(fmtRemoved);
@@ -441,7 +439,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             alertPrice = false;
                             dbPHandler.deleteAlert(Symbol);
                         }
-
+                        buttonClicked = true;
                     }
                 });
                 setVolBtn.setOnClickListener(new View.OnClickListener() {
@@ -476,7 +474,7 @@ public class CryptoSelectActivity extends BaseActivity {
                             alertVol = false;
                             dbVHandler.deleteAlert(Symbol);
                         }
-
+                        buttonClicked = true;
                     }
                 });
 
@@ -493,36 +491,13 @@ public class CryptoSelectActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         dialog3.dismiss();
+                        if (buttonClicked){
+                            checkJobScheduler();
+                            restart();}
                     }
                 });
-
             }
         });
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        editor.putBoolean("cs_active", false);
-        editor.apply();
-
-        Boolean aaActive   = mSettings.getBoolean("aa_active", false);
-        Boolean t100Active = mSettings.getBoolean("t100_active", false);
-        Boolean restart    = getIntent().getBooleanExtra("restart", false);
-        getIntent().removeExtra("restart");
-
-        if(!aaActive && !t100Active && !restart) checkStartService();
-    }
-    @Override
-    public void onPause(){
-        super.onPause();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-        editor.putBoolean("cs_active", false);
-        editor.apply();
     }
 }
 

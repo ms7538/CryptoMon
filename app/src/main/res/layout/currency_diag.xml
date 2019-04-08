@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/light_gray"
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:text="@string/currency"
+        android:background="@color/l3col"
         android:textColor="@android:color/black"
         android:textSize="25sp" />
 
@@ -25,7 +28,8 @@
 
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/curr_rg">
 
         <RadioButton
             android:id="@+id/radio_currency_usd"
@@ -124,14 +128,56 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/indian_rupee" />
-
     </RadioGroup>
-
     </ScrollView>
 
-    <Button
-        android:id="@+id/Units_OK_btn"
+    <LinearLayout
+        android:id="@+id/curr_diag_delLayout"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:background="@android:color/background_dark"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/ok" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/notice"
+            android:layout_marginBottom="5sp"
+            android:textColor="@color/red"
+            android:textSize="19sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/delete_switch_notice"
+            android:textColor="@color/light_blue"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/black"
+        android:layout_marginTop="1dp">
+
+        <Button
+            android:id="@+id/Units_OK_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/ok" />
+
+        <Button
+            android:id="@+id/Units_NO_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/back"
+            tools:ignore="RelativeOverlap" />
+
+    </RelativeLayout>
+
 </LinearLayout>

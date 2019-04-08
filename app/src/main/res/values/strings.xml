@@ -165,11 +165,11 @@
     <string name="about">About</string>
     <string name="version">Version:</string>
     <string name="about_">About:</string>
-    <string name="vers_number">1.1</string>
+    <string name="vers_number">1.3</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="release_date">Release Date:</string>
     <string name="release_date2">March 01, 2018</string>
-    <string name="update_date">July 10, 2018</string>
+    <string name="update_date">April 7, 2019</string>
     <string name="crypto_currencies">Crypto Currencies:</string>
     <string name="onehundred">100</string>
     <string name="monetary_currencies">Monetary Currencies:</string>
@@ -224,4 +224,13 @@
     <string name="coinmarketcap_link">CoinMarketCap Link</string>
     <string name="delete_achieved_alert">Delete Achieved Alert</string>
     <string name="hhmma">hh:mm a</string>
+    <string name="notice">NOTICE</string>
+    <string name="delete_switch_notice">Switching the selected monetary currency will result in
+                                        deletion of all set automatic alerts! You may reset the
+                                        automatic again using the selected monetary currency.
+                                                                                           </string>
+    <string name="this_will_stop_running">This will stop running all services and  \n delete all set alerts</string>
+    <string name="cancel">Cancel</string>
+    <string name="this_action_will_clear_all_achieved_alerts">This action will clear all achieved alerts</string>
+
 </resources>

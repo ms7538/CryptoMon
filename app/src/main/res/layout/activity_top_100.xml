@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -9,7 +8,8 @@
     android:background="@android:color/darker_gray"
     tools:context="com.poloapps.cryptomon.T100Activity">
 
-    <com.google.android.gms.ads.AdView
+    <com.google.android.gms.ads.doubleclick.PublisherAdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

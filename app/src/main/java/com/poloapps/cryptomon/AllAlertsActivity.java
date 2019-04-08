@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -20,9 +18,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -37,7 +33,6 @@ public class AllAlertsActivity extends BaseActivity {
     ArrayList<HashMap<String, String>> AchievedList;
     ArrayList<HashMap<String, String>> AlertSetList;
     final DecimalFormat frmt  = new DecimalFormat("#,###,###,###,###.##");
-    final DecimalFormat frmt0 = new DecimalFormat("#,###,###,###,###,###");
     final DecimalFormat frmt2 = new DecimalFormat("#.########");
 
     @Override
@@ -49,9 +44,11 @@ public class AllAlertsActivity extends BaseActivity {
         bar.setDisplayShowTitleEnabled(false);
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
-        AdView mAdView      = findViewById(R.id.all_alerts_adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mPublisherAdView = findViewById(R.id.all_alerts_adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice("A530388CACF455CECC92502035BB36DC")
+                .build();
+        mPublisherAdView.loadAd(adRequest);
         updateCurrentVals();
     }
 
@@ -60,21 +57,24 @@ public class AllAlertsActivity extends BaseActivity {
         super.onResume();
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
         final SharedPreferences.Editor editor = mSettings.edit();
-        getIntent().removeExtra("restart");
         overwritten = 0;
-        stopRunningService();
         final int YELLOW  = ContextCompat.getColor(getApplicationContext(),(R.color.bright_yellow));
         final int RED     = ContextCompat.getColor(getApplicationContext(),(R.color.red));
         final int GREEN   = ContextCompat.getColor(getApplicationContext(),(R.color.green2));
-        final LayoutInflater li    = LayoutInflater.from(getApplicationContext());
 
-        TextView     achievedTopMsg = findViewById(R.id.achieved_top_msg);
-        TextView     setTopMsg      = findViewById(R.id.set_top_msg);
+        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        final String  Symb   = mSettings.getString("Curr_symb","€");
+
+        final LayoutInflater li    = LayoutInflater.from(getApplicationContext());
+        ImageButton DelAchAll      = findViewById(R.id.del_ach_all_btn);
+        ImageButton DelSetAll      = findViewById(R.id.del_set_all_btn);
+        TextView    achievedTopMsg = findViewById(R.id.achieved_top_msg);
+        TextView    setTopMsg      = findViewById(R.id.set_top_msg);
 
         String   priceAlerts  = dbPHandler.dbToString();
         String[] splitPAlerts = priceAlerts.split("[\n]");
         int      lenPArray    = splitPAlerts.length;
-        String   volAlerts    = dbVHandler.listEntries();
+        String   volAlerts    = dbVHandler.dbToString();
         String[] splitVAlerts = volAlerts.split("[\n]");
         int      lenVArray    = splitVAlerts.length;
 
@@ -84,9 +84,12 @@ public class AllAlertsActivity extends BaseActivity {
         if (splitPAlerts[0].equals("")) lenPArray = 0;
         if (splitVAlerts[0].equals("")) lenVArray = 0;
 
-        if(lenPArray == 0 && lenVArray == 0) setTopMsg.setText(getString(R.string.no_alerts_set));
-
+        if(lenPArray == 0 && lenVArray == 0){
+            setTopMsg.setText(getString(R.string.no_alerts_set));
+            DelSetAll.setVisibility(View.INVISIBLE);
+        }
         else {
+            DelSetAll.setVisibility(View.VISIBLE);
             String topMsg = getString(R.string.running);
             if(lenPArray+lenVArray == 1){
                 topMsg = getString(R.string.running1);
@@ -100,6 +103,7 @@ public class AllAlertsActivity extends BaseActivity {
             String id_set    = splitPAlerts[i];
             String cur_val   = dbCVHandler.currentPrice(splitPAlerts[i]);
             String thr_val   = dbPHandler.getPrice_Val(splitPAlerts[i]);
+            String th_check  = dbPHandler.getThresh_Check(splitPAlerts[i]);
             String type       = "Price";
             int    set_hrs   = Integer.parseInt(dbCVHandler.currentHour(splitPAlerts[i]));
             long   millis    = System.currentTimeMillis();
@@ -112,6 +116,7 @@ public class AllAlertsActivity extends BaseActivity {
             s_item.put("cur_val", cur_val);
             s_item.put("thr_val", thr_val);
             s_item.put("type"   , type);
+            s_item.put("th_check", th_check);
             s_item.put("set_hrs", setHrs);
 
             AlertSetList.add(s_item);
@@ -120,6 +125,7 @@ public class AllAlertsActivity extends BaseActivity {
             String id_set    = splitVAlerts[j];
             String cur_val   = dbCVHandler.currentVol(splitVAlerts[j]);
             String thr_val   = dbVHandler.getVol_Val(splitVAlerts[j]);
+            String th_check  =  dbVHandler.getThresh_Check(splitVAlerts[j]);
             String type      = "24h Volume";
             int    set_hrs   = Integer.parseInt(dbCVHandler.currentHour(splitVAlerts[j]));
             long   millis    = System.currentTimeMillis();
@@ -131,12 +137,13 @@ public class AllAlertsActivity extends BaseActivity {
             s_item.put("cur_val", cur_val);
             s_item.put("thr_val", thr_val);
             s_item.put("type"   , type);
+            s_item.put("th_check", th_check);
             s_item.put("set_hrs", setHrs);
             AlertSetList.add(s_item);
         }
 
         String[] fr1 = {"id_set", "cur_val", "thr_val", "type", "set_hrs" };
-        int[]    to1 = {R.id.set_alert_name, R.id.set_current_val, R.id.set_threshold_val,
+        int[] to1    = {R.id.set_alert_name, R.id.set_current_val, R.id.set_threshold_val,
                 R.id.set_alert_type, R.id.set_updated_val};
 
         ListAdapter setAdapter = new SimpleAdapter(getApplicationContext(), AlertSetList,
@@ -155,21 +162,28 @@ public class AllAlertsActivity extends BaseActivity {
                 TextView setThreshVal = view.findViewById(R.id.set_threshold_val);
                 TextView setCurrVal   = view.findViewById(R.id.set_current_val);
                 ImageButton CS_sel    = view.findViewById(R.id.set_cs_btn);
+                ImageView checkIcon   = view.findViewById(R.id.set_icon_specifier);
                 final String   type   = currentRow.get("type");
+
+                final int th_check    = Integer.parseInt(currentRow.get("th_check"));
+                if(th_check == 1){
+                    setThreshVal.setTextColor(GREEN);
+                    checkIcon.setBackground(getDrawable(R.drawable.ic_action_surpass));
+                }else if(th_check == -1){
+                    setThreshVal.setTextColor(RED);
+                    checkIcon.setBackground(getDrawable(R.drawable.ic_action_fall_below));
+                }else {checkIcon.setBackground(getDrawable(R.drawable.ic_action_not_available));}
 
                 double valTh   = Double.parseDouble(setThreshVal.getText().toString());
                 double valCr   = Double.parseDouble(setCurrVal.getText().toString());
 
                 if      (valTh < .01)  thresh = frmt2;
-                else if (valTh >= 100) thresh = frmt0;
-                else                   thresh = frmt;
-
                 if      (valCr < .01)  curr = frmt2;
-                else if (valCr >= 100) curr = frmt0;
-                else                   curr = frmt;
 
-                String dispThr = "$"  + thresh.format(valTh);
-                String dispCur = "$"  + curr.format(valCr);
+                String disp_curr_symb = "$";
+                if (!Dollar) disp_curr_symb = Symb;
+                String dispThr = disp_curr_symb + thresh.format(valTh);
+                String dispCur = disp_curr_symb + curr.format(valCr);
                 setThreshVal.setText(dispThr);
                 setCurrVal.setText(dispCur);
 
@@ -194,7 +208,7 @@ public class AllAlertsActivity extends BaseActivity {
                         startCSActivity(currentRow.get("id_set"));
                     }
                 });
-                dispStale.append( "h");
+                dispStale.append("h");
                 delButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -202,6 +216,7 @@ public class AllAlertsActivity extends BaseActivity {
                             dbPHandler.deleteAlert(currentRow.get("id_set"));
                         else if(type.equals("24h Volume"))
                             dbVHandler.deleteAlert(currentRow.get("id_set"));
+                        checkJobScheduler();
                         restart();
                     }
                 });
@@ -210,37 +225,37 @@ public class AllAlertsActivity extends BaseActivity {
         };
         Set_lv.setAdapter(setAdapter);
 
-        String priceAchAlrts    = dbPAchHandler.dbEntries();
-        String[] splitPAchAlrts = priceAchAlrts.split("[\n]");
-        int len2                = splitPAchAlrts.length;
-
+        String priceAchAlrts      = dbPAchHandler.dbEntries();
+        String[] splitPAchAlrts   = priceAchAlrts.split("[\n]");
+        int len2                  = splitPAchAlrts.length;
         String   volAchAlerts     = dbVAchHandler.dbEntries();
         String[] splitVAchAlerts  = volAchAlerts.split("[\n]");
         int len3                  = splitVAchAlerts.length;
         String topMsg             = getString(R.string.achieved);
+
         if(splitPAchAlrts[0].equals("")) len2 = 0;
         if(splitVAchAlerts[0].equals("")) len3 = 0;
-
         if(len2 == 0 && len3 == 0) {
             achievedTopMsg.setText(getString(R.string.no_achieved_alerts));
+            DelAchAll.setVisibility(View.INVISIBLE);
         }else {
+            DelAchAll.setVisibility(View.VISIBLE);
             if(len2 + len3 == 1) topMsg = getString(R.string.achieved1);
             String msg = String.format(Locale.US, "%d", len2 + len3) + " " + topMsg;
             achievedTopMsg.setText(msg);
         }
         editor.putInt("disp_alerts",   len2+len3);
-        editor.putBoolean("aa_active", true);
         editor.apply();
 
         AchievedList         = new ArrayList<>();
         ListView achLV       = findViewById(R.id.alertAch_listView);
 
         for (int i = 0;i < len2;i++) {
-
             String threshVal = dbPAchHandler.getThresh_Val(splitPAchAlrts[i]);
             String threshBrk = dbPAchHandler.getThresh_Brk(splitPAchAlrts[i]);
             String check     = dbPAchHandler.getColumnBreakerChck(splitPAchAlrts[i]);
             String min_ach   = dbPAchHandler.getAchievedTimeStamp(splitPAchAlrts[i]);
+            String ach_symb  = dbPAchHandler.getAchievedMonCurrency(splitPAchAlrts[i]);
             String type1     = "Price";
             String top_msg   = getString(R.string.alert_achieved);
 
@@ -251,13 +266,14 @@ public class AllAlertsActivity extends BaseActivity {
             }
 
             HashMap<String, String> item = new HashMap<>();
-            item.put("id",      splitPAchAlrts[i]);
-            item.put("msg",     top_msg);
-            item.put("check",   check);
-            item.put("type",    type1);
-            item.put("thresh",  threshVal);
-            item.put("min_ach", min_ach);
-            item.put("breaker", threshBrk);
+            item.put("id",       splitPAchAlrts[i]);
+            item.put("msg",      top_msg);
+            item.put("check",    check);
+            item.put("type",     type1);
+            item.put("thresh",   threshVal);
+            item.put("min_ach",  min_ach);
+            item.put("breaker",  threshBrk);
+            item.put("mon_curr", ach_symb);
 
             AchievedList.add(item);
         }
@@ -268,6 +284,7 @@ public class AllAlertsActivity extends BaseActivity {
             String threshBrk = dbVAchHandler.getThreshBrk(splitVAchAlerts[ij]);
             String check     = dbVAchHandler.getColumnBreakerChck(splitVAchAlerts[ij]);
             String min_ach   = dbVAchHandler.getAchievedTimeStamp(splitVAchAlerts[ij]);
+            String ach_symb  = dbVAchHandler.getAchievedMonCurrency(splitVAchAlerts[ij]);
             String type1     = "24h Volume";
             String top_msg   = getString(R.string.alert_achieved);
 
@@ -277,13 +294,14 @@ public class AllAlertsActivity extends BaseActivity {
                 threshBrk = "N/A";
             }
             HashMap<String, String> item = new HashMap<>();
-            item.put("id" ,    id);
-            item.put("msg",    top_msg);
-            item.put("check",  check);
-            item.put("type",   type1);
-            item.put("thresh", threshVal);
-            item.put("min_ach",min_ach);
-            item.put("breaker",threshBrk);
+            item.put("id" ,      id);
+            item.put("msg",      top_msg);
+            item.put("check",    check);
+            item.put("type",     type1);
+            item.put("thresh",   threshVal);
+            item.put("min_ach",  min_ach);
+            item.put("breaker",  threshBrk);
+            item.put("mon_curr", ach_symb);
 
             AchievedList.add(item);
         }
@@ -320,12 +338,12 @@ public class AllAlertsActivity extends BaseActivity {
                     Time2.setText(achTime);
 
                     double threshVal = Double.parseDouble(currentRow.get("thresh"));
-                    String valThr = "$" + frmt.format(threshVal);
+                    String valThr = currentRow.get("mon_curr") + frmt.format(threshVal);
                     valT.setText(valThr);
 
                     if (!check.equals("100")) {
                         double breakVal = Double.parseDouble(currentRow.get("breaker"));
-                        String valBrk = "$" + frmt.format(breakVal);
+                        String valBrk = currentRow.get("mon_curr") + frmt.format(breakVal);
                         valB.setText(valBrk);
 
                         if (check.equals("1")) {
@@ -395,49 +413,72 @@ public class AllAlertsActivity extends BaseActivity {
                 }
             };
             achLV.setAdapter(listAdapter2);
+
+        DelSetAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(AllAlertsActivity.this);
+                @SuppressLint("InflateParams")
+                View mView = getLayoutInflater()
+                        .inflate(R.layout.confirm_del_set_alerts_menu,null);
+                builder.setView(mView);
+
+                final AlertDialog dialog = builder.create();
+                final Button cancel_btn = mView.findViewById(R.id.del_set_alerts_NO_btn);
+                final Button ok_btn = mView.findViewById(R.id.del_set_alerts_OK_btn);
+
+                cancel_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }});
+                ok_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dbPHandler.deleteAll();
+                        dbVHandler.deleteAll();
+                        if(isJobServiceOn(getApplicationContext())){cancelJob();}
+                        restart();
+                    }});
+                dialog.show();
+            }
+        });
+
+        DelAchAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(AllAlertsActivity.this);
+                @SuppressLint("InflateParams")
+                View mView = getLayoutInflater()
+                        .inflate(R.layout.confirm_del_ach_alerts_menu,null);
+                builder.setView(mView);
+
+                final AlertDialog dialog = builder.create();
+                final Button cancel_btn = mView.findViewById(R.id.del_ach_alerts_NO_btn);
+                final Button ok_btn = mView.findViewById(R.id.del_ach_alerts_OK_btn);
+
+                cancel_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }});
+                ok_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dbPAchHandler.deleteAll();
+                        dbVAchHandler.deleteAll();
+                        restart();
+                    }});
+                dialog.show();
+            }
+        });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        editor.putBoolean("aa_active", false);
-        editor.apply();
-
-        Boolean csActive   = mSettings.getBoolean("cs_active", false);
-        Boolean t100Active = mSettings.getBoolean("t100_active", false);
-        Boolean restart    = getIntent().getBooleanExtra("restart", false);
-        getIntent().removeExtra("restart");
-
-        if(!csActive && !t100Active && !restart ) checkStartService();
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        stopRunningService();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        editor.putBoolean("aa_active", true);
-        editor.apply();
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-        editor.putBoolean("aa_active", false);
-        editor.apply();
-    }
     public void startCSActivity(String in){
-        Intent intent = new Intent(
-                AllAlertsActivity.this,
-                CryptoSelectActivity.class);
+        Intent intent = new Intent(AllAlertsActivity.this,CryptoSelectActivity.class);
         intent.putExtra("crypto_id", in);
-        intent.putExtra("restart", false);
         AllAlertsActivity.this.startActivity(intent);
     }
 }

@@ -30,10 +30,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 
-//v1.1    created
+//v1.216    created
 public class T100Activity extends BaseActivity {
 
     long createdTime = System.currentTimeMillis() / 1000L;
@@ -55,20 +54,22 @@ public class T100Activity extends BaseActivity {
         bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this,
                                                                               R.color.dark_gray)));
 
-        String reqCurrentTime =
-                DateFormat.getDateTimeInstance().format(new Date());
+        String reqCurrentTime = DateFormat.getDateTimeInstance().format(new Date());
         Time2.setText(reqCurrentTime);
-        String LC_url       = "https://api.coinmarketcap.com/v1/ticker/";
-        AdView mAdView      = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+
+        mPublisherAdView = findViewById(R.id.adView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder()
+                .addTestDevice("A530388CACF455CECC92502035BB36DC")
+                .build();
+        mPublisherAdView.loadAd(adRequest);
 
         final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
+        boolean Dollar = mSettings.getBoolean("Dollar", true);
 
-        final Boolean Dollar = mSettings.getBoolean("Dollar", true);
         final String  Curr   = mSettings.getString("Curr_code","eur");
         final Integer RED    = ContextCompat.getColor(getApplicationContext(), (R.color.red));
 
+        LC_url = "https://api.coinmarketcap.com/v1/ticker/";
         if(!Dollar) LC_url = LC_url + "?convert=" + Curr;
 
         final DecimalFormat form  = new DecimalFormat("#,###,###,###.##");
@@ -85,14 +86,12 @@ public class T100Activity extends BaseActivity {
 
                     String price_key      = "price_usd";
                     String curr_symbol    = "$";
-                    String volume_24h_key = "24h_volume_usd";
-                    String us_price_key   = price_key;
-                    String us_vol_key     = volume_24h_key;
-
+                    String Vol24h_key     = "24h_volume_usd";
+                    boolean Dollar = mSettings.getBoolean("Dollar", true);
                     if(!Dollar){
                         price_key      = "price_" + Curr;
                         curr_symbol    = mSettings.getString("Curr_symb","€");
-                        volume_24h_key = "24h_volume_" + Curr;
+                        Vol24h_key     = "24h_volume_" + Curr;
                     }
                     rankList = new ArrayList<>();
                     ListView lv = findViewById(R.id.t100_listView);
@@ -105,18 +104,17 @@ public class T100Activity extends BaseActivity {
 
                         String rate       = obj1.getString(price_key);
                         Double d_rate     = Double.parseDouble(rate);
-                        Double curr_vol   = Double.parseDouble(obj1.getString(volume_24h_key));
+                        Double curr_vol   = Double.parseDouble(obj1.getString(Vol24h_key));
                         String volume_24h = curr_symbol + form3.format(curr_vol);
 
-                        Double usPrice   = Double.parseDouble(obj1.getString(us_price_key));
-                        Double usVolume  = Double.parseDouble(obj1.getString(us_vol_key));
+                        double PriceVal  = Double.parseDouble(obj1.getString(price_key));
+                        double VolVal    = Double.parseDouble(obj1.getString(Vol24h_key));
 
                         if (d_rate < .01) rate  = curr_symbol + form2.format(d_rate);
                         else              rate  = curr_symbol + form.format(d_rate);
 
                         String name       = obj1.getString("name");
                         String symbol     = obj1.getString("symbol");
-
 
                         name              = name + " / " + symbol;
                         String rank       = obj1.getString("rank");
@@ -125,10 +123,10 @@ public class T100Activity extends BaseActivity {
                         String delta_7d   = obj1.getString("percent_change_7d");
                         String link_id    = obj1.getString("id");
                         long millis       = System.currentTimeMillis();
-                        Integer hours     = (int) (millis/1000/60/60);
+                        int hours         = (int) (millis/1000/60/60);
 
                         dbCVHandler.deleteEntry(link_id);
-                        dbCVHandler.addCurrentVals(link_id,usPrice,usVolume, hours);
+                        dbCVHandler.addCurrentVals(link_id, PriceVal, VolVal, hours);
 
                         HashMap<String, String> item = new HashMap<>();
                         item.put("rank",    rank);
@@ -224,40 +222,13 @@ public class T100Activity extends BaseActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-
-        Boolean csActive   = mSettings.getBoolean("cs_active", false);
-        Boolean aaActive   = mSettings.getBoolean("aa_active", false);
-        Boolean t100Active = mSettings.getBoolean("t100_active", true);
-        Boolean restart    = getIntent().getBooleanExtra("restart", false);
-        getIntent().removeExtra("restart");
-
-        if(!csActive && !aaActive && !t100Active && !restart) checkStartService();
-        editor.putBoolean("t100_active", false);
-        editor.apply();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        final SharedPreferences mSettings = this.getSharedPreferences("Settings", 0);
-        final SharedPreferences.Editor editor = mSettings.edit();
-        editor.putBoolean("t100_active", true);
-        editor.apply();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
         SharedPreferences.Editor editor = mSettings.edit();
-        Boolean Dollar = mSettings.getBoolean("Dollar", true);
+        boolean Dollar = mSettings.getBoolean("Dollar", true);
         String  Curr   = mSettings.getString("Curr_code","eur");
 
-        editor.putBoolean("t100_active", false);
         String T100_currency = "usd";
         if(!Dollar) T100_currency = Curr;
         editor.putString("t100_curr",T100_currency);
@@ -268,21 +239,14 @@ public class T100Activity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences mSettings     = this.getSharedPreferences("Settings", 0);
-        SharedPreferences.Editor editor = mSettings.edit();
-        getIntent().removeExtra("restart");
-        Boolean Dollar                  = mSettings.getBoolean("Dollar", true);
+        boolean Dollar                  = mSettings.getBoolean("Dollar", true);
         String  Curr                    = mSettings.getString("Curr_code","eur");
         String  T100                    = mSettings.getString("t100_curr","usd");
-        stopRunningService();
-        editor.putBoolean("t100_active", true);
-        editor.apply();
 
-        Long resumeTime             = System.currentTimeMillis() / 1000L;
+        long resumeTime             = System.currentTimeMillis() / 1000L;
         if (resumeTime - createdTime > 299) restart();
         String currency_check = "usd";
         if(!Dollar) currency_check = Curr;
         if (!Objects.equals(T100, currency_check)) restart();
     }
-
-
 }
