@@ -56,7 +56,7 @@
         android:background="@color/delta_col"
         android:foregroundGravity="center"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id" />
+        ads:adUnitId="ca-app-pub-6002737231550640/8522592009"/>
 
     <LinearLayout
         android:id="@+id/set_layout"
